@@ -1,0 +1,63 @@
+.wallet-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .wallet-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .wallet-container p {
+    font-size: 1.2em;
+    color: #666;
+    text-align: center;
+  }
+  
+  .wallet-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .wallet-container label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .wallet-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  .wallet-container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .wallet-container button:hover {
+    background-color: #0056b3;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .button-group button {
+    flex: 1;
+  }
