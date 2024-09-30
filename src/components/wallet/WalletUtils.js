@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
+const API_URL = 'http://localhost:3000';
 
 export const isAmountAvailable = async (userId, amount) => {
   try {

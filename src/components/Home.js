@@ -8,6 +8,9 @@ const Home = () => {
       <h2>CoolGoat</h2>
       <p>Bienvenido a CoolGoat!</p>
       <Link to="/wallet">Ir a mi billetera</Link>
+      <Link to="/fixtures">
+        Ver Partidos disponibles
+      </Link>
     </div>
   );
 };
