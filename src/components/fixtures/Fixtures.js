@@ -1,3 +1,5 @@
+// components/Fixtures.js
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Fixtures.css';
@@ -22,24 +24,26 @@ const Fixtures = () => {
       if (toDate) queryParams.append('to', toDate);
       queryParams.append('page', page.toString());
       queryParams.append('count', count.toString());
-  
+
       const response = await fetch(`${API_URL}/fixtures?${queryParams.toString()}`);
-      const data = await response.json();
-      console.log('Datos recibidos:', data);
-  
-      if (data && data.fixtures) {
-        setFixtures(data.fixtures);
-        if (data.pagination && data.pagination.totalPages) {
-          setTotalPages(data.pagination.totalPages);
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log('Datos recibidos:', data);
+
+        if (data && data.fixtures) {
+          setFixtures(data.fixtures);
+          if (data.pagination && data.pagination.totalPages) {
+            setTotalPages(data.pagination.totalPages);
+          } else {
+            setTotalPages(1);
+          }
         } else {
+          console.error('No se encontraron fixtures en la respuesta');
+          setFixtures([]);
           setTotalPages(1);
         }
-      } else if (Array.isArray(data)) {
-        // Si data es un array de fixtures
-        setFixtures(data);
-        setTotalPages(1);
       } else {
-        console.error('No se encontraron fixtures en la respuesta');
+        console.error('Error al obtener los fixtures');
         setFixtures([]);
         setTotalPages(1);
       }
@@ -50,16 +54,15 @@ const Fixtures = () => {
     }
   };
 
-  // Utilizar useEffect para llamar a fetchFixtures cuando page cambie
+  // Llamar a fetchFixtures cuando cambien page, country, fromDate o toDate
   useEffect(() => {
     fetchFixtures();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, country, fromDate, toDate]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setPage(1);
-    fetchFixtures();
+    setPage(1); // Reiniciar a la primera página al realizar una nueva búsqueda
   };
 
   const handleFixtureClick = (fixture) => {
