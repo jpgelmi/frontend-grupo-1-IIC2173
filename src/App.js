@@ -10,6 +10,7 @@ import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Unauthorized from "./components/Unauthorized";
+import RequireAuth from "./components/RequireAuth";
 
 const ROLES = {
   user: 100,
@@ -23,8 +24,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="unauthorized" element={<Unauthorized />} />
       <Route
         element={
@@ -33,6 +34,7 @@ function App() {
           />
         }
       >
+        <Route path="/home" element={<Home />} />
         <Route
           path="/wallet/*"
           element={

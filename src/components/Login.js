@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { AlertCircle, Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "./hooks/useAuth";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { postLogin } from "../api/axios";
-import { postStats } from "../api/axios";
 
-export default function Login() {
+export default function ModernLogin() {
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +32,6 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    postStats("login", "login");
     if (email === "") {
       setError("Falta el correo electrónico");
       return;
@@ -78,32 +76,29 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#40B3E8] to-[#4058A0] px-4 relative" style={{fontFamily: 'Montserrat, sans-serif'}}>
-      <Link 
-        to="/" 
-        className="absolute top-8 left-8 flex items-center text-white hover:text-gray-200 transition-colors duration-200"
-      >
-        <ArrowLeft className="h-5 w-5 mr-2" />
-        <span className="text-sm font-medium">Volver a inicio</span>
-      </Link>
-      <div className="w-full max-w-md mt-16">
-        <div className="bg-white shadow-2xl rounded-3xl overflow-hidden">
-          <div className="px-8 py-12">
-            <div className="flex justify-center mb-8">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-zNngG1oOXGus0MbQSS36QZCffAawwu.png" alt="Lexia Logo" className="w-48" />
-            </div>
-            <h2 className="text-3xl font-bold text-[#4058A0] text-center mb-4">Iniciar sesión</h2>
-            <p className="text-sm text-[#666666] text-center mb-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-green-200 px-4">
+      <div className="w-full max-w-md">
+        <Link 
+          to="/" 
+          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-300 mb-8"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          <span className="text-sm font-medium">Volver a inicio</span>
+        </Link>
+        <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
+          <div className="px-6 py-8">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">Iniciar sesión</h2>
+            <p className="text-center text-gray-600 mb-8">
               Ingresa tu correo y contraseña para acceder
             </p>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[#666666]">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Correo electrónico
                 </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
+                <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-[#40B3E8]" aria-hidden="true" />
+                    <Mail className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
                   <input
                     id="email"
@@ -111,18 +106,18 @@ export default function Login() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#40B3E8] focus:border-[#40B3E8] sm:text-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     placeholder="tu@ejemplo.com"
                   />
                 </div>
               </div>
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-[#666666]">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                   Contraseña
                 </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
+                <div className="relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-[#40B3E8]" aria-hidden="true" />
+                    <Lock className="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
                   <input
                     id="password"
@@ -130,7 +125,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#40B3E8] focus:border-[#40B3E8] sm:text-sm"
+                    className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm"
                     placeholder="••••••••"
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -155,16 +150,16 @@ export default function Login() {
                     type="checkbox"
                     checked={persist}
                     onChange={togglePersist}
-                    className="h-4 w-4 text-[#40B3E8] focus:ring-[#40B3E8] border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="persist" className="ml-2 block text-sm text-[#666666]">
+                  <label htmlFor="persist" className="ml-2 block text-sm text-gray-700">
                     Recordarme
                   </label>
                 </div>
                 <div className="text-sm">
-                  <button className="font-medium text-[#4058A0] hover:text-[#40B3E8]" onClick={() => navigate("/forgot-password")}>
+                  <a href="#" className="font-medium text-green-600 hover:text-green-500">
                     ¿Olvidaste tu contraseña?
-                  </button>
+                  </a>
                 </div>
               </div>
               {error && (
@@ -182,27 +177,23 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-[#40B3E8] to-[#4058A0] hover:from-[#3CA1D1] hover:to-[#394F90] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#40B3E8]"
-                  style={{
-                    background: 'linear-gradient(-120deg, #4058A0, #40B3E8)',
-                    backgroundSize: '200% 200%',
-                    animation: 'gradientShift 5s ease infinite',
-                  }}
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300"
                 >
                   Iniciar sesión
                 </button>
               </div>
             </form>
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                ¿No tienes una cuenta?{' '}
+                <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                  Regístrate aquí
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <style jsx>{`
-        @keyframes gradientShift {
-          0% {background-position: 0% 50%;}
-          50% {background-position: 100% 50%;}
-          100% {background-position: 0% 50%;}
-        }
-      `}</style>
     </div>
   );
 }

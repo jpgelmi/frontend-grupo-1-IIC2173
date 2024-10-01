@@ -12,28 +12,6 @@ export const axiosPrivate = axios.create({
   withCredentials: true,
 });
 
-export const getFixtures = async (country, fromDate, toDate, page, count) => {
-  const URL = `${BASE_URL}/fixtures`;
-  const queryParams = new URLSearchParams();
-
-  if (country) queryParams.append("country", country);
-  if (fromDate) queryParams.append("from", fromDate);
-  if (toDate) queryParams.append("to", toDate);
-  queryParams.append("page", page.toString());
-  queryParams.append("count", count.toString());
-
-  try {
-    const response = await axios.get(`${URL}?${queryParams.toString()}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
 export const postLogin = async (email, password) => {
   const LOGIN_URL = `${BASE_URL}/login`;
 
@@ -52,19 +30,16 @@ export const postLogin = async (email, password) => {
   }
 };
 
-export const postRegister = async (user) => {
+export const postRegister = async (email, userName, password) => {
   const REGISTER_URL = `${BASE_URL}/register`;
 
   try {
     const response = await axios.post(
       REGISTER_URL,
       JSON.stringify({
-        name: user.firstName,
-        lastName: user.lastName,
-        birthDate: user.birthDate,
-        email: user.email,
-        password: user.password,
-        plan: user.plan,
+        email: email,
+        name: userName,
+        password: password,
       }),
       {
         headers: {
@@ -73,6 +48,29 @@ export const postRegister = async (user) => {
         withCredentials: true,
       }
     );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const getFixtures = async (country, fromDate, toDate, page, count) => {
+  const URL = `${BASE_URL}/fixtures`;
+  const queryParams = new URLSearchParams();
+
+  if (country) queryParams.append("country", country);
+  if (fromDate) queryParams.append("from", fromDate);
+  if (toDate) queryParams.append("to", toDate);
+  queryParams.append("page", page.toString());
+  queryParams.append("count", count.toString());
+
+  try {
+    const response = await axios.get(`${URL}?${queryParams.toString()}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response;
   } catch (error) {
     return error;

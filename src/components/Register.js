@@ -1,218 +1,231 @@
-import { useRef, useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import "../styles/login.css";
-import { postRegister } from "../api/axios";
-import logo from "../assets/logo.png";
+import React, { useState, useEffect, useRef } from 'react'
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { postRegister } from '../api/axios'
+import useAuth from './hooks/useAuth'
+import { Link } from 'react-router-dom'
 
-const Register = () => {
-  const { setAuth } = useAuth();
+export default function MinimalRegister() {
+  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/home";
-
-  const userRef = useRef();
-  const errRef = useRef();
-  const emailRef = useRef();
-
-  const [email, setEmail] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const { setAuth } = useAuth()
+  const userRef = useRef(null)
+  const emailRef = useRef(null)
+  const errRef = useRef(null)
 
   useEffect(() => {
     if (userRef.current) {
-      userRef.current.focus();
+      userRef.current.focus()
     } else {
-      console.warn("Input element not found");
+      console.warn("Input element not found")
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    setErrMsg("");
-  }, [password, password2, email]);
+    setErrMsg("")
+  }, [password, password2, email])
 
   const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/i;
-    const nameRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
+    e.preventDefault()
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/i
+    const nameRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/
+
     if (password !== password2) {
-      setErrMsg("Las contraseñas no coinciden");
-      userRef.current.focus();
-      return;
+      setErrMsg("Las contraseñas no coinciden")
+      userRef.current?.focus()
+      return
     } else if (password.length < 8) {
-      setErrMsg("La contraseña debe tener al menos 8 caracteres");
-      userRef.current.focus();
-      return;
+      setErrMsg("La contraseña debe tener al menos 8 caracteres")
+      userRef.current?.focus()
+      return
     } else if (!emailRegex.test(email)) {
-      setErrMsg("Email inválido");
-      emailRef.current.focus();
-      return;
+      setErrMsg("Email inválido")
+      emailRef.current?.focus()
+      return
     } else if (!passwordRegex.test(password)) {
-      setErrMsg("La contraseña debe tener al menos 8 caracteres y un número.");
-      userRef.current.focus();
-      return;
-    } else if (nombre === "" || apellido === "" || fechaNacimiento === "") {
-      setErrMsg("Por favor llena todos los campos");
-      userRef.current.focus();
-      return;
-    } else if (!nameRegex.test(nombre) || !nameRegex.test(apellido)) {
-      setErrMsg("Nombre y apellido deben contener solo letras y espacios");
-      userRef.current.focus();
-      return;
+      setErrMsg("La contraseña debe tener al menos 8 caracteres y un número.")
+      userRef.current?.focus()
+      return
+    } else if (userName === "") {
+      setErrMsg("Por favor llena todos los campos")
+      userRef.current?.focus()
+      return
+    } else if (!nameRegex.test(userName)) {
+      setErrMsg("Nombre y apellido deben contener solo letras y espacios")
+      userRef.current?.focus()
+      return
     }
 
-    const response = await postRegister(
-      email,
-      nombre.trim(),
-      apellido.trim(),
-      fechaNacimiento,
-      password.trim(),
-      password2.trim()
-    );
+    try {
+      const response = await postRegister(
+        email,
+        userName.trim(),
+        password.trim(),
+      )
 
-    if (response.status === 201) {
-      const accessToken = response?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ email, roles, accessToken, nombre });
-      setPassword("");
-      setPassword2("");
-      setEmail("");
+      if (response.status === 201) {
+        const accessToken = response?.accessToken
+        const roles = response?.data?.roles
+        setAuth({ email, roles, accessToken, userName })
+        setPassword("")
+        setPassword2("")
+        setEmail("")
 
-      navigate("/verify", { state: { from } });
-    } else {
-      setErrMsg(response.response.data.message);
-      errRef.current.scrollIntoView();
+        window.location.href = "/home"
+      } else {
+        setErrMsg(response.response.data.message)
+        errRef.current?.scrollIntoView()
+      }
+    } catch (err) {
+      setErrMsg("Error al registrar. Por favor, intenta de nuevo.")
+      errRef.current?.scrollIntoView()
     }
-  };
+  }
 
   return (
-    <div className="App">
-      <div className="login-navbar-container">
-        <div className="login-navbar-options-home">
-          <a href="/">Inicio</a>
-        </div>
-        <div className="login-navbar-options">
-          <h5>Ya tengo una cuenta</h5>
-        </div>
-        <div className="login-navbar-options">
-          <button className="login-navbar-btn">
-            <a href="/login">Login</a>
-          </button>
-        </div>
+    <div className="min-h-screen bg-gradient-to-r from-green-100 to-green-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <Link 
+          to="/" 
+          className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-300 mb-8"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          <span className="text-sm font-medium">Volver a inicio</span>
+        </Link>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Regístrate</h2>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-inner">
-          <div className="logo">
-            <img src={logo} className="logo" alt="Logo" />
-          </div>
-          {errMsg !== "" && (
-            <div className="error-box" ref={errRef}>
-              <div className="error">{errMsg}</div>
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10">
+          {errMsg && (
+            <div ref={errRef} className="mb-4 bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <span className="block sm:inline">{errMsg}</span>
             </div>
           )}
-          <div className="form-group">
-            <h2>Regístrate</h2>
-          </div>
-          <div className="form-group">
-            <label>Correo Electrónico:</label>
-            <input
-              type="text"
-              id="email"
-              ref={emailRef}
-              autoComplete="on"
-              onChange={(e) => setEmail(e.target.value.trim())}
-              value={email}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Nombre:</label>
-            <input
-              type="text"
-              id="nombre"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setNombre(e.target.value)}
-              value={nombre}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Apellido:</label>
-            <input
-              type="text"
-              id="apellido"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setApellido(e.target.value)}
-              value={apellido}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Fecha de Nacimiento:</label>
-            <input
-              type="date"
-              id="fechaNacimiento"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setFechaNacimiento(e.target.value.trim())}
-              value={fechaNacimiento}
-              required
-            />
-          </div>
-          <div className="form-group" style={{ position: "relative" }}>
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type={showPassword ? "text" : "password"} // Muestra u oculta la contraseña
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
-            <button
-              type="button"
-              onClick={toggleShowPassword}
-              className="show-password-btn"
-            >
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </button>
-          </div>
-          <div className="form-group" style={{ position: "relative" }}>
-            <label htmlFor="repeat-password">Repetir Contraseña:</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              id="repeat-password"
-              onChange={(e) => setPassword2(e.target.value)}
-              value={password2}
-              required
-            />
-            <button
-              type="button"
-              onClick={toggleShowPassword}
-              className="show-password-btn"
-            >
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </button>
-          </div>
-          <input type="submit" value="REGISTRARME" />
-        </div>
-      </form>
-    </div>
-  );
-};
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Correo Electrónico
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef}
+              />
+            </div>
 
-export default Register;
+            <div>
+              <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
+                Nombre
+              </label>
+              <input
+                id="userName"
+                name="userName"
+                type="text"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                ref={userRef}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Contraseña
+              </label>
+              <div className="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={toggleShowPassword}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="password2" className="block text-sm font-medium text-gray-700">
+                Repetir Contraseña
+              </label>
+              <div className="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="password2"
+                  name="password2"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  value={password2}
+                  onChange={(e) => setPassword2(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={toggleShowPassword}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300"
+              >
+                REGISTRARME
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  ¿Ya tienes una cuenta?
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Link
+                to="/login"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-green-600 bg-white hover:bg-gray-50 transition duration-300"
+              >
+                Iniciar sesión
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
