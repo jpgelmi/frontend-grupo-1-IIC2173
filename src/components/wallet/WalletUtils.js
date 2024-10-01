@@ -49,8 +49,9 @@ export const deductAmount = async (userId, amount, setBalance) => {
 
 export const addAmount = async (userId, amount, setBalance) => {
   try {
-    // console.log(userId);
-    // console.log(amount);
+    console.log('addAmount');
+    console.log('userId', userId);
+    console.log(amount);
     const response = await fetch(`${API_URL}/users/addAmount/${userId}`, {
       method: 'POST',
       headers: {
@@ -75,7 +76,7 @@ export const addAmount = async (userId, amount, setBalance) => {
 
 export const getBalance = async (userId, setBalance, setUserName) => {
     try {
-        // console.log(userId);
+        console.log(userId);
         const response = await fetch(`${API_URL}/balance/${userId}`, {
         method: 'GET',
         headers: {
@@ -104,7 +105,7 @@ export const getBalance = async (userId, setBalance, setUserName) => {
   
       if (usernameResponse.ok) {
         const data = await usernameResponse.json();
-        // console.log(data.userName);
+        console.log(data.userName);
         setUserName(data.userName);
       } else {
         console.error('Error fetching username');

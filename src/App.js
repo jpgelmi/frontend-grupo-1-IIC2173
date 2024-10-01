@@ -5,18 +5,17 @@ import Wallet from './components/wallet/Wallet';
 import Home from './components/Home';
 import AddFunds from './components/wallet/AddFunds';
 import Fixtures from './components/fixtures/Fixtures';
-import FixtureDetails from './components/fixtures/FixtureDetails'; // Importa el componente correcto
+import FixtureDetails from './components/fixtures/FixtureDetails';
 
 function App() {
   const [balance, setBalance] = useState(0);
   const [userName, setUserName] = useState('');
-  const userId = '2'; // Reemplaza con el ID del usuario actual
+  const [userId, setUserId] = useState('3');
 
   return (
     <Router>
       <Routes>
         <Route path="/wallet/*" element={<Wallet userId={userId} balance={balance} setBalance={setBalance} userName={userName} setUserName={setUserName} />} />
-        <Route path="/wallet/add-funds" element={<AddFunds userId={userId} balance={balance} setBalance={setBalance} userName={userName} />} />
         <Route path="/fixtures" element={<Fixtures />} />
         <Route path="/match/:id" element={<FixtureDetails />} />
         <Route path="/" element={<Home />} />

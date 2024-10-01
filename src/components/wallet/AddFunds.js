@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addAmount } from './WalletUtils';
 import '../style/Wallet.css';
 
 
 const AddFunds = ({ userId, balance, setBalance, userName }) => {
+
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const AddFunds = ({ userId, balance, setBalance, userName }) => {
   };
 
   return (
-    console.log(userName),
+    console.log(userId),
     <div className="wallet-container">
       <h2>Cargar wallet de {userName}</h2>
       <form onSubmit={handleAddFunds}>
