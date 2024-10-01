@@ -1,63 +1,81 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Fixtures.css';
 
 const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
 
 const Fixtures = () => {
-  const [fixtures, setFixtures] = useState([]); // Inicializar como un array vacío
-  const [country, setCountry] = useState('');   // Filtro por país
-  const [fromDate, setFromDate] = useState(''); // Fecha desde
-  const [toDate, setToDate] = useState('');     // Fecha hasta
+  const [fixtures, setFixtures] = useState([]);
+  const [country, setCountry] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [page, setPage] = useState(1);
+  const [count] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   const fetchFixtures = async () => {
     try {
-      // Construcción dinámica del query string solo si los filtros están presentes
       const queryParams = new URLSearchParams();
       if (country) queryParams.append('country', country);
       if (fromDate) queryParams.append('from', fromDate);
       if (toDate) queryParams.append('to', toDate);
-      queryParams.append('page', page);
-
+      queryParams.append('page', page.toString());
+      queryParams.append('count', count.toString());
+  
       const response = await fetch(`${API_URL}/fixtures?${queryParams.toString()}`);
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Fixtures:', data);
-
-        // Verificar si data.fixtures existe y es un array
-        if (Array.isArray(data.fixtures)) {
-          setFixtures(data.fixtures); // Actualiza el estado con los fixtures
+      const data = await response.json();
+      console.log('Datos recibidos:', data);
+  
+      if (data && data.fixtures) {
+        setFixtures(data.fixtures);
+        if (data.pagination && data.pagination.totalPages) {
+          setTotalPages(data.pagination.totalPages);
         } else {
-          setFixtures([]); // Si no es un array, asigna un array vacío
+          setTotalPages(1);
         }
-
-        // Actualiza las páginas totales
-        setTotalPages(data.pagination?.totalPages || 1); // Manejar el caso de que no haya totalPages
+      } else if (Array.isArray(data)) {
+        // Si data es un array de fixtures
+        setFixtures(data);
+        setTotalPages(1);
       } else {
-        console.error('Error fetching fixtures');
-        setFixtures([]); // Si ocurre un error, asegurarse de que fixtures sea un array vacío
+        console.error('No se encontraron fixtures en la respuesta');
+        setFixtures([]);
+        setTotalPages(1);
       }
     } catch (error) {
-      console.error('Error fetching fixtures:', error);
-      setFixtures([]); // En caso de error, asegúrate de que fixtures sea un array vacío
+      console.error('Error al obtener los fixtures:', error);
+      setFixtures([]);
+      setTotalPages(1);
     }
   };
 
+  // Utilizar useEffect para llamar a fetchFixtures cuando page cambie
   useEffect(() => {
-    fetchFixtures(); // Llama a la API cuando cambian los filtros o la página
-  }, [country, fromDate, toDate, page]);
+    fetchFixtures();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setPage(1);
+    fetchFixtures();
+  };
 
   const handleFixtureClick = (fixture) => {
     navigate(`/match/${fixture.fixture.id}`, { state: { fixture } });
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setPage(1); // Resetea la página a 1 al hacer una nueva búsqueda
-    fetchFixtures(); // Llama a la API después de la búsqueda
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
   };
 
   return (
@@ -88,22 +106,38 @@ const Fixtures = () => {
         <ul className="fixtures-list">
           {fixtures.length > 0 ? (
             fixtures.map((fixture, index) => (
-              <li key={index} className="fixture-item" onClick={() => handleFixtureClick(fixture)}>
-                <p>{fixture.teams.away.name} vs {fixture.teams.home.name}</p>
-                <p>{fixture.fixture.date}</p>
+              <li
+                key={index}
+                className="fixture-item"
+                onClick={() => handleFixtureClick(fixture)}
+              >
+                <p>
+                  {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
+                </p>
+                <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
               </li>
             ))
           ) : (
-            <p>No se encontraron partidos.</p> // Mensaje cuando no hay partidos
+            <p>No se encontraron partidos.</p>
           )}
         </ul>
       </div>
-      <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page === 1}>Anterior</button>
-        <span>Página {page} de {totalPages}</span>
-        <button onClick={() => setPage(page + 1)} disabled={page === totalPages}>Siguiente</button>
-      </div>
-      <button className="back-button" onClick={() => navigate('/')}>Volver al inicio</button>
+      {fixtures.length > 0 && (
+        <div className="pagination">
+          <button onClick={handlePrevPage} disabled={page === 1}>
+            Anterior
+          </button>
+          <span>
+            Página {page} de {totalPages}
+          </span>
+          <button onClick={handleNextPage} disabled={page === totalPages}>
+            Siguiente
+          </button>
+        </div>
+      )}
+      <button className="back-button" onClick={() => navigate('/')}>
+        Volver al inicio
+      </button>
     </div>
   );
 };
