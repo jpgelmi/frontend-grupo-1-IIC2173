@@ -35,4 +35,6 @@ jobs:
         run: npm install -g lighthouse
 
       - name: Run Lighthouse
-        run: lighthouse http://arquisisproject.me --output=json --output-path=./lighthouse-results.json
+        run: |
+         npm install -g lighthouse
+         lighthouse http://arquisisproject.me --headless --output=json --output-path=./lighthouse-results.json
