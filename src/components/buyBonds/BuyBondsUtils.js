@@ -2,12 +2,6 @@ const API_URL = 'http://localhost:3000';
 
 export const createBuyRequest = async (fixtureId, userId, quantity, price, betType) => {
     try {
-        console.log('createBuyRequest');
-        console.log('fixtureId', fixtureId);
-        console.log('userId', userId);
-        console.log('quantity', quantity);
-        console.log('price', price);
-        console.log('betType', betType);
         const response = await fetch(`${API_URL}/buyRequest`, {
         method: 'POST',
         headers: {
@@ -29,3 +23,68 @@ export const createBuyRequest = async (fixtureId, userId, quantity, price, betTy
         return false;
     }
     };
+
+export const checkAmountAvailable = async (userId, amount) => {
+    try {
+        const response = await fetch(`${API_URL}/users/isAmountAvailable`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: userId, amount }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error checking amount availability');
+        }
+        const data = await response.json();
+        return data.isAvailable;
+    } catch (error) {
+        console.error('Error checking amount availability:', error);
+        return false;
+    }
+}
+
+// Funcion que resta los bonos disponibles de un bono con la solicitud /restarBono
+export const restarBono = async (fixtureId, quantity) => {
+    try {
+        const response = await fetch(`${API_URL}/bonos/restarBono`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fixtureId, quantity }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error checking amount availability');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error checking amount availability:', error);
+        return false;
+    }
+}
+
+// Funcion que resta los fondos de un usuario con la solicitud /users/discountAmount
+export const discountAmount = async (userId, amount) => {
+    try {
+        const response = await fetch(`${API_URL}/users/discountAmount`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: userId, amount: amount }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error checking amount availability');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error checking amount availability:', error);
+        return false;
+    }
+}

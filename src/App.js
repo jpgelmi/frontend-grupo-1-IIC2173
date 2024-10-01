@@ -21,7 +21,7 @@ function App() {
         <Route path="/wallet/*" element={<Wallet userId={userId} balance={balance} setBalance={setBalance} userName={userName} setUserName={setUserName} />} />
         <Route path="/fixtures" element={<Fixtures />} />
         <Route path="/match/:id" element={<FixtureDetails />} />
-        <Route path="/buy-bonds" element={<BuyBonds userId={userId} />} />
+        <Route path="/buy-bonds" element={<BuyBonds userId={userId} balance={balance} setBalance={setBalance} />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>
