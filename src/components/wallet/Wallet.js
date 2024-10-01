@@ -5,7 +5,7 @@ import WalletReload from './WalletReload';
 import AddFunds from './AddFunds';
 
 const Wallet = () => {
-  const userId = '1'; // Reemplaza con el ID del usuario actual
+  const userId = '2'; // Reemplaza con el ID del usuario actual
   const [balance, setBalance] = useState(0);
   const [userName, setUserName] = useState('');
 

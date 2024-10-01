@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getBalance } from './WalletUtils';
 import '../style/Wallet.css';
 
-const WalletBalance = ({ userId, balance, setBalance, userName, setUserName  }) => {
+const WalletBalance = ({ userId, balance, setBalance, userName, setUserName }) => {
   useEffect(() => {
     getBalance(userId, setBalance, setUserName);
   }, [userId, setBalance]);

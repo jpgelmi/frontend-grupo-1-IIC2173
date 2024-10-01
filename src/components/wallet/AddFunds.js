@@ -4,7 +4,6 @@ import { addAmount } from './WalletUtils';
 import '../style/Wallet.css';
 
 
-
 const AddFunds = ({ userId, balance, setBalance, userName }) => {
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ const AddFunds = ({ userId, balance, setBalance, userName }) => {
   };
 
   return (
+    console.log(userName),
     <div className="wallet-container">
       <h2>Cargar wallet de {userName}</h2>
       <form onSubmit={handleAddFunds}>
