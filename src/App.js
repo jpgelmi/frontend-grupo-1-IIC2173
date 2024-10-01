@@ -7,6 +7,7 @@ import AddFunds from './components/wallet/AddFunds';
 import Fixtures from './components/fixtures/Fixtures';
 import FixtureDetails from './components/fixtures/FixtureDetails';
 import BuyBonds from './components/buyBonds/BuyBonds';
+import BuyRequests from './components/buyBonds/BuyRequests';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -22,7 +23,8 @@ function App() {
         <Route path="/fixtures" element={<Fixtures />} />
         <Route path="/match/:id" element={<FixtureDetails />} />
         <Route path="/buy-bonds" element={<BuyBonds userId={userId} balance={balance} setBalance={setBalance} />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/buy-requests/:userId" element={<BuyRequests />} />
+        <Route path="/" element={<Home userId={userId} />} />
       </Routes>
     </Router>
   );

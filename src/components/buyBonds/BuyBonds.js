@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBuyRequest, checkAmountAvailable, restarBono, discountAmount } from './BuyBondsUtils';
+import { createBuyRequest, checkAmountAvailable, restarBono, discountAmount, sumarBono, createBrokerRequest } from './BuyBondsUtils';
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 
@@ -15,52 +15,69 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
     navigate(-1); // Navega a la vista anterior
   };
 
+  const throwAlert = (title, text, icon) => {
+      Swal.fire({
+        title,
+        text,
+        icon,
+        confirmButtonText: 'OK',
+      });
+  }
+
+  const noFundsAlert = () => {
+    Swal.fire({
+      title: 'Fondos insuficientes',
+      text: 'No tienes suficientes fondos. ¿Quieres cargar tu billetera?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Cargar billetera',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/wallet/add-funds'); // Navega a la página de la billetera
+      }
+    });
+  }
+
+  const successAlert = () => {
+    Swal.fire({
+      title: 'Solicitud enviada con éxito',
+      text: 'En unos minutos confirmaremos la compra, debes revisar en tus solicitudes de compra si fue exitosa o no. Recibirás el dinero de vuelta en tu cuenta en caso de no ser exitosa la compra.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    }).then(() => {
+      navigate(-1);
+    });
+  }
+
   const handleBuy = async () => {
     if (numBonds <= bond) {
       try {
-        // Revisamos si hay suficientes fondos disponibles
+        // 1. Descontamos numBonos a los bonos temporalmente
+        await restarBono(fixtureId, numBonds);
+
+        // 2. Verificamos si el usuario tiene suficientes fondos
         const isAvailable = await checkAmountAvailable(userId, numBonds * 1000);
         if (!isAvailable) {
-          Swal.fire({
-            title: 'Fondos insuficientes',
-            text: 'No tienes suficientes fondos. ¿Quieres cargar tu billetera?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Cargar billetera',
-            cancelButtonText: 'Cancelar',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate('/wallet/add-funds'); // Navega a la página de la billetera
-            }
-          });
+          await sumarBono(fixtureId, numBonds);
+          noFundsAlert();
           return;
         }
-        await createBuyRequest(fixtureId, userId, numBonds, numBonds * 100, betType);
-        await restarBono(fixtureId, numBonds);
+        // 3. Se descuentan los fondos al usuario temporalmente
         await discountAmount(userId, numBonds * 1000);
+        // 4. Crear solicitud de compra
+         const requestId = await createBuyRequest(fixtureId, userId, numBonds, numBonds * 1000, betType);
+         console.log(requestId);
         setBalance(balance - numBonds * 1000);
-        Swal.fire({
-          title: 'Compra realizada con éxito',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        }).then(() => {
-          navigate(-1);
-        });
+        // Enviar solicitud al broker
+        createBrokerRequest({requestId, fixtureId, numBonds, betType});
+        successAlert();
       } catch (error) {
         console.error('Error al realizar la compra:', error);
-        Swal.fire({
-          title: 'Error al realizar la compra',
-          text: error.message,
-          icon: 'error',
-          confirmButtonText: 'OK',
-        });
+        throwAlert('Error', 'Ocurrió un error al realizar la compra', 'error');
       }
     } else {
-      Swal.fire({
-        title: 'No hay suficientes bonos disponibles',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
+      throwAlert('Error', 'No hay suficientes bonos disponibles', 'error');
     }
   };
 

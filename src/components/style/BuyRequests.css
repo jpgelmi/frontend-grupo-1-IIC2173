@@ -1,0 +1,41 @@
+/* BuyRequests.css */
+.buy-requests-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .buy-requests-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .buy-requests-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .buy-requests-container th,
+  .buy-requests-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .buy-requests-container th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .buy-requests-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .buy-requests-container tr:hover {
+    background-color: #ddd;
+  }
