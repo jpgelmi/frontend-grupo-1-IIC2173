@@ -1,16 +1,13 @@
-// components/Fixtures.js
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../style/Fixtures.css';
-
-const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getFixtures } from "../../api/axios";
+import "../style/Fixtures.css";
 
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
-  const [country, setCountry] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [country, setCountry] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [page, setPage] = useState(1);
   const [count] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
@@ -18,51 +15,48 @@ const Fixtures = () => {
 
   const fetchFixtures = async () => {
     try {
-      const queryParams = new URLSearchParams();
-      if (country) queryParams.append('country', country);
-      if (fromDate) queryParams.append('from', fromDate);
-      if (toDate) queryParams.append('to', toDate);
-      queryParams.append('page', page.toString());
-      queryParams.append('count', count.toString());
+      const response = await getFixtures(
+        country,
+        fromDate,
+        toDate,
+        page,
+        count
+      );
 
-      const response = await fetch(`${API_URL}/fixtures?${queryParams.toString()}`);
       if (response.status === 200) {
-        const data = await response.json();
-        console.log('Datos recibidos:', data);
-
-        if (data && data.fixtures) {
-          setFixtures(data.fixtures);
-          if (data.pagination && data.pagination.totalPages) {
-            setTotalPages(data.pagination.totalPages);
+        if (response.data.fixtures) {
+          setFixtures(response.data.fixtures);
+          if (response.data.pagination && response.data.pagination.totalPages) {
+            setTotalPages(response.data.pagination.totalPages);
           } else {
             setTotalPages(1);
           }
         } else {
-          console.error('No se encontraron fixtures en la respuesta');
+          console.error("No se encontraron fixtures en la respuesta");
           setFixtures([]);
           setTotalPages(1);
         }
       } else {
-        console.error('Error al obtener los fixtures');
+        console.error("Error al obtener los fixtures");
         setFixtures([]);
         setTotalPages(1);
       }
     } catch (error) {
-      console.error('Error al obtener los fixtures:', error);
+      console.error("Error al obtener los fixtures:", error);
       setFixtures([]);
       setTotalPages(1);
     }
   };
 
-  // Llamar a fetchFixtures cuando cambien page, country, fromDate o toDate
+  // Ejecuta fetchFixtures cada vez que la página cambie
   useEffect(() => {
     fetchFixtures();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, country, fromDate, toDate]);
+  }, [page]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setPage(1); // Reiniciar a la primera página al realizar una nueva búsqueda
+    setPage(1);  // Reiniciar a la página 1 para hacer la nueva búsqueda
+    fetchFixtures();
   };
 
   const handleFixtureClick = (fixture) => {
@@ -138,7 +132,7 @@ const Fixtures = () => {
           </button>
         </div>
       )}
-      <button className="back-button" onClick={() => navigate('/')}>
+      <button className="back-button" onClick={() => navigate("/")}>
         Volver al inicio
       </button>
     </div>
