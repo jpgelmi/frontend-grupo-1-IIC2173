@@ -6,6 +6,9 @@ import Home from './components/Home';
 import AddFunds from './components/wallet/AddFunds';
 import Fixtures from './components/fixtures/Fixtures';
 import FixtureDetails from './components/fixtures/FixtureDetails';
+import BuyBonds from './components/buyBonds/BuyBonds';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 function App() {
   const [balance, setBalance] = useState(0);
@@ -18,6 +21,7 @@ function App() {
         <Route path="/wallet/*" element={<Wallet userId={userId} balance={balance} setBalance={setBalance} userName={userName} setUserName={setUserName} />} />
         <Route path="/fixtures" element={<Fixtures />} />
         <Route path="/match/:id" element={<FixtureDetails />} />
+        <Route path="/buy-bonds" element={<BuyBonds userId={userId} balance={balance} setBalance={setBalance} />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>

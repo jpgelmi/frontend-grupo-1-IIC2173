@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Fixtures.css';
 
-const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
+const API_URL = 'http://localhost:3000';
 
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);

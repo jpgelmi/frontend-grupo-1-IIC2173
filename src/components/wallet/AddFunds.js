@@ -25,11 +25,13 @@ const AddFunds = ({ userId, balance, setBalance, userName }) => {
   };
 
   return (
-    console.log(userId),
+    // console.log(userId),
     <div className="wallet-container">
       <h2>Cargar wallet de {userName}</h2>
       <form onSubmit={handleAddFunds}>
         <div>
+          {/* Fondos disponibles */}
+          <p>Fondos disponibles: ${balance.toFixed(2)}</p>
           <label>Monto a cargar:</label>
           <input
             type="number"

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WalletBalance from './WalletBalance';
-import WalletReload from './WalletReload';
 import AddFunds from './AddFunds';
 
 const Wallet = ({ userId, balance, setBalance, userName, setUserName }) => {
