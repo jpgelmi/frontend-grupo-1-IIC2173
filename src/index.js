@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={process.env.ISSUE_BASE_URL} // Asegúrate de definir esta variable en tu .env
-      clientId={process.env.CLIENTID} // Asegúrate de definir esta variable en tu .env
+      domain={process.env.REACT_APP_ISSUE_BASE_URL} // Asegúrate de definir esta variable en tu .env
+      clientId={process.env.REACT_APP_CLIENT_ID} // Asegúrate de definir esta variable en tu .env
       redirectUri={window.location.origin} // URL de redirección después de iniciar sesión
     >
       <App />

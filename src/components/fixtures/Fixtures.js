@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Fixtures.css';
 
-const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
-
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
   const [country, setCountry] = useState('');
@@ -14,7 +12,7 @@ const Fixtures = () => {
 
   const fetchFixtures = async () => {
     try {
-      const response = await fetch(`${API_URL}/fixtures?country=${country}&date=${date}&page=${page}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/fixtures?country=${country}&date=${date}&page=${page}`);
       if (response.ok) {
         const data = await response.json();
         console.log('Fixtures:', data);

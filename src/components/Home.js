@@ -8,7 +8,7 @@ const Home = () => {
 
   const handleRegister = () => {
     // Redirigir a la URL de registro de Auth0
-    window.location.href = process.env.SIGN_UP_URL; // Asegúrate de que esté configurada correctamente
+    window.location.href = process.env.REACT_APP_SIGN_UP_URL; // Asegúrate de que esté configurada correctamente
   };
 
   return (

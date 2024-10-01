@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function AuthenticacionManage() {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const [message, setMessage] = useState('');
-
+  console.log("AUTH0", isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) {
       setMessage(`Bienvenido, ${user.name}`);

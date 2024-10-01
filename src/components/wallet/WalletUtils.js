@@ -1,8 +1,7 @@
-const API_URL = 'http://localhost:3000';
 
 export const isAmountAvailable = async (userId, amount) => {
   try {
-    const response = await fetch(`${API_URL}/users/isAmountAvailable`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/isAmountAvailable`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +24,7 @@ export const isAmountAvailable = async (userId, amount) => {
 
 export const deductAmount = async (userId, amount, setBalance) => {
   try {
-    const response = await fetch(`${API_URL}/users/discountAmount`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/discountAmount`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +50,7 @@ export const addAmount = async (userId, amount, setBalance) => {
   try {
     // console.log(userId);
     // console.log(amount);
-    const response = await fetch(`${API_URL}/users/addAmount/${userId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/addAmount/${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +75,7 @@ export const addAmount = async (userId, amount, setBalance) => {
 export const getBalance = async (userId, setBalance, setUserName) => {
     try {
         // console.log(userId);
-        const response = await fetch(`${API_URL}/balance/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/balance/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -95,7 +94,7 @@ export const getBalance = async (userId, setBalance, setUserName) => {
     }
 
     // Obtener el nombre de usuario
-    const usernameResponse = await fetch(`${API_URL}/userName/${userId}`, {
+    const usernameResponse = await fetch(`${process.env.REACT_APP_API_URL}/userName/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

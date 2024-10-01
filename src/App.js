@@ -13,12 +13,15 @@ function App() {
   const [balance, setBalance] = useState(0);
   const [userName, setUserName] = useState('');
   const userId = '2'; // Reemplaza con el ID del usuario actual
+  console.log("Auth0 Domain:", process.env.REACT_APP_ISSUE_BASE_URL);
+  console.log("Auth0 Client ID:", process.env.REACT_APP_CLIENTID);
+  console.log("Sign Up URL:", process.env.REACT_APP_SIGN_UP_URL);
 
   return (
     <Auth0Provider
-      domain={process.env.ISSUE_BASE_URL} // Tu dominio de Auth0
-      clientId={process.env.CLIENTID} // Tu client ID de Auth0
-      redirectUri={window.location.origin} // URL de redirección después de iniciar sesión
+      domain={process.env.REACT_APP_ISSUE_BASE_URL} // Tu dominio de Auth0
+      clientId={process.env.REACT_APP_CLIENT_ID} // Tu client ID de Auth0
+      authorizationParams={{ redirect_uri: window.location.origin }}
     >
       <Router>
         <Routes>

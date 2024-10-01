@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../style/FixtureDetails.css';
 
-const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
-
-
 const FixtureDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,7 +12,7 @@ const FixtureDetails = () => {
   useEffect(() => {
     const fetchBono = async () => {
       try {
-        const response = await fetch(`${API_URL}/bonos/bonos/${fixture.fixture.id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/bonos/bonos/${fixture.fixture.id}`);
         if (response.ok) {
           const contentType = response.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
