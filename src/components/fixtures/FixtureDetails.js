@@ -73,15 +73,15 @@ const FixtureDetails = () => {
           <>
             <p>
               {fixture.teams.home.name} gana: {fixture.odds[0].values[0].odd}
-              <button className="button-buy" onClick={() => handleBuyBonds('home', fixture.teams.home.name, fixture.odds[0].values[0].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+              <button className="button-buy" onClick={() => handleBuyBonds('Home', fixture.teams.home.name, fixture.odds[0].values[0].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
               </p>
             <p>
               {fixture.teams.away.name} gana: {fixture.odds[0].values[2].odd}
-              <button className="button-buy" onClick={() => handleBuyBonds('away', fixture.teams.away.name, fixture.odds[0].values[2].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+              <button className="button-buy" onClick={() => handleBuyBonds('Away', fixture.teams.away.name, fixture.odds[0].values[2].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
             </p>
             <p>
               Empate: {fixture.odds[0].values[1].odd}
-              <button className="button-buy" onClick={() => handleBuyBonds('draw', 'Empate', fixture.odds[0].values[1].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+              <button className="button-buy" onClick={() => handleBuyBonds('Draw', 'Empate', fixture.odds[0].values[1].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
               </p>
           </>
         ) : (
