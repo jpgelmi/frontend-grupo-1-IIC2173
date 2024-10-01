@@ -14,7 +14,7 @@ export default function MinimalRegister() {
   const [showPassword, setShowPassword] = useState(false)
 
   const { setAuth, persist, setPersist } = useAuth();
-  const { navigate } = useNavigate()
+  const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || "/home";
   console.log(from);
