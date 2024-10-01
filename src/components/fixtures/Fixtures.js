@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios";
 import "../style/Fixtures.css";
 
+const API_URL = 'http://localhost:3000';
+
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
   const [country, setCountry] = useState("");

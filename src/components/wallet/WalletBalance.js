@@ -6,7 +6,7 @@ import '../style/Wallet.css';
 const WalletBalance = ({ userId, balance, setBalance, userName, setUserName }) => {
   useEffect(() => {
     getBalance(userId, setBalance, setUserName);
-  }, [userId, setBalance]);
+  }, [userId, setBalance, setUserName]);
 
   return (
     <div className="wallet-container">
