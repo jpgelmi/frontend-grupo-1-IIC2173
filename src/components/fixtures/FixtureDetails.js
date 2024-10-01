@@ -19,7 +19,7 @@ const FixtureDetails = () => {
   useEffect(() => {
     const fetchBono = async () => {
       try {
-        const response = await fetch(`${API_URL}/bonos/bonos/${fixture.fixture.id}`);
+        const response = await fetch(`${API_URL}/bonos/${fixture.fixture.id}`);
         if (response.ok) {
           const contentType = response.headers.get("content-type");
           if (contentType && contentType.includes("application/json")) {
