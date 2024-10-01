@@ -1,4 +1,7 @@
 const API_URL = 'http://localhost:3000';
+// Importamos desde el .env
+// const API_URL = process.env.BACK_URL;
+
 
 export const isAmountAvailable = async (userId, amount) => {
   try {
@@ -9,12 +12,12 @@ export const isAmountAvailable = async (userId, amount) => {
       },
       body: JSON.stringify({ id: userId, amount }),
     });
-
+    
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error || 'Error checking amount availability');
     }
-
+    
     const data = await response.json();
     return data.isAvailable;
   } catch (error) {
@@ -22,6 +25,7 @@ export const isAmountAvailable = async (userId, amount) => {
     return false;
   }
 };
+
 
 export const deductAmount = async (userId, amount, setBalance) => {
   try {
@@ -76,6 +80,7 @@ export const addAmount = async (userId, amount, setBalance) => {
 
 export const getBalance = async (userId, setBalance, setUserName) => {
     try {
+        console.log(API_URL);
         console.log(userId);
         const response = await fetch(`${API_URL}/balance/${userId}`, {
         method: 'GET',

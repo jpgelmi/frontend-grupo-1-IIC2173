@@ -12,6 +12,10 @@ const FixtureDetails = () => {
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
+    navigate('/buy-bonds', { state: { betType, teamName, odd, bond, fixtureId } });
+  };
+
   useEffect(() => {
     const fetchBono = async () => {
       try {
@@ -33,7 +37,7 @@ const FixtureDetails = () => {
         setLoading(false);
       }
     };
-  
+
     fetchBono();
   }, [fixture.id]);
   
@@ -67,9 +71,18 @@ const FixtureDetails = () => {
         <h3>Valores de apuestas</h3>
         {oddsAvailable ? (
           <>
-            <p>{fixture.teams.home.name} gana: {fixture.odds[0].values[0].odd}</p>
-            <p>{fixture.teams.away.name} gana: {fixture.odds[0].values[2].odd}</p>
-            <p>Empate: {fixture.odds[0].values[1].odd}</p>
+            <p>
+              {fixture.teams.home.name} gana: {fixture.odds[0].values[0].odd}
+              <button onClick={() => handleBuyBonds('home', fixture.teams.home.name, fixture.odds[0].values[0].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+              </p>
+            <p>
+              {fixture.teams.away.name} gana: {fixture.odds[0].values[2].odd}
+              <button onClick={() => handleBuyBonds('away', fixture.teams.away.name, fixture.odds[0].values[2].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+            </p>
+            <p>
+              Empate: {fixture.odds[0].values[1].odd}
+              <button onClick={() => handleBuyBonds('draw', 'Empate', fixture.odds[0].values[1].odd, bono.bonosDisponibles, fixture.fixture.id)}>Comprar bono</button>
+              </p>
           </>
         ) : (
           <p>Valores no disponibles</p>
