@@ -96,6 +96,7 @@ export default function MinimalRegister() {
 
         navigate(from, { replace: true });
       } else {
+        console.log(response)
         setErrMsg(response.response.data.message)
         errRef.current?.scrollIntoView()
       }
