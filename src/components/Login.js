@@ -9,6 +9,7 @@ export default function ModernLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/home";
+  console.log(from);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,7 @@ export default function ModernLogin() {
       setPersist(persistState === "true");
     }
   }, [setPersist]);
+
 
   const saveToLocalStorage = (key, value) => {
     localStorage.setItem(key, value);
@@ -45,8 +47,8 @@ export default function ModernLogin() {
         withCredentials: true,
       });
       if (response.status === 200) {
-        const { accessToken, roles, name, shortName } = response.data;
-        setAuth({ email, roles, accessToken, name, shortName });
+        const { accessToken, roles, name, email } = response.data;
+        setAuth({ email, roles, accessToken, name });
         saveToLocalStorage("accessToken", accessToken);
         saveToLocalStorage("persist", persist);
 

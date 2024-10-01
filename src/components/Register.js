@@ -3,6 +3,7 @@ import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import { postRegister } from '../api/axios'
 import useAuth from './hooks/useAuth'
 import { Link } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function MinimalRegister() {
   const [email, setEmail] = useState('')
@@ -12,10 +13,18 @@ export default function MinimalRegister() {
   const [errMsg, setErrMsg] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const { setAuth } = useAuth()
+  const { setAuth, persist, setPersist } = useAuth();
+  const { navigate } = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/home";
+  console.log(from);
   const userRef = useRef(null)
   const emailRef = useRef(null)
   const errRef = useRef(null)
+
+  const saveToLocalStorage = (key, value) => {
+    localStorage.setItem(key, value);
+  };
 
   useEffect(() => {
     if (userRef.current) {
@@ -73,14 +82,19 @@ export default function MinimalRegister() {
       )
 
       if (response.status === 201) {
-        const accessToken = response?.accessToken
+        const accessToken = response?.data?.accessToken
         const roles = response?.data?.roles
-        setAuth({ email, roles, accessToken, userName })
+        console.log(roles, accessToken, email, userName)
+        setAuth({ email, roles, accessToken, name: userName });
+
+        saveToLocalStorage("accessToken", accessToken);
+        saveToLocalStorage("persist", persist);
+
         setPassword("")
         setPassword2("")
         setEmail("")
 
-        window.location.href = "/home"
+        navigate(from, { replace: true });
       } else {
         setErrMsg(response.response.data.message)
         errRef.current?.scrollIntoView()

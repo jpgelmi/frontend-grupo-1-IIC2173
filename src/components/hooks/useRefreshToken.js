@@ -1,4 +1,4 @@
-import axios from "../api/axios";
+import axios from "../../api/axios";
 import useAuth from "./useAuth"
 
 function useRefreshToken() {
@@ -13,7 +13,7 @@ function useRefreshToken() {
                 email: response.data.email,
                 roles: response.data.roles,
                 accessToken: response.data.accessToken,
-                nombre: response.data.nombre}
+                name: response.data.nombre}
         })
         return response.data.accessToken;
     }
