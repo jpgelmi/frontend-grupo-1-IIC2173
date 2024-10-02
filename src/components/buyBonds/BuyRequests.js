@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getBuyRequestsByUser, getFixtureById } from './BuyBondsUtils.js';
+import { getBuyRequestsByUser, getFixtureById } from '../../api/axios.js';
 import { useParams, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import '../style/BuyRequests.css';
 
 const BuyRequests = () => {

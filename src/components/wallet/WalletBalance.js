@@ -1,12 +1,27 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getBalance } from './WalletUtils.js';
+import { getBalance, getUserName } from "../../api/axios.js";
+import useAuth from '../hooks/useAuth.js';
 import '../style/Wallet.css';
 
 const WalletBalance = ({ userId, balance, setBalance, userName, setUserName }) => {
+  const { auth } = useAuth();
+  const token = auth.accessToken;
+
   useEffect(() => {
-    getBalance(userId, setBalance, setUserName);
-  }, [userId, setBalance, setUserName]);
+    const fetchBalanceAndUser = async () => {
+      try {
+        const balance = await getBalance(token, userId);
+        const userName = await getUserName(token, userId);
+        setBalance(balance);
+        setUserName(userName);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchBalanceAndUser();
+  }, [token, userId, setBalance, setUserName]);
 
   return (
     <div className="wallet-container">
