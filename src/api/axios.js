@@ -202,8 +202,10 @@ export const postDiscountAmount = async (token, amount) => {
   }
 };
 
-export const getBuyRequestsByUser = async (token, userId) => {
-  const URL = `${BASE_URL}/buyRequest/${userId}`;
+export const getBuyRequestsByUser = async (token) => {
+  const URL = `${BASE_URL}/buyRequest`;
+  console.log('URL:', URL); 
+  console.log('Token:', token); 
   try {
     const response = await axios.get(URL, {
       headers: {
