@@ -79,9 +79,7 @@ export const getFixtures = async (token, country, fromDate, toDate, page, count)
 };
 export const postBuyBonds = async (
   token,
-  requestId,
   fixtureId,
-  userId,
   quantity,
   price,
   betType
@@ -91,9 +89,7 @@ export const postBuyBonds = async (
     const response = await axios.post(
       URL,
       JSON.stringify({
-        requestId,
         fixtureId,
-        userId,
         quantity,
         price,
         betType,
