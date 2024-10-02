@@ -112,13 +112,12 @@ export const postBuyBonds = async (
   }
 };
 
-export const postCheckAmountAvailable  = async (token, userId, amount) => {
-  const URL = `${BASE_URL}/users/isAmountAvailable`;
+export const postCheckAmountAvailable  = async (token, amount) => {
+  const URL = `${BASE_URL}/user/isAmountAvailable`;
   try {
     const response = await axios.post(
       URL,
       {
-        id: userId,
         amount,
       },
       {
@@ -184,13 +183,12 @@ export const postSumarBono = async (token, fixtureId, quantity) => {
   }
 };
 
-export const postDiscountAmount = async (token, userId, amount) => {
-  const URL = `${BASE_URL}/users/discountAmount`;
+export const postDiscountAmount = async (token, amount) => {
+  const URL = `${BASE_URL}/user/discountAmount`;
   try {
     const response = await axios.post(
       URL,
       {
-        id: userId,
         amount: amount,
       },
       {
