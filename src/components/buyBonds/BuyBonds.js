@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBuyRequest, checkAmountAvailable, restarBono, discountAmount, sumarBono, createBrokerRequest } from './BuyBondsUtils';
+import { createBrokerRequest } from './BuyBondsUtils.js';
+import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount} from '../../api/axios.js';
+import useAuth from "../hooks/useAuth.js";
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 
@@ -8,11 +10,14 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
   const [numBonds, setNumBonds] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
+
   const { betType, teamName, odd, bond, fixtureId } = location.state;
 
+  const { auth } = useAuth();
+  const token = auth.accessToken;
+
   const handleCancel = () => {
-    navigate(-1); // Navega a la vista anterior
+    navigate(-1);
   };
 
   const throwAlert = (title, text, icon) => {
@@ -34,7 +39,7 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/wallet/add-funds'); // Navega a la página de la billetera
+        navigate('/wallet'); // Navega a la página de la billetera
       }
     });
   }
@@ -53,24 +58,20 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
   const handleBuy = async () => {
     if (numBonds <= bond) {
       try {
-        // 1. Descontamos numBonos a los bonos temporalmente
-        await restarBono(fixtureId, numBonds);
+        await postRestarBono(token, fixtureId, numBonds);
 
-        // 2. Verificamos si el usuario tiene suficientes fondos
-        const isAvailable = await checkAmountAvailable(userId, numBonds * 1000);
+        const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
         if (!isAvailable) {
-          await sumarBono(fixtureId, numBonds);
+          await postSumarBono(token, fixtureId, numBonds);
           noFundsAlert();
           return;
         }
-        // 3. Se descuentan los fondos al usuario temporalmente
-        await discountAmount(userId, numBonds * 1000);
-        // 4. Crear solicitud de compra
-         const requestId = await createBuyRequest(fixtureId, userId, numBonds, numBonds * 1000, betType);
-         console.log(requestId);
+        await postDiscountAmount(token, numBonds * 1000);
+
+        const requestId = await postBuyBonds(token,fixtureId, numBonds, numBonds * 1000, betType);
         setBalance(balance - numBonds * 1000);
-        // Enviar solicitud al broker
-        createBrokerRequest({requestId, fixtureId, numBonds, betType});
+
+        createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});
         successAlert();
       } catch (error) {
         console.error('Error al realizar la compra:', error);

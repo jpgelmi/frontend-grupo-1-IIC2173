@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getBuyRequestsByUser, getFixtureById } from './BuyBondsUtils';
+import { getBuyRequestsByUser, getFixtureById } from '../../api/axios.js';
 import { useParams, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import useAuth from "../hooks/useAuth.js";
 import '../style/BuyRequests.css';
 
 const BuyRequests = () => {
@@ -10,15 +10,18 @@ const BuyRequests = () => {
   const [buyRequests, setBuyRequests] = useState([]);
   const [fixtures, setFixtures] = useState({});
 
+  const { auth } = useAuth();
+  const token = auth.accessToken;
+
   useEffect(() => {
     const fetchBuyRequests = async () => {
-      const data = await getBuyRequestsByUser(userId);
+      const data = await getBuyRequestsByUser(token);
       setBuyRequests(data);
 
       const fixtureDetails = {};
       for (const request of data) {
         if (!fixtureDetails[request.fixtureId]) {
-          const fixture = await getFixtureById(request.fixtureId);
+          const fixture = await getFixtureById(token, request.fixtureId);
           fixtureDetails[request.fixtureId] = fixture;
         }
       }
@@ -45,6 +48,7 @@ const BuyRequests = () => {
               <th>Precio</th>
               <th>Tipo de Apuesta</th>
               <th>Estado</th>
+              <th>Resultado</th> 
             </tr>
           </thead>
           <tbody>
@@ -62,13 +66,18 @@ const BuyRequests = () => {
                   <td>{request.price}</td>
                   <td>{request.betType}</td>
                   <td>{request.status}</td>
+                  <td>
+                    {request.status === 'correct' ? 'Acertado, dinero entregado en cuenta' : 
+                     request.status === 'wrong' ? 'No acertaste, suerte la próxima vez' : 
+                     'Pendiente'}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       )}
-       <button onClick={() => navigate('/')}>Volver al Inicio</button>
+       <button onClick={() => navigate('/home')}>Volver al Inicio</button>
     </div>
   );
 };

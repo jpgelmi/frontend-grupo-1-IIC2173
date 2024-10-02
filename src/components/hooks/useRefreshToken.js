@@ -1,5 +1,5 @@
-import axios from "../../api/axios";
-import useAuth from "./useAuth"
+import axios from "../../api/axios.js";
+import useAuth from "./useAuth.js"
 
 function useRefreshToken() {
     const {setAuth} = useAuth();
@@ -13,7 +13,7 @@ function useRefreshToken() {
                 email: response.data.email,
                 roles: response.data.roles,
                 accessToken: response.data.accessToken,
-                name: response.data.nombre}
+                name: response.data.name}
         })
         return response.data.accessToken;
     }
