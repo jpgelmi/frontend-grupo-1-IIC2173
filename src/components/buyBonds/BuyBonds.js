@@ -39,7 +39,7 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/wallet/add-funds'); // Navega a la página de la billetera
+        navigate('/wallet'); // Navega a la página de la billetera
       }
     });
   }
@@ -60,16 +60,15 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
       try {
         await postRestarBono(token, fixtureId, numBonds);
 
-        const isAvailable = await postCheckAmountAvailable(token, userId, numBonds * 1000);
+        const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
         if (!isAvailable) {
           await postSumarBono(token, fixtureId, numBonds);
           noFundsAlert();
           return;
         }
-        await postDiscountAmount(token, userId, numBonds * 1000);
+        await postDiscountAmount(token, numBonds * 1000);
 
-        const requestId = await postBuyBonds(token,fixtureId, userId, numBonds, numBonds * 1000, betType);
-         console.log(requestId);
+        const requestId = await postBuyBonds(token,fixtureId, numBonds, numBonds * 1000, betType);
         setBalance(balance - numBonds * 1000);
 
         createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios.js";
+import useAuth from "../hooks/useAuth.js";
 import "../style/Fixtures.css";
-
-const API_URL = 'http://localhost:3000';
 
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
@@ -15,9 +14,13 @@ const Fixtures = () => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
+  const { auth } = useAuth();
+  const token = auth.accessToken;
+
   const fetchFixtures = async () => {
     try {
       const response = await getFixtures(
+        token,
         country,
         fromDate,
         toDate,
@@ -134,7 +137,7 @@ const Fixtures = () => {
           </button>
         </div>
       )}
-      <button className="back-button" onClick={() => navigate("/")}>
+      <button className="back-button" onClick={() => navigate("/home")}>
         Volver al inicio
       </button>
     </div>

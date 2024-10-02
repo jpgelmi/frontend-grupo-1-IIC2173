@@ -1,4 +1,7 @@
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
 
@@ -54,7 +57,7 @@ export const postRegister = async (email, userName, password) => {
   }
 };
 
-export const getFixtures = async (country, fromDate, toDate, page, count) => {
+export const getFixtures = async (token, country, fromDate, toDate, page, count) => {
   const URL = `${BASE_URL}/fixtures`;
   const queryParams = new URLSearchParams();
 
@@ -68,7 +71,9 @@ export const getFixtures = async (country, fromDate, toDate, page, count) => {
     const response = await axios.get(`${URL}?${queryParams.toString()}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     });
     return response;
   } catch (error) {
@@ -77,21 +82,19 @@ export const getFixtures = async (country, fromDate, toDate, page, count) => {
 };
 export const postBuyBonds = async (
   token,
-  requestId,
   fixtureId,
-  userId,
   quantity,
   price,
   betType
 ) => {
   const URL = `${BASE_URL}/buyRequest`;
   try {
+    const requestId = uuidv4();
     const response = await axios.post(
       URL,
       JSON.stringify({
         requestId,
         fixtureId,
-        userId,
         quantity,
         price,
         betType,
@@ -110,13 +113,12 @@ export const postBuyBonds = async (
   }
 };
 
-export const postCheckAmountAvailable  = async (token, userId, amount) => {
-  const URL = `${BASE_URL}/users/isAmountAvailable`;
+export const postCheckAmountAvailable  = async (token, amount) => {
+  const URL = `${BASE_URL}/user/isAmountAvailable`;
   try {
     const response = await axios.post(
       URL,
       {
-        id: userId,
         amount,
       },
       {
@@ -182,13 +184,12 @@ export const postSumarBono = async (token, fixtureId, quantity) => {
   }
 };
 
-export const postDiscountAmount = async (token, userId, amount) => {
-  const URL = `${BASE_URL}/users/discountAmount`;
+export const postDiscountAmount = async (token, amount) => {
+  const URL = `${BASE_URL}/user/discountAmount`;
   try {
     const response = await axios.post(
       URL,
       {
-        id: userId,
         amount: amount,
       },
       {
@@ -206,8 +207,10 @@ export const postDiscountAmount = async (token, userId, amount) => {
   }
 };
 
-export const getBuyRequestsByUser = async (token, userId) => {
-  const URL = `${BASE_URL}/buyRequest/${userId}`;
+export const getBuyRequestsByUser = async (token) => {
+  const URL = `${BASE_URL}/buyRequest`;
+  console.log('URL:', URL); 
+  console.log('Token:', token); 
   try {
     const response = await axios.get(URL, {
       headers: {
@@ -284,6 +287,7 @@ export const getBono = async (token, fixtureId) => {
 export const getBonoByFixtureId = async (token, fixtureId) => {
   try {
     const URL = `${BASE_URL}/bonos/${fixtureId}`;
+    console.log(`${BASE_URL}/bonos/${fixtureId}`)
     const response = await axios.get(URL, {
       headers: {
         'Content-Type': 'application/json',
@@ -291,6 +295,7 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
       },
       withCredentials: true,
     });
+    console.log(response)
     return response;
 
   } catch (error) {
@@ -338,11 +343,11 @@ export const postDeductAmount = async (token, userId, amount) => {
   }
 };
 
-export const postAddAmount = async (token, userId, amount) => {
+export const postAddAmount = async (token, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/addAmount/${userId}`,
-      { amount: parseFloat(amount) },
+      `${BASE_URL}/user/addAmount`,
+      JSON.stringify({ amount: parseFloat(amount) }),
       {
         headers: {
           'Content-Type': 'application/json',
@@ -358,9 +363,9 @@ export const postAddAmount = async (token, userId, amount) => {
   }
 };
 
-export const getBalance = async (token, userId) => {
+export const getBalance = async (token) => {
   try {
-    const response = await axios.get(`${BASE_URL}/balance/${userId}`, {
+    const response = await axios.get(`${BASE_URL}/user/balance`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

@@ -22,17 +22,12 @@ const FixtureDetails = () => {
 
   useEffect(() => {
     const fetchBono = async () => {
+      console.log(fixture.fixture.id);
       try {
         const response = await getBonoByFixtureId(token, fixture.fixture.id);
 
         if (response.status === 200) {
-          const contentType = response.headers.get("content-type");
-          if (contentType && contentType.includes("application/json")) {
-            const data = await response.json();
-            setBono(data);
-          } else {
-            console.error("Error: La respuesta no es JSON");
-          }
+          setBono(response.data);
         } else {
           console.error("Error fetching bono");
         }
