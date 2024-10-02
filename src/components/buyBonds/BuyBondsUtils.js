@@ -14,14 +14,11 @@ export const formatDateToUTC = (date) => {
   };
 
 export const createBrokerRequest = async (token, request) => {
-    console.log('Request to broker', request);
     const fixture = await getFixtureById(token, request.fixtureId);
 
-    const teamName = request.betType === 'Home' ? fixture.teams.home.name : request.betType === 'Away' ? fixture.teams.away.name : '---';
-    console.log('teamName', teamName);
-    console.log("request", request.requestId    );    
+    const teamName = request.betType === 'Home' ? fixture.teams.home.name : request.betType === 'Away' ? fixture.teams.away.name : '---';  
     const params = {
-        "request_id": request.requestId,
+        "request_id": request.requestId.data.uuid,
         "group_id": 1,
         "fixture_id": request.fixtureId,
         "league_name": fixture.league.name,

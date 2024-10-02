@@ -1,4 +1,7 @@
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
 
@@ -86,9 +89,11 @@ export const postBuyBonds = async (
 ) => {
   const URL = `${BASE_URL}/buyRequest`;
   try {
+    const requestId = uuidv4();
     const response = await axios.post(
       URL,
       JSON.stringify({
+        requestId,
         fixtureId,
         quantity,
         price,

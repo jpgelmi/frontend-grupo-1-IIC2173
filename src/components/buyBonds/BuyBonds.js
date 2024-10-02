@@ -69,7 +69,6 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
         await postDiscountAmount(token, numBonds * 1000);
 
         const requestId = await postBuyBonds(token,fixtureId, numBonds, numBonds * 1000, betType);
-         console.log(requestId);
         setBalance(balance - numBonds * 1000);
 
         createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});

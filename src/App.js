@@ -64,7 +64,7 @@ function App() {
             />
           }
         />
-        <Route path="/buy-requests/:userId" element={<BuyRequests />} />
+        <Route path="/buy-requests" element={<BuyRequests />} />
         <Route path="/" element={<Home />} />
       </Route>
       </Route>
