@@ -45,6 +45,7 @@ const BuyRequests = () => {
               <th>Precio</th>
               <th>Tipo de Apuesta</th>
               <th>Estado</th>
+              <th>Resultado</th> 
             </tr>
           </thead>
           <tbody>
@@ -62,6 +63,11 @@ const BuyRequests = () => {
                   <td>{request.price}</td>
                   <td>{request.betType}</td>
                   <td>{request.status}</td>
+                  <td>
+                    {request.status === 'correct' ? 'Acertado, dinero entregado en cuenta' : 
+                     request.status === 'wrong' ? 'No acertaste, suerte la próxima vez' : 
+                     'Pendiente'}
+                  </td>
                 </tr>
               );
             })}
