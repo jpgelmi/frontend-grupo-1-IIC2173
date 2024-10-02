@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addAmount } from './WalletUtils.js';
+import { postAddAmount } from '../../api/axios.js';
+import useAuth from "../hooks/useAuth.js";
 import '../style/Wallet.css';
 
-
-const AddFunds = ({ userId, balance, setBalance, userName }) => {
-
+const AddFunds = ({userId, balance, setBalance, userName }) => {
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
+  const { auth } = useAuth();
+  const token = auth.accessToken;
+
   const handleAddFunds = async (e) => {
     e.preventDefault();
-    const newBalance = await addAmount(userId, amount, setBalance);
-    if (newBalance) {
-      setBalance(balance + parseFloat(amount));
+    try {
+      const newBalance = await postAddAmount(token, userId, amount);
+      setBalance(newBalance);
       navigate('/wallet');
-    } else {
+    } catch (error) {
       alert('Error adding funds');
     }
   };
@@ -25,12 +27,10 @@ const AddFunds = ({ userId, balance, setBalance, userName }) => {
   };
 
   return (
-    // console.log(userId),
     <div className="wallet-container">
       <h2>Cargar wallet de {userName}</h2>
       <form onSubmit={handleAddFunds}>
         <div>
-          {/* Fondos disponibles */}
           <p>Fondos disponibles: ${balance.toFixed(2)}</p>
           <label>Monto a cargar:</label>
           <input

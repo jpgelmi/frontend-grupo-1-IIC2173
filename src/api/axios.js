@@ -297,3 +297,95 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
     console.error('Error al obtener el bono:', error);
   }
 };
+
+export const postIsAmountAvailable = async (token, userId, amount) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/users/isAmountAvailable`,
+      { id: userId, amount },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data.isAvailable;
+  } catch (error) {
+    console.error('Error checking amount availability:', error);
+    throw error;
+  }
+};
+
+export const postDeductAmount = async (token, userId, amount) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/users/discountAmount`,
+      { id: userId, amount },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data.money;
+  } catch (error) {
+    console.error('Error deducting amount:', error);
+    throw error;
+  }
+};
+
+export const postAddAmount = async (token, userId, amount) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/users/addAmount/${userId}`,
+      { amount: parseFloat(amount) },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response.data.money;
+  } catch (error) {
+    console.error('Error adding amount:', error);
+    throw error;
+  }
+};
+
+export const getBalance = async (token, userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/balance/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data.balance;
+  } catch (error) {
+    console.error('Error fetching balance:', error);
+    throw error;
+  }
+};
+
+export const getUserName = async (token, userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/userName/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data.userName;
+  } catch (error) {
+    console.error('Error fetching username:', error);
+    throw error;
+  }
+};
