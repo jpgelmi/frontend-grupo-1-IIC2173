@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { AlertCircle, Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react";
-import useAuth from "./hooks/useAuth";
+import useAuth from "./hooks/useAuth.js";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { postLogin } from "../api/axios";
+import { postLogin } from "../api/axios.js";
 
 export default function ModernLogin() {
   const { auth, setAuth, persist, setPersist } = useAuth();

@@ -4,7 +4,7 @@ import './style/Home.css'; // Asegúrate de que la ruta sea correcta
 
 const Home = (userId) => {
   return (
-    console.log(userId),
+    console.log("User:", userId),
     <div className="home-container">
       <h2>CoolGoat</h2>
       <p>Bienvenido a CoolGoat!</p>

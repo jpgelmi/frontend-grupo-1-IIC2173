@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getBuyRequestsByUser, getFixtureById } from './BuyBondsUtils';
+import { getBuyRequestsByUser, getFixtureById } from './BuyBondsUtils.js';
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../style/BuyRequests.css';

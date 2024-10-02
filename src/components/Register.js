@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
-import { postRegister } from '../api/axios'
-import useAuth from './hooks/useAuth'
+import { postRegister } from '../api/axios.js'
+import useAuth from './hooks/useAuth.js'
 import { Link } from 'react-router-dom'
 import { useNavigate, useLocation } from 'react-router-dom'
 

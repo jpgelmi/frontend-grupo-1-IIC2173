@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addAmount } from './WalletUtils';
+import { addAmount } from './WalletUtils.js';
 import '../style/Wallet.css';
 
 

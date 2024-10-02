@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Wallet from "./components/wallet/Wallet";
-import Home from "./components/Home";
-import Fixtures from "./components/fixtures/Fixtures";
-import FixtureDetails from "./components/fixtures/FixtureDetails";
-import BuyBonds from "./components/buyBonds/BuyBonds";
-import LandingPage from "./components/LandingPage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Unauthorized from "./components/Unauthorized";
-import RequireAuth from "./components/RequireAuth";
-import BuyRequests from './components/buyBonds/BuyRequests';
-import PersistLogin from "./components/PersistLogin";
-import Missing from "./components/Missing";
+import Wallet from "./components/wallet/Wallet.js";
+import Home from "./components/Home.js";
+import Fixtures from "./components/fixtures/Fixtures.js";
+import FixtureDetails from "./components/fixtures/FixtureDetails.js";
+import BuyBonds from "./components/buyBonds/BuyBonds.js";
+import LandingPage from "./components/LandingPage.js";
+import Login from "./components/Login.js";
+import Register from "./components/Register.js";
+import Unauthorized from "./components/Unauthorized.js";
+import RequireAuth from "./components/RequireAuth.js";
+import BuyRequests from './components/buyBonds/BuyRequests.js';
+import PersistLogin from "./components/PersistLogin.js";
+import Missing from "./components/Missing.js";
 
 
 const ROLES = {

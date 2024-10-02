@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFixtures } from "../../api/axios";
+import { getFixtures } from "../../api/axios.js";
 import "../style/Fixtures.css";
 
 const API_URL = 'http://localhost:3000';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBuyRequest, checkAmountAvailable, restarBono, discountAmount, sumarBono, createBrokerRequest } from './BuyBondsUtils';
+import { createBuyRequest, checkAmountAvailable, restarBono, discountAmount, sumarBono, createBrokerRequest } from './BuyBondsUtils.js';
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 
