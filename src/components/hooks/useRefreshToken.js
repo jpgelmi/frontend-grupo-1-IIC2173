@@ -13,7 +13,7 @@ function useRefreshToken() {
                 email: response.data.email,
                 roles: response.data.roles,
                 accessToken: response.data.accessToken,
-                name: response.data.nombre}
+                name: response.data.name}
         })
         return response.data.accessToken;
     }

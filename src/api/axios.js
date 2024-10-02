@@ -54,7 +54,7 @@ export const postRegister = async (email, userName, password) => {
   }
 };
 
-export const getFixtures = async (country, fromDate, toDate, page, count) => {
+export const getFixtures = async (token, country, fromDate, toDate, page, count) => {
   const URL = `${BASE_URL}/fixtures`;
   const queryParams = new URLSearchParams();
 
@@ -68,7 +68,9 @@ export const getFixtures = async (country, fromDate, toDate, page, count) => {
     const response = await axios.get(`${URL}?${queryParams.toString()}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     });
     return response;
   } catch (error) {
@@ -284,6 +286,7 @@ export const getBono = async (token, fixtureId) => {
 export const getBonoByFixtureId = async (token, fixtureId) => {
   try {
     const URL = `${BASE_URL}/bonos/${fixtureId}`;
+    console.log(`${BASE_URL}/bonos/${fixtureId}`)
     const response = await axios.get(URL, {
       headers: {
         'Content-Type': 'application/json',
@@ -291,6 +294,7 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
       },
       withCredentials: true,
     });
+    console.log(response)
     return response;
 
   } catch (error) {
@@ -338,11 +342,11 @@ export const postDeductAmount = async (token, userId, amount) => {
   }
 };
 
-export const postAddAmount = async (token, userId, amount) => {
+export const postAddAmount = async (token, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/addAmount/${userId}`,
-      { amount: parseFloat(amount) },
+      `${BASE_URL}/user/addAmount`,
+      JSON.stringify({ amount: parseFloat(amount) }),
       {
         headers: {
           'Content-Type': 'application/json',
@@ -358,9 +362,9 @@ export const postAddAmount = async (token, userId, amount) => {
   }
 };
 
-export const getBalance = async (token, userId) => {
+export const getBalance = async (token) => {
   try {
-    const response = await axios.get(`${BASE_URL}/balance/${userId}`, {
+    const response = await axios.get(`${BASE_URL}/user/balance`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

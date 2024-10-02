@@ -4,7 +4,7 @@ import { postAddAmount } from '../../api/axios.js';
 import useAuth from "../hooks/useAuth.js";
 import '../style/Wallet.css';
 
-const AddFunds = ({userId, balance, setBalance, userName }) => {
+const AddFunds = ({balance, setBalance, userName }) => {
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const AddFunds = ({userId, balance, setBalance, userName }) => {
   const handleAddFunds = async (e) => {
     e.preventDefault();
     try {
-      const newBalance = await postAddAmount(token, userId, amount);
+      const newBalance = await postAddAmount(token, amount);
       setBalance(newBalance);
       navigate('/wallet');
     } catch (error) {
