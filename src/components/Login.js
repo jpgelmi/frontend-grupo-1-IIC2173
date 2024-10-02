@@ -5,11 +5,10 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { postLogin } from "../api/axios";
 
 export default function ModernLogin() {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { auth, setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/home";
-  console.log(from);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,10 +26,11 @@ export default function ModernLogin() {
     }
   }, [setPersist]);
 
-
-  const saveToLocalStorage = (key, value) => {
-    localStorage.setItem(key, value);
-  };
+  useEffect(() => {
+    if (auth?.accessToken) {
+      navigate(from, { replace: true });
+    }
+  }, [auth, navigate, from]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,14 +47,15 @@ export default function ModernLogin() {
         withCredentials: true,
       });
       if (response.status === 200) {
-        const { accessToken, roles, name, email } = response.data;
+        const { accessToken, roles, name } = response.data;
         setAuth({ email, roles, accessToken, name });
-        saveToLocalStorage("accessToken", accessToken);
-        saveToLocalStorage("persist", persist);
-
+        if (persist) {
+          localStorage.setItem("accessToken", accessToken);
+        } else {
+          localStorage.removeItem("accessToken");
+        }
         setEmail("");
         setPassword("");
-        navigate(from, { replace: true });
       } else {
         setError(response.response.data.message);
       }
@@ -188,9 +189,9 @@ export default function ModernLogin() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 ¿No tienes una cuenta?{' '}
-                <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                <Link to="/register" className="font-medium text-green-600 hover:text-green-500">
                   Regístrate aquí
-                </a>
+                </Link>
               </p>
             </div>
           </div>

@@ -12,10 +12,12 @@ import Register from "./components/Register";
 import Unauthorized from "./components/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import BuyRequests from './components/buyBonds/BuyRequests';
+import PersistLogin from "./components/PersistLogin";
+import Missing from "./components/Missing";
 
 
 const ROLES = {
-  user: 100,
+  user: 100
 };
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route element={<PersistLogin />}>
       <Route
         element={
           <RequireAuth
@@ -64,7 +67,8 @@ function App() {
         <Route path="/buy-requests/:userId" element={<BuyRequests />} />
         <Route path="/" element={<Home />} />
       </Route>
-
+      </Route>
+      <Route path="*" element={<Missing />} />
     </Routes>
   );
 }
