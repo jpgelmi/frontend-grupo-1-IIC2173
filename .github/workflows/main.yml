@@ -1,0 +1,49 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ master, main, develop, actions ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.11.1'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+  lighthouse:
+    runs-on: ubuntu-latest
+
+    services:
+      chrome:
+        image: 'browserless/chrome'
+        ports:
+          - 3000:3000
+        options: >-
+         --shm-size 2g
+        env:
+         CHROME_NO_SANDBOX: true
+         CHROME_DISABLE_SETUID_SANDBOX: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Lighthouse
+        run: node lighthouse.js

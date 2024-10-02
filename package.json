@@ -2,14 +2,15 @@
   "name": "frontend-grupo-1-iic2173",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.9.0",
     "lucide-react": "^0.446.0",
+    "lighthouse": "^12.2.1",
+    "puppeteer-core": "^23.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +45,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.25.1",
+    "@eslint/js": "^9.11.1",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.1",
+    "globals": "^15.9.0",
+    "jest": "^27.5.1",
+    "lighthouse": "^12.2.1",
     "tailwindcss": "^3.4.13"
   }
+  
 }
