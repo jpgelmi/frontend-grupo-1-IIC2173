@@ -262,3 +262,38 @@ export const postSendRequestToBroker = async (token, request) => {
     return false;
   }
 };
+
+export const getBono = async (token, fixtureId) => {
+  try {
+    const URL = `${BASE_URL}/bonos/${fixtureId}`;
+    const response = await axios.get(URL, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el bono:', error);
+    throw error;
+  }
+};
+
+export const getBonoByFixtureId = async (token, fixtureId) => {
+  try {
+    const URL = `${BASE_URL}/bonos/${fixtureId}`;
+    const response = await axios.get(URL, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+
+  } catch (error) {
+    console.error('Error al obtener el bono:', error);
+  }
+};
