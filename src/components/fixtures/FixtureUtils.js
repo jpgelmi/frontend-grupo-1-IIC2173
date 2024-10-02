@@ -3,7 +3,7 @@ const API_URL = 'http://localhost:3000'; // Reemplaza con la URL de tu backend
 export const getBono = async (fixtureId) => {
   try {
     // console.log("Buscando bonos");
-    const response = await fetch(`${API_URL}/bonos/bonos/${fixtureId}`, {
+    const response = await fetch(`${API_URL}/bonos/${fixtureId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
