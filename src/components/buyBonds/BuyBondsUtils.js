@@ -19,8 +19,9 @@ export const createBrokerRequest = async (token, request) => {
 
     const teamName = request.betType === 'Home' ? fixture.teams.home.name : request.betType === 'Away' ? fixture.teams.away.name : '---';
     console.log('teamName', teamName);
+    console.log("request", request.requestId    );    
     const params = {
-        "request_id": request._id,
+        "request_id": request.requestId,
         "group_id": 1,
         "fixture_id": request.fixtureId,
         "league_name": fixture.league.name,
