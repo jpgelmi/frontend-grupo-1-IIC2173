@@ -3,11 +3,11 @@ import lighthouse from 'lighthouse';
 
 (async () => {
   try {
-    const urlList = ['http://arquisisproject.me'];
+    const urlList = ['https://dacc169tplyal.cloudfront.net/'];
 
     for (const url of urlList) {
       const browser = await puppeteer.connect({
-        browserWSEndpoint: 'http://arquisisproject.me'
+        browserWSEndpoint: 'https://dacc169tplyal.cloudfront.net/'
       });
 
       console.log(url);
