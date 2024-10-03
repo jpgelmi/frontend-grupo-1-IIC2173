@@ -17,6 +17,7 @@ export const axiosPrivate = axios.create({
 
 export const postLogin = async (email, password) => {
   const LOGIN_URL = `${BASE_URL}/login`;
+  console.log('postLogin', LOGIN_URL)
 
   try {
     const response = await axios.post(
@@ -35,6 +36,7 @@ export const postLogin = async (email, password) => {
 
 export const postRegister = async (email, userName, password) => {
   const REGISTER_URL = `${BASE_URL}/register`;
+  console.log('register post', REGISTER_URL)
 
   try {
     const response = await axios.post(
