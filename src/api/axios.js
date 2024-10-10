@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
 
+
 export default axios.create({
   baseURL: BASE_URL,
 });
@@ -82,6 +83,7 @@ export const getFixtures = async (token, country, fromDate, toDate, page, count)
     return error;
   }
 };
+
 export const postBuyBonds = async (
   token,
   fixtureId,
