@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBrokerRequest } from './BuyBondsUtils.js';
-import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount} from '../../api/axios.js';
+import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount, commitTransaction} from '../../api/axios.js';
 import useAuth from "../hooks/useAuth.js";
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
+
 
 const BuyBonds = ({ userId, balance, setBalance }) => {
   const [numBonds, setNumBonds] = useState(1);
@@ -60,19 +61,45 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
       try {
         await postRestarBono(token, fixtureId, numBonds);
 
-        const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
-        if (!isAvailable) {
-          await postSumarBono(token, fixtureId, numBonds);
-          noFundsAlert();
-          return;
-        }
-        await postDiscountAmount(token, numBonds * 1000);
+        // const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
+        // if (!isAvailable) {
+        //   await postSumarBono(token, fixtureId, numBonds);
+        //   noFundsAlert();
+        //   return;
+        // }
 
-        const requestId = await postBuyBonds(token,fixtureId, numBonds, numBonds * 1000, betType);
-        setBalance(balance - numBonds * 1000);
+        // await postDiscountAmount(token, numBonds * 1000);
 
-        createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});
-        successAlert();
+        // Crear solicitud de compra
+        const trx = await postBuyBonds(token, fixtureId, numBonds, numBonds * 1000, betType);
+        // console.log('trx:', trx.data);
+        // setBalance(balance - numBonds * 1000);
+
+        // createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});
+
+        const { url, token: token_ws } = trx.data;
+        // console.log('URL:', url);
+        // console.log('Token_ws:', token_ws);
+        // console.log('Token:', token);
+
+
+        // Crear un formulario dinámico
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        // Crear un campo de entrada para el token
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'token_ws';
+        input.value = token_ws;
+        form.appendChild(input);
+
+        // Agregar el formulario al cuerpo del documento y enviarlo
+        document.body.appendChild(form);
+        form.submit();
+
+        // successAlert();
       } catch (error) {
         console.error('Error al realizar la compra:', error);
         throwAlert('Error', 'Ocurrió un error al realizar la compra', 'error');

@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
+// const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
 
 
 export default axios.create({
@@ -102,6 +103,32 @@ export const postBuyBonds = async (
         quantity,
         price,
         betType,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const commitTransaction = async ({token, token_ws}) => {
+  const URL = `${BASE_URL}/buyRequest/commit`;
+  // console.log('commitTransaction', URL)
+  // console.log('token_ws', token_ws)
+  // console.log('token', token)
+
+  try {
+    const response = await axios.post(
+      URL,
+      JSON.stringify({
+        token_ws,
       }),
       {
         headers: {
