@@ -59,7 +59,7 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
   const handleBuy = async () => {
     if (numBonds <= bond) {
       try {
-        await postRestarBono(token, fixtureId, numBonds);
+        // await postRestarBono(token, fixtureId, numBonds);
 
         // const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
         // if (!isAvailable) {
@@ -71,13 +71,19 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
         // await postDiscountAmount(token, numBonds * 1000);
 
         // Crear solicitud de compra
-        const trx = await postBuyBonds(token, fixtureId, numBonds, numBonds * 1000, betType);
-        // console.log('trx:', trx.data);
+        // La respuesta es el trx y la solicitud de compra
+        const data = await postBuyBonds(token, fixtureId, numBonds, numBonds * 1000, betType);
+        console.log('data:', data.data);
+        const trx = data.data.transaction;
+        const request = data.data.buyRequest;
+        console.log('trx:', trx);
+        console.log('Request:', request);
         // setBalance(balance - numBonds * 1000);
+        const wallet = false;
 
-        // createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});
+        createBrokerRequest(token, {request, fixtureId, numBonds, betType, wallet});
 
-        const { url, token: token_ws } = trx.data;
+        const { token: token_ws, url } = trx;
         // console.log('URL:', url);
         // console.log('Token_ws:', token_ws);
         // console.log('Token:', token);
