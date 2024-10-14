@@ -61,3 +61,10 @@
   .button-group button {
     flex: 1;
   }
+
+  button:disabled {
+    background-color: #555;
+    color: #fff;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }

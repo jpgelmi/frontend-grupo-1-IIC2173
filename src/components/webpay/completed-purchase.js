@@ -18,9 +18,9 @@ const CompletedPurchase = () => {
         const token_ws = searchParams.get('token_ws');
         console.log("Token_ws:");
         console.log(token_ws);
-        console.log("Token:");
-        console.log(token);
-        const response = await commitTransaction({ token, token_ws });
+        const webpay = true;
+        const buyRequestId = -1;
+        const response = await commitTransaction({ token, token_ws, webpay, buyRequestId });
         console.log("Respuesta del back:");
         console.log(response);
         setData(response.data);

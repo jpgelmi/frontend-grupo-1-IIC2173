@@ -118,7 +118,7 @@ export const postBuyBonds = async (
   }
 };
 
-export const commitTransaction = async ({token, token_ws}) => {
+export const commitTransaction = async ({token, token_ws, webpay, buyRequestId}) => {
   const URL = `${BASE_URL}/buyRequest/commit`;
   // console.log('commitTransaction', URL)
   // console.log('token_ws', token_ws)
@@ -129,6 +129,8 @@ export const commitTransaction = async ({token, token_ws}) => {
       URL,
       JSON.stringify({
         token_ws,
+        webpay,
+        buyRequestId
       }),
       {
         headers: {

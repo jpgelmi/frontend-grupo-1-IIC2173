@@ -69,6 +69,7 @@ const BuyRequests = () => {
                   <td>
                     {request.status === 'correct' ? 'Acertado, dinero entregado en cuenta' : 
                      request.status === 'wrong' ? 'No acertaste, suerte la próxima vez' : 
+                     request.status === 'rejected' ? 'Compra anulada' : 
                      'Pendiente'}
                   </td>
                 </tr>

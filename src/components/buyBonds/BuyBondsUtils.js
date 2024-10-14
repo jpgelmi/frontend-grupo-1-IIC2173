@@ -27,7 +27,7 @@ export const createBrokerRequest = async (token, request) => {
         "round": fixture.league.round,
         "date": fixture.date,
         "result": teamName,
-        "deposit_token": "",
+        "deposit_token": request.token_ws,
         "datetime": formatDateToUTC(new Date()),
         "wallet": request.wallet,
         "quantity": request.numBonds,

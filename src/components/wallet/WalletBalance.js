@@ -31,7 +31,8 @@ const WalletBalance = ({ userId, balance, setBalance }) => {
       <p>Fondos disponibles: ${balance.toFixed(2)}</p>
       <div className="button-group">
         <Link to="/wallet/add-funds">
-          <button>Cargar dinero</button>
+        {/* Desactivamos el botón de cargar dinero */}
+          <button type="button" disabled>Cargar fondos</button>
         </Link>
         <Link to="/home">
           <button type="button">Volver al inicio</button>
