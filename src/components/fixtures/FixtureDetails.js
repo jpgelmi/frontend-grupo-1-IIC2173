@@ -13,6 +13,7 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
+<<<<<<< HEAD
   // Obtener el Access Token de Auth0
   useEffect(() => {
     const getToken = async () => {
@@ -28,6 +29,10 @@ const FixtureDetails = () => {
 
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
+=======
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
+>>>>>>> e78913a (cambios auth0)
 
   const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
     navigate("/buy-bonds", {

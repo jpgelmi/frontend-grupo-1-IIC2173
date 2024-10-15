@@ -14,10 +14,14 @@ root.render(
     <Auth0Provider
       domain={domain}
       clientId={clientId}
+<<<<<<< HEAD
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: "https://dev-8gmwjdpfjujgf0mi.us.auth0.com/api/v2/",
       }}
+=======
+      redirectUri={window.location.origin}
+>>>>>>> e78913a (cambios auth0)
     >
     <BrowserRouter>
         <Routes>

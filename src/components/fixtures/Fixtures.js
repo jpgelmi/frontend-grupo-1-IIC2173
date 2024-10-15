@@ -16,6 +16,7 @@ const Fixtures = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState("");
 
+<<<<<<< HEAD
   // Obtención del Access Token
   useEffect(() => {
     const getToken = async () => {
@@ -31,6 +32,10 @@ const Fixtures = () => {
     };
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
+=======
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
+>>>>>>> e78913a (cambios auth0)
 
   // Función para obtener los fixtures
   const fetchFixtures = async () => {

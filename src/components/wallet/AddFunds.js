@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postAddAmount } from "../../api/axios.js";
 import "../style/Wallet.css";
+=======
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { postAddAmount } from '../../api/axios.js';
+import '../style/Wallet.css';
+>>>>>>> e78913a (cambios auth0)
 import { useAuth0 } from "@auth0/auth0-react";
 
 const AddFunds = () => {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState("");
   const [balance, setBalance] = useState(0);
@@ -26,6 +34,10 @@ const AddFunds = () => {
 
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
+=======
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
+>>>>>>> e78913a (cambios auth0)
 
   const handleAddFunds = async (e) => {
     e.preventDefault();
