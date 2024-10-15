@@ -14,7 +14,7 @@ import RequireAuth from "./components/RequireAuth.js";
 import BuyRequests from './components/buyBonds/BuyRequests.js';
 import PersistLogin from "./components/PersistLogin.js";
 import Missing from "./components/Missing.js";
-import CompletedPurchase from './components/webpay/completed-purchase.js';
+import CompletedPurchase from './components/webpay/CompletedPurchase.js';
 
 
 
@@ -33,7 +33,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route path="/completed-purchase" element={<CompletedPurchase />} />
       <Route element={<PersistLogin />}>
       <Route
         element={
@@ -43,6 +42,7 @@ function App() {
         }
       >
         <Route path="/home" element={<Home />} />
+        <Route path="/completed-purchase" element={<CompletedPurchase />} />
         <Route
           path="/wallet/*"
           element={

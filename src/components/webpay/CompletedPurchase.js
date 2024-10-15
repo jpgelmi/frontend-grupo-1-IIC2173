@@ -4,30 +4,36 @@ import { commitTransaction } from '../../api/axios.js';
 import useAuth from "../hooks/useAuth.js";
 
 const CompletedPurchase = () => {
-  const navigate = useNavigate();
+
+
   const [searchParams] = useSearchParams();
+  console.log("Search params:");
+  console.log(searchParams);
+  const token_ws = searchParams.get('token_ws');
+  console.log("Token_ws:");
+  console.log(token_ws);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   const { auth } = useAuth();
   const token = auth.accessToken;
+  console.log("Token:");
+  console.log(auth);
+  console.log(token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token_ws = searchParams.get('token_ws');
-        console.log("Token_ws:");
-        console.log(token_ws);
         const webpay = true;
         const buyRequestId = -1;
-        const response = await commitTransaction({ token, token_ws, webpay, buyRequestId });
+        // const response = await commitTransaction({ token, token_ws, webpay, buyRequestId });
         console.log("Respuesta del back:");
-        console.log(response);
-        setData(response.data);
+        // console.log(response);
+        // setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     };
 

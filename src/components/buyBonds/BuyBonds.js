@@ -16,6 +16,7 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
 
   const { auth } = useAuth();
   const token = auth.accessToken;
+  console.log(token);
 
   const handleCancel = () => {
     navigate(-1);
