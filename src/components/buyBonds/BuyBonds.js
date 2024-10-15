@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBrokerRequest } from './BuyBondsUtils.js';
 import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount} from '../../api/axios.js';
-import useAuth from "../hooks/useAuth.js";
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const BuyBonds = ({ userId, balance, setBalance }) => {
   const [numBonds, setNumBonds] = useState(1);
@@ -13,8 +13,8 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
 
   const { betType, teamName, odd, bond, fixtureId } = location.state;
 
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  const { user, isAuthenticated } = useAuth0();
+  const token = "Bearer"
 
   const handleCancel = () => {
     navigate(-1);

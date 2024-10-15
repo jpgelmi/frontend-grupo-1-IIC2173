@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getBonoByFixtureId } from "../../api/axios.js";
 import "../style/FixtureDetails.css";
-import useAuth from "../hooks/useAuth.js";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const FixtureDetails = () => {
   const location = useLocation();
@@ -11,8 +11,8 @@ const FixtureDetails = () => {
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
 
   const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
     navigate("/buy-bonds", {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios.js";
-import useAuth from "../hooks/useAuth.js";
 import "../style/Fixtures.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
@@ -14,8 +14,8 @@ const Fixtures = () => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
 
   const fetchFixtures = async () => {
     try {

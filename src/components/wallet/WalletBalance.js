@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getBalance, getUserName } from "../../api/axios.js";
-import useAuth from '../hooks/useAuth.js';
 import '../style/Wallet.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const WalletBalance = ({ userId, balance, setBalance }) => {
-  const { auth } = useAuth();
-  const token = auth.accessToken;
-  const userName = auth.name;
-
-  console.log(auth);
-  console.log(userName);
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
+  const userName = "";
 
   useEffect(() => {
     const fetchBalanceAndUser = async () => {

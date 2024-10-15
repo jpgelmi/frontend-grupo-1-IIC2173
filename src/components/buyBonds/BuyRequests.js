@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getBuyRequestsByUser, getFixtureById } from '../../api/axios.js';
 import { useParams, useNavigate } from 'react-router-dom';
-import useAuth from "../hooks/useAuth.js";
 import '../style/BuyRequests.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const BuyRequests = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [buyRequests, setBuyRequests] = useState([]);
   const [fixtures, setFixtures] = useState({});
-
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  
+  const { user, isAuthenticated } = useAuth0();
+  const token = ""
 
   useEffect(() => {
     const fetchBuyRequests = async () => {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAddAmount } from '../../api/axios.js';
-import useAuth from "../hooks/useAuth.js";
 import '../style/Wallet.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AddFunds = ({balance, setBalance, userName }) => {
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  const { user, isAuthenticated } = useAuth0();
+  const token = "";
 
   const handleAddFunds = async (e) => {
     e.preventDefault();
