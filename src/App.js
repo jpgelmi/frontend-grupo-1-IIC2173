@@ -11,18 +11,14 @@ import Unauthorized from "./components/Unauthorized.js";
 import BuyRequests from "./components/buyBonds/BuyRequests.js";
 import Missing from "./components/Missing.js";
 import LoginBotton from "./components/LoginButton.js";
-import LogoutButton from "./components/LogoutButton.js";
-import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
   const [balance, setBalance] = useState(0);
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("3");
 
-  const { isLoading, error } = useAuth0();
-
   return (
-    //Incluir spinner de carga
+
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<LoginBotton />} />
