@@ -13,14 +13,28 @@ const Fixtures = () => {
   const [count] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [accessToken, setAccessToken] = useState('');
 
-  const { user, isAuthenticated } = useAuth0();
-  const token = "";
+  useEffect(() => {
+    const getToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+        } catch (error) {
+          console.error('Error obteniendo el Access Token:', error);
+        }
+      }
+    };
+
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   const fetchFixtures = async () => {
     try {
       const response = await getFixtures(
-        token,
+        accessToken,
         country,
         fromDate,
         toDate,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAddAmount } from '../../api/axios.js';
 import '../style/Wallet.css';
@@ -8,13 +8,28 @@ const AddFunds = ({balance, setBalance, userName }) => {
   const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
-  const { user, isAuthenticated } = useAuth0();
-  const token = "";
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    const getToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+        } catch (error) {
+          console.error('Error obteniendo el Access Token:', error);
+        }
+      }
+    };
+
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleAddFunds = async (e) => {
     e.preventDefault();
     try {
-      const newBalance = await postAddAmount(token, amount);
+      const newBalance = await postAddAmount(accessToken, amount);
       setBalance(newBalance);
       navigate('/wallet');
     } catch (error) {

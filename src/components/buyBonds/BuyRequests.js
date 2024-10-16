@@ -9,19 +9,35 @@ const BuyRequests = () => {
   const navigate = useNavigate();
   const [buyRequests, setBuyRequests] = useState([]);
   const [fixtures, setFixtures] = useState({});
-  
-  const { user, isAuthenticated } = useAuth0();
-  const token = ""
+
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    const getToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+        } catch (error) {
+          console.error('Error obteniendo el Access Token:', error);
+        }
+      }
+    };
+
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
+
 
   useEffect(() => {
     const fetchBuyRequests = async () => {
-      const data = await getBuyRequestsByUser(token);
+      const data = await getBuyRequestsByUser(accessToken);
       setBuyRequests(data);
 
       const fixtureDetails = {};
       for (const request of data) {
         if (!fixtureDetails[request.fixtureId]) {
-          const fixture = await getFixtureById(token, request.fixtureId);
+          const fixture = await getFixtureById(accessToken, request.fixtureId);
           fixtureDetails[request.fixtureId] = fixture;
         }
       }

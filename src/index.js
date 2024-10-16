@@ -16,6 +16,7 @@ root.render(
       clientId={clientId}
       authorizationParams={{
         redirect_uri: window.location.origin,
+        audience: "https://dev-8gmwjdpfjujgf0mi.us.auth0.com/api/v2/",
       }}
     >
     <BrowserRouter>

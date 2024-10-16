@@ -10,9 +10,23 @@ const FixtureDetails = () => {
   const { fixture } = location.state || {};
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [accessToken, setAccessToken] = useState('');
 
-  const { user, isAuthenticated } = useAuth0();
-  const token = "";
+  useEffect(() => {
+    const getToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+        } catch (error) {
+          console.error('Error obteniendo el Access Token:', error);
+        }
+      }
+    };
+
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
     navigate("/buy-bonds", {
@@ -24,7 +38,7 @@ const FixtureDetails = () => {
     const fetchBono = async () => {
       console.log(fixture.fixture.id);
       try {
-        const response = await getBonoByFixtureId(token, fixture.fixture.id);
+        const response = await getBonoByFixtureId(accessToken, fixture.fixture.id);
 
         if (response.status === 200) {
           setBono(response.data);
