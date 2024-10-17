@@ -6,8 +6,9 @@ import useAuth from "../hooks/useAuth.js";
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 
-const BuyBonds = ({ userId, balance, setBalance }) => {
+const BuyBonds = () => {
   const [numBonds, setNumBonds] = useState(1);
+  const [balance, setBalance] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
