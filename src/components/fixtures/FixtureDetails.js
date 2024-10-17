@@ -4,6 +4,7 @@ import { getBonoByFixtureId } from "../../api/axios.js";
 import "../style/FixtureDetails.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const FixtureDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
