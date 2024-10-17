@@ -6,8 +6,9 @@ import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 import { useAuth0 } from "@auth0/auth0-react";
 
-const BuyBonds = ({ userId, balance, setBalance }) => {
+const BuyBonds = () => {
   const [numBonds, setNumBonds] = useState(1);
+  const [balance, setBalance] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
