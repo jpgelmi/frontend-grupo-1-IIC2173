@@ -9,54 +9,6 @@ export default axios.create({
   baseURL: BASE_URL,
 });
 
-export const axiosPrivate = axios.create({
-  baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
-
-export const postLogin = async (email, password) => {
-  const LOGIN_URL = `${BASE_URL}/login`;
-
-  try {
-    const response = await axios.post(
-      LOGIN_URL,
-      { email, password },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const postRegister = async (email, userName, password) => {
-  const REGISTER_URL = `${BASE_URL}/register`;
-
-  try {
-    const response = await axios.post(
-      REGISTER_URL,
-      JSON.stringify({
-        email: email,
-        name: userName,
-        password: password,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
 export const getFixtures = async (token, country, fromDate, toDate, page, count) => {
   const URL = `${BASE_URL}/fixtures`;
   const queryParams = new URLSearchParams();
@@ -114,7 +66,7 @@ export const postBuyBonds = async (
 };
 
 export const postCheckAmountAvailable  = async (token, amount) => {
-  const URL = `${BASE_URL}/user/isAmountAvailable`;
+  const URL = `${BASE_URL}/wallet/isAmountAvailable`;
   try {
     const response = await axios.post(
       URL,
@@ -185,7 +137,7 @@ export const postSumarBono = async (token, fixtureId, quantity) => {
 };
 
 export const postDiscountAmount = async (token, amount) => {
-  const URL = `${BASE_URL}/user/discountAmount`;
+  const URL = `${BASE_URL}/wallet/discountAmount`;
   try {
     const response = await axios.post(
       URL,
@@ -208,6 +160,7 @@ export const postDiscountAmount = async (token, amount) => {
 };
 
 export const getBuyRequestsByUser = async (token) => {
+  console.log('Getting buy requests by user');
   const URL = `${BASE_URL}/buyRequest`;
   console.log('URL:', URL); 
   console.log('Token:', token); 
@@ -227,6 +180,7 @@ export const getBuyRequestsByUser = async (token) => {
 };
 
 export const getFixtureById = async (token, fixtureId) => {
+  console.log('Getting fixture by id:', fixtureId);
   const URL = `${BASE_URL}/fixtures/${fixtureId}`;
   try {
     const response = await axios.get(URL, {
@@ -306,7 +260,7 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
 export const postIsAmountAvailable = async (token, userId, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/isAmountAvailable`,
+      `${BASE_URL}/wallet/isAmountAvailable`,
       { id: userId, amount },
       {
         headers: {
@@ -326,7 +280,7 @@ export const postIsAmountAvailable = async (token, userId, amount) => {
 export const postDeductAmount = async (token, userId, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/discountAmount`,
+      `${BASE_URL}/wallet/discountAmount`,
       { id: userId, amount },
       {
         headers: {
@@ -346,7 +300,7 @@ export const postDeductAmount = async (token, userId, amount) => {
 export const postAddAmount = async (token, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/user/addAmount`,
+      `${BASE_URL}/wallet/addAmount`,
       JSON.stringify({ amount: parseFloat(amount) }),
       {
         headers: {
@@ -365,7 +319,7 @@ export const postAddAmount = async (token, amount) => {
 
 export const getBalance = async (token) => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/balance`, {
+    const response = await axios.get(`${BASE_URL}/wallet/balance`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

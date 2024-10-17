@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBrokerRequest } from './BuyBondsUtils.js';
 import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount} from '../../api/axios.js';
-import useAuth from "../hooks/useAuth.js";
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
+import { useAuth0 } from "@auth0/auth0-react";
 
-const BuyBonds = ({ userId, balance, setBalance }) => {
+const BuyBonds = () => {
   const [numBonds, setNumBonds] = useState(1);
+  const [balance, setBalance] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   const { betType, teamName, odd, bond, fixtureId } = location.state;
 
-  const { auth } = useAuth();
-  const token = auth.accessToken;
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [accessToken, setAccessToken] = useState('');
+
+  useEffect(() => {
+    const getToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+        } catch (error) {
+          console.error('Error obteniendo el Access Token:', error);
+        }
+      }
+    };
+
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleCancel = () => {
     navigate(-1);
@@ -58,20 +74,20 @@ const BuyBonds = ({ userId, balance, setBalance }) => {
   const handleBuy = async () => {
     if (numBonds <= bond) {
       try {
-        await postRestarBono(token, fixtureId, numBonds);
+        await postRestarBono(accessToken, fixtureId, numBonds);
 
-        const isAvailable = await postCheckAmountAvailable(token, numBonds * 1000);
+        const isAvailable = await postCheckAmountAvailable(accessToken, numBonds * 1000);
         if (!isAvailable) {
-          await postSumarBono(token, fixtureId, numBonds);
+          await postSumarBono(accessToken, fixtureId, numBonds);
           noFundsAlert();
           return;
         }
-        await postDiscountAmount(token, numBonds * 1000);
+        await postDiscountAmount(accessToken, numBonds * 1000);
 
-        const requestId = await postBuyBonds(token,fixtureId, numBonds, numBonds * 1000, betType);
+        const requestId = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType);
         setBalance(balance - numBonds * 1000);
 
-        createBrokerRequest(token, {requestId, fixtureId, numBonds, betType});
+        createBrokerRequest(accessToken, {requestId, fixtureId, numBonds, betType});
         successAlert();
       } catch (error) {
         console.error('Error al realizar la compra:', error);
