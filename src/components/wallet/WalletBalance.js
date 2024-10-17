@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getBalance } from "../../api/axios.js";
@@ -24,18 +23,6 @@ const WalletBalance = () => {
 
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
-=======
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getBalance, getUserName } from "../../api/axios.js";
-import '../style/Wallet.css';
-import { useAuth0 } from "@auth0/auth0-react";
-
-const WalletBalance = ({ userId, balance, setBalance }) => {
-  const { user, isAuthenticated } = useAuth0();
-  const token = "";
-  const userName = "";
->>>>>>> e78913a (cambios auth0)
 
   useEffect(() => {
     const fetchBalanceAndUser = async () => {

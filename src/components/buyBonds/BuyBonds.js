@@ -14,7 +14,6 @@ const BuyBonds = () => {
 
   const { betType, teamName, odd, bond, fixtureId } = location.state;
 
-<<<<<<< HEAD
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
@@ -32,10 +31,6 @@ const BuyBonds = () => {
 
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
-=======
-  const { user, isAuthenticated } = useAuth0();
-  const token = "Bearer"
->>>>>>> e78913a (cambios auth0)
 
   const handleCancel = () => {
     navigate(-1);
