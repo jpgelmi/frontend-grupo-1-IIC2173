@@ -97,11 +97,10 @@ const BuyRequests = () => {
                   <td>{request.betType}</td>
                   <td>{request.status}</td>
                   <td>
-                    {request.status === "correct"
-                      ? "Acertado, dinero entregado en cuenta"
-                      : request.status === "wrong"
-                      ? "No acertaste, suerte la próxima vez"
-                      : "Pendiente"}
+                    {request.status === 'correct' ? 'Acertado, dinero entregado en cuenta' : 
+                      request.status === 'wrong' ? 'No acertaste, suerte la próxima vez' : 
+                      request.status === 'rejected' ? 'Compra anulada' : 
+                      'Pendiente'}
                   </td>
                 </tr>
               );

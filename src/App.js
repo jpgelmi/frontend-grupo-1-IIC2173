@@ -10,6 +10,7 @@ import Unauthorized from "./components/Unauthorized.js";
 import BuyRequests from "./components/buyRequests/BuyRequests.js";
 import Missing from "./components/Missing.js";
 import LoginBotton from "./components/LoginButton.js";
+import CompletedPurchase from './components/webpay/CompletedPurchase.js';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<LoginBotton />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="/completed-purchase" element={<CompletedPurchase />} />
       <Route
         path="/wallet/*"
         element={<Wallet/>}

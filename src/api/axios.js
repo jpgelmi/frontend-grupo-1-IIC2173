@@ -32,6 +32,7 @@ export const getFixtures = async (token, country, fromDate, toDate, page, count)
     return error;
   }
 };
+
 export const postBuyBonds = async (
   token,
   fixtureId,
@@ -50,6 +51,31 @@ export const postBuyBonds = async (
         quantity,
         price,
         betType,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const commitTransaction = async ({token, token_ws, webpay, buyRequestId}) => {
+  const URL = `${BASE_URL}/buyRequest/commit`;
+
+  try {
+    const response = await axios.post(
+      URL,
+      JSON.stringify({
+        token_ws,
+        webpay,
+        buyRequestId
       }),
       {
         headers: {
