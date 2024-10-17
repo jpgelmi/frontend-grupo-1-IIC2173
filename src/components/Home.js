@@ -7,9 +7,7 @@ import Cargando from './Cargando.js';
 import LogOutButton from './LogoutButton.js';
 
 const Home = () => {
-  const { error, isLoading, isAuthenticated, user, token } = useAuth0();
-  console.log(user);
-  console.log(token);
+  const { error, isLoading, isAuthenticated } = useAuth0();
   return (
     <div>
       {error && <div>Oops... Error en el Auth0</div>}
