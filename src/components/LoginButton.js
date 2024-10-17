@@ -2,8 +2,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LoginButton() {
   const { loginWithRedirect } = useAuth0();
-
-<<<<<<< HEAD
   return (
     <button
       onClick={() => loginWithRedirect()}
@@ -15,7 +13,4 @@ export default function LoginButton() {
       Iniciar Sesión
     </button>
   );
-=======
-  return <button onClick={() => loginWithRedirect()}>Log In</button>;
->>>>>>> e78913a (cambios auth0)
 }
