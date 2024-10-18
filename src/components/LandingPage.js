@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoginButton from './LoginButton.js';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -14,16 +15,7 @@ export default function LandingPage() {
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <button onClick={() => navigate("/login")} className="bg-white text-green-500 px-4 py-2 rounded-full font-semibold hover:bg-green-100 transition duration-300 flex items-center">
-                  <span className="mr-2" role="img" aria-label="Iniciar sesión">🔑</span>
-                  Iniciar Sesión
-                </button>
-              </li>
-              <li>
-                <button onClick={() => navigate("/register")} className="bg-green-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition duration-300 flex items-center">
-                  <span className="mr-2" role="img" aria-label="Registrarse">➕</span>
-                  Registrarse
-                </button>
+                <LoginButton/>
               </li>
             </ul>
           </nav>
