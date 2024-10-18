@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBrokerRequest } from './BuyBondsUtils.js';
-import {postBuyBonds, postCheckAmountAvailable, postRestarBono, postSumarBono, postDiscountAmount} from '../../api/axios.js';
+import {postBuyBonds, postCheckAmountAvailable, postDiscountAmount, commitTransaction } from '../../api/axios.js';
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -28,7 +28,7 @@ const BuyBonds = () => {
         }
       }
     };
-
+    
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
 
@@ -74,25 +74,21 @@ const BuyBonds = () => {
   const handleBuy = async (opcion) => {
     if (numBonds <= bond) {
       try {
-        console.log('Opción:', opcion);
-        
         if (opcion === 'wallet') {
           const isAvailable = await postCheckAmountAvailable(accessToken, numBonds * 1000);
           if (!isAvailable) {
             noFundsAlert();
             return;
           } else {
-            // await postRestarBono(token, fixtureId, numBonds);
-            const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType);
+            const wallet = true;
+            const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType, wallet);
             const request = data.data.buyRequest;
             const token_ws = "";
-            const wallet = true;
             createBrokerRequest(accessToken, {token_ws, request, fixtureId, numBonds, betType, wallet});
             await postDiscountAmount(accessToken, numBonds * 1000);
             const webpay = false;
             const buyRequestId = request.uuid;
             const response = await commitTransaction({ accessToken, token_ws, webpay, buyRequestId });
-            console.log('Response:', response);
             successAlert();
           }
         }
@@ -100,16 +96,13 @@ const BuyBonds = () => {
         // Crear solicitud de compra
         // La respuesta es el trx y la solicitud de compra
         if (opcion === 'webpay') {
-          const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType);
-          console.log('data:', data.data);
+          const wallet = false;
+          const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType, wallet);
           const trx = data.data.transaction;
           const request = data.data.buyRequest;
-          console.log('trx:', trx);
-          console.log('Request:', request);
-          const wallet = false;
 
           
-          const { accessToken: token_ws, url } = trx;
+          const { token: token_ws, url } = trx;
           createBrokerRequest(accessToken, {token_ws, request, fixtureId, numBonds, betType, wallet});
 
           // Crear un formulario dinámico

@@ -44,8 +44,8 @@ const BuyRequests = () => {
             fixtureDetails[request.fixtureId] = fixture;
           }
         }
+        setFixtures(fixtureDetails);
       }
-      setFixtures(fixtureDetails);
     };
 
     fetchBuyRequests();
@@ -74,8 +74,8 @@ const BuyRequests = () => {
           <tbody>
             {buyRequests.map((request) => {
               const fixture = fixtures[request.fixtureId];
+              // console.log(fixtures);
               return (
-                // console.log(fixture),
                 // console.log(fixture.odds[0].values.find(value => value.value === request.betType).odd),
                 <tr key={request.id}>
                   <td>{fixture ? fixture.teams.home.name : "Cargando..."}</td>

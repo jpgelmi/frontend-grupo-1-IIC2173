@@ -36,7 +36,6 @@ const Fixtures = () => {
   const fetchFixtures = async () => {
     try {
       if (isAuthenticated && accessToken) {
-        console.log("Fetching fixtures with token:", accessToken); // Log del token usado
         const response = await getFixtures(
           accessToken,
           country,
@@ -45,7 +44,6 @@ const Fixtures = () => {
           page,
           count
         );
-        console.log("API Response:", response); // Verificación de la respuesta de la API
 
         if (response.status === 200) {
           if (response.data.fixtures) {

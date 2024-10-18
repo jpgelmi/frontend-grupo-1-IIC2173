@@ -38,7 +38,8 @@ export const postBuyBonds = async (
   fixtureId,
   quantity,
   price,
-  betType
+  betType,
+  wallet
 ) => {
   const URL = `${BASE_URL}/buyRequest`;
   try {
@@ -51,6 +52,7 @@ export const postBuyBonds = async (
         quantity,
         price,
         betType,
+        wallet
       }),
       {
         headers: {
@@ -66,8 +68,12 @@ export const postBuyBonds = async (
   }
 };
 
-export const commitTransaction = async ({token, token_ws, webpay, buyRequestId}) => {
+export const commitTransaction = async ({accessToken, token_ws, webpay, buyRequestId}) => {
   const URL = `${BASE_URL}/buyRequest/commit`;
+  console.log('Committing transaction:', {accessToken});
+  console.log('Token WS:', token_ws);
+  console.log('Webpay:', webpay);
+  console.log('Buy Request ID:', buyRequestId);
 
   try {
     const response = await axios.post(
@@ -80,7 +86,7 @@ export const commitTransaction = async ({token, token_ws, webpay, buyRequestId})
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         withCredentials: true,
       }
@@ -114,54 +120,6 @@ export const postCheckAmountAvailable  = async (token, amount) => {
   }
 };
 
-export const postRestarBono = async (token, fixtureId, quantity) => {
-  const URL = `${BASE_URL}/bonos/restarBono`;
-  try {
-    const response = await axios.post(
-      URL,
-      {
-        fixtureId,
-        quantity,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error al restar el bono:', error);
-    return false;
-  }
-};
-
-export const postSumarBono = async (token, fixtureId, quantity) => {
-  const URL = `${BASE_URL}/bonos/sumarBono`;
-  try {
-    const response = await axios.post(
-      URL,
-      {
-        fixtureId,
-        quantity,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error al sumar el bono:', error);
-    return false;
-  }
-};
-
 export const postDiscountAmount = async (token, amount) => {
   const URL = `${BASE_URL}/wallet/discountAmount`;
   try {
@@ -186,10 +144,7 @@ export const postDiscountAmount = async (token, amount) => {
 };
 
 export const getBuyRequestsByUser = async (token) => {
-  console.log('Getting buy requests by user');
   const URL = `${BASE_URL}/buyRequest`;
-  console.log('URL:', URL); 
-  console.log('Token:', token); 
   try {
     const response = await axios.get(URL, {
       headers: {
@@ -206,7 +161,6 @@ export const getBuyRequestsByUser = async (token) => {
 };
 
 export const getFixtureById = async (token, fixtureId) => {
-  console.log('Getting fixture by id:', fixtureId);
   const URL = `${BASE_URL}/fixtures/${fixtureId}`;
   try {
     const response = await axios.get(URL, {
