@@ -3,59 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
+
 
 export default axios.create({
   baseURL: BASE_URL,
 });
-
-export const axiosPrivate = axios.create({
-  baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
-  withCredentials: true,
-});
-
-export const postLogin = async (email, password) => {
-  const LOGIN_URL = `${BASE_URL}/login`;
-
-  try {
-    const response = await axios.post(
-      LOGIN_URL,
-      { email, password },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const postRegister = async (email, userName, password) => {
-  const REGISTER_URL = `${BASE_URL}/register`;
-
-  try {
-    const response = await axios.post(
-      REGISTER_URL,
-      JSON.stringify({
-        email: email,
-        name: userName,
-        password: password,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    return error;
-  }
-};
 
 export const getFixtures = async (token, country, fromDate, toDate, page, count) => {
   const URL = `${BASE_URL}/fixtures`;
@@ -80,12 +33,14 @@ export const getFixtures = async (token, country, fromDate, toDate, page, count)
     return error;
   }
 };
+
 export const postBuyBonds = async (
   token,
   fixtureId,
   quantity,
   price,
-  betType
+  betType,
+  wallet
 ) => {
   const URL = `${BASE_URL}/buyRequest`;
   try {
@@ -98,6 +53,7 @@ export const postBuyBonds = async (
         quantity,
         price,
         betType,
+        wallet
       }),
       {
         headers: {
@@ -113,8 +69,37 @@ export const postBuyBonds = async (
   }
 };
 
+export const commitTransaction = async ({accessToken, token_ws, webpay, buyRequestId}) => {
+  const URL = `${BASE_URL}/buyRequest/commit`;
+  console.log('Committing transaction:', {accessToken});
+  console.log('Token WS:', token_ws);
+  console.log('Webpay:', webpay);
+  console.log('Buy Request ID:', buyRequestId);
+
+  try {
+    const response = await axios.post(
+      URL,
+      JSON.stringify({
+        token_ws,
+        webpay,
+        buyRequestId
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const postCheckAmountAvailable  = async (token, amount) => {
-  const URL = `${BASE_URL}/user/isAmountAvailable`;
+  const URL = `${BASE_URL}/wallet/isAmountAvailable`;
   try {
     const response = await axios.post(
       URL,
@@ -136,56 +121,8 @@ export const postCheckAmountAvailable  = async (token, amount) => {
   }
 };
 
-export const postRestarBono = async (token, fixtureId, quantity) => {
-  const URL = `${BASE_URL}/bonos/restarBono`;
-  try {
-    const response = await axios.post(
-      URL,
-      {
-        fixtureId,
-        quantity,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error al restar el bono:', error);
-    return false;
-  }
-};
-
-export const postSumarBono = async (token, fixtureId, quantity) => {
-  const URL = `${BASE_URL}/bonos/sumarBono`;
-  try {
-    const response = await axios.post(
-      URL,
-      {
-        fixtureId,
-        quantity,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error al sumar el bono:', error);
-    return false;
-  }
-};
-
 export const postDiscountAmount = async (token, amount) => {
-  const URL = `${BASE_URL}/user/discountAmount`;
+  const URL = `${BASE_URL}/wallet/discountAmount`;
   try {
     const response = await axios.post(
       URL,
@@ -209,8 +146,6 @@ export const postDiscountAmount = async (token, amount) => {
 
 export const getBuyRequestsByUser = async (token) => {
   const URL = `${BASE_URL}/buyRequest`;
-  console.log('URL:', URL); 
-  console.log('Token:', token); 
   try {
     const response = await axios.get(URL, {
       headers: {
@@ -306,7 +241,7 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
 export const postIsAmountAvailable = async (token, userId, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/isAmountAvailable`,
+      `${BASE_URL}/wallet/isAmountAvailable`,
       { id: userId, amount },
       {
         headers: {
@@ -326,7 +261,7 @@ export const postIsAmountAvailable = async (token, userId, amount) => {
 export const postDeductAmount = async (token, userId, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/discountAmount`,
+      `${BASE_URL}/wallet/discountAmount`,
       { id: userId, amount },
       {
         headers: {
@@ -346,7 +281,7 @@ export const postDeductAmount = async (token, userId, amount) => {
 export const postAddAmount = async (token, amount) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/user/addAmount`,
+      `${BASE_URL}/wallet/addAmount`,
       JSON.stringify({ amount: parseFloat(amount) }),
       {
         headers: {
@@ -365,7 +300,7 @@ export const postAddAmount = async (token, amount) => {
 
 export const getBalance = async (token) => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/balance`, {
+    const response = await axios.get(`${BASE_URL}/wallet/balance`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

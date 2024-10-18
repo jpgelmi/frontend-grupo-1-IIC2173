@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getBonoByFixtureId } from "../../api/axios.js";
 import "../style/FixtureDetails.css";
-import useAuth from "../hooks/useAuth.js";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const FixtureDetails = () => {
   const location = useLocation();

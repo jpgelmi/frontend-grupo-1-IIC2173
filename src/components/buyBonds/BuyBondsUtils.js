@@ -17,8 +17,9 @@ export const createBrokerRequest = async (token, request) => {
     const fixture = await getFixtureById(token, request.fixtureId);
 
     const teamName = request.betType === 'Home' ? fixture.teams.home.name : request.betType === 'Away' ? fixture.teams.away.name : '---';  
+    console.log('Request:', request);
     const params = {
-        "request_id": request.requestId.data.uuid,
+        "request_id": request.request.uuid,
         "group_id": 1,
         "fixture_id": request.fixtureId,
         "league_name": fixture.league.name,
@@ -27,6 +28,7 @@ export const createBrokerRequest = async (token, request) => {
         "result": teamName,
         "deposit_token": "",
         "datetime": formatDateToUTC(new Date()),
+        "wallet": request.wallet,
         "quantity": request.numBonds,
         "seller": 0
     }
