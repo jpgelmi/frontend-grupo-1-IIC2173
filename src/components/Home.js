@@ -20,6 +20,8 @@ const Home = () => {
           <Link to="/wallet">Ir a mi billetera</Link>
           <Link to={`/buy-requests`}>Ver Mis Solicitudes de Compra</Link>
           <Link to="/fixtures">Ver Partidos disponibles</Link>
+          <Link to="/recomedaciones">Ver Recomendaciones</Link>
+
         </div>
       ) : (
         <LandingPage />
