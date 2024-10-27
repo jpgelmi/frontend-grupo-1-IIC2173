@@ -329,3 +329,35 @@ export const getUserName = async (token, userId) => {
     throw error;
   }
 };
+
+export const getRecomedation = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recomendaciones`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching recomendation:', error);
+    throw error;
+  }
+}
+
+export const getActiveJobs = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recomendaciones/active_jobs`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching active jobs:', error);
+    throw error;
+  }
+}
