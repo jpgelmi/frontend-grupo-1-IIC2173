@@ -3,8 +3,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getRecomedation } from '../api/axios.js';
 import "./style/recomendaciones.css";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function Recomendaciones() {
+    const navigate = useNavigate();
     const [recomendaciones, setRecomendaciones] = useState([]);
     const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
     const [accessToken, setAccessToken] = useState("");
@@ -22,7 +26,9 @@ export default function Recomendaciones() {
     
         getToken();
     }, [getAccessTokenSilently, isAuthenticated]);
-    
+    const handleFixtureClick = (fixture) => {
+        navigate(`/match/${fixture.fixture.id}`, { state: { fixture } });
+      };
     useEffect(() => {
         console.log(accessToken)
         const fetchRecomendaciones = async () => {
@@ -40,32 +46,30 @@ export default function Recomendaciones() {
     }, [accessToken]);
 
     return (
-        <section className="container">
-            <h1 className="titulo">Recomendaciones</h1>
-            {Array.isArray(recomendaciones) && recomendaciones.length > 0 ? (
-                recomendaciones.map((recomendacion) => (
-                    <div
-                        key={recomendacion._id}
-                        className="element"
-                        aria-labelledby={`recomendacion-title-${recomendacion._id}`}
-                    >
-                        <h3 id={`recomendacion-title-${recomendacion._id}`} className="text-xl font-semibold mb-2">
-                            {`${recomendacion.teams.home.name} vs ${recomendacion.teams.away.name}`}
-                        </h3>
-                        <p>{`Fecha: ${new Date(recomendacion.fixture.date).toLocaleString()}`}</p>
-                        <Link to={`/match/${recomendacion.fixture.id}`} style={{ backgroundColor: '#2563EB', color: 'white', padding: '10px 20px', borderRadius: '5px' }}>
-                            Partido
-                        </Link>
-                    </div>
-                ))
+        <div className="fixtures-container">
+        <div className="fixtures-list-container">
+          <ul className="fixtures-list">
+            {recomendaciones.length > 0 ? (
+              recomendaciones.map((fixture, index) => (
+                <li
+                  key={index}
+                  className="fixture-item"
+                  onClick={() => handleFixtureClick(fixture)}
+                >
+                  <p>
+                    {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
+                  </p>
+                  <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
+                </li>
+              ))
             ) : (
-                <p>No hay recomendaciones disponibles.</p>
+              <p>No se encontraron partidos.</p>
             )}
-            <Link to="/" style={{ backgroundColor: '#2563EB', color: 'white', padding: '10px 20px', borderRadius: '5px' }}>Volver al Inicio</Link>
-        </section>
-
-
+          </ul>
+        </div>
+        </div>
     );
+
 }
 
 
