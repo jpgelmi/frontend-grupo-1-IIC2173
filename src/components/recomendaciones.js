@@ -30,7 +30,6 @@ export default function Recomendaciones() {
         navigate(`/match/${fixture.fixture.id}`, { state: { fixture } });
       };
     useEffect(() => {
-        console.log(accessToken)
         const fetchRecomendaciones = async () => {
             if (accessToken) {
                 try {
