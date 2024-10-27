@@ -345,3 +345,19 @@ export const getRecomedation = async (token) => {
     throw error;
   }
 }
+
+export const getActiveJobs = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recomendaciones/active_jobs`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching active jobs:', error);
+    throw error;
+  }
+}
