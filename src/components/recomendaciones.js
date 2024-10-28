@@ -62,7 +62,7 @@ export default function Recomendaciones() {
                 </li>
               ))
             ) : (
-              <p>No se encontraron partidos.</p>
+              <p>Aún no has acertado a ningún partido, para acceder al servicio de recomendaciones debes acertar a al menos un resultado!</p>
             )}
           </ul>
         </div>
