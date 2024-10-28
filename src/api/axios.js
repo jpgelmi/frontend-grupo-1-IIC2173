@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://arquisisproject.me";
 
 
 export default axios.create({
