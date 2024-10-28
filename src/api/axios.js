@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "https://arquisisproject.me";
+// const BASE_URL = "https://arquisisproject.me";
 
 
 export default axios.create({
