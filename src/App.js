@@ -11,6 +11,7 @@ import BuyRequests from "./components/buyRequests/BuyRequests.js";
 import Missing from "./components/Missing.js";
 import LoginBotton from "./components/LoginButton.js";
 import CompletedPurchase from './components/webpay/CompletedPurchase.js';
+import Recomendaciones from './components/recomendaciones.js';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path="/buy-requests" element={<BuyRequests />} />
       <Route path="/" element={<Home />} />
       <Route path="*" element={<Missing />} />
+      <Route path="/recomedaciones" element={<Recomendaciones />} /> 
     </Routes>
   );
 }

@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "https://x1cf892wb2.execute-api.us-east-2.amazonaws.com/prod";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://arquisisproject.me";
+// const BASE_URL = "https://arquisisproject.me";
 
 
 export default axios.create({
@@ -329,3 +330,35 @@ export const getUserName = async (token, userId) => {
     throw error;
   }
 };
+
+export const getRecomedation = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recomendaciones`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching recomendation:', error);
+    throw error;
+  }
+}
+
+export const getActiveJobs = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recomendaciones/active_jobs`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching active jobs:', error);
+    throw error;
+  }
+}
