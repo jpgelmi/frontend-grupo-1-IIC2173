@@ -66,6 +66,7 @@ export default function Recomendaciones() {
             )}
           </ul>
         </div>
+          <button onClick={() => navigate("/")}>Volver al Inicio</button>
         </div>
     );
 
