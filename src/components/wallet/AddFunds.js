@@ -31,7 +31,7 @@ const AddFunds = () => {
     e.preventDefault();
     try {
       if (isAuthenticated) {
-        const newBalance = await postAddAmount(accessToken, amount);
+        const newBalance = await postAddAmount(accessToken, amount, user.email);
         setBalance(newBalance);
         navigate("/wallet");
       }

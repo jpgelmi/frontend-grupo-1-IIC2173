@@ -279,11 +279,14 @@ export const postDeductAmount = async (token, userId, amount) => {
   }
 };
 
-export const postAddAmount = async (token, amount) => {
+export const postAddAmount = async (token, amount, email) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/wallet/addAmount`,
-      JSON.stringify({ amount: parseFloat(amount) }),
+      JSON.stringify({ 
+        amount: parseFloat(amount),
+        email: email
+       }),
       {
         headers: {
           'Content-Type': 'application/json',
