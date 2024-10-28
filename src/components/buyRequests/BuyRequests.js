@@ -50,6 +50,7 @@ const BuyRequests = () => {
 
     fetchBuyRequests();
   }, [ accessToken, isAuthenticated]);
+  
 
   return (
     <div className="buy-requests-container">
@@ -69,6 +70,7 @@ const BuyRequests = () => {
               <th>Tipo de Apuesta</th>
               <th>Estado</th>
               <th>Resultado</th>
+              <th>Link a boleta</th>
             </tr>
           </thead>
           <tbody>
@@ -101,6 +103,12 @@ const BuyRequests = () => {
                       request.status === 'wrong' ? 'No acertaste, suerte la próxima vez' : 
                       request.status === 'rejected' ? 'Compra anulada' : 
                       'Pendiente'}
+                  </td>
+                  {/* Creamos un botón para dirigir al link process.env.BUCKET_URL/boletas/request.uuid*/}
+                  <td>
+                    <a href={`https://pdf-bucket-unique-name.s3.us-east-2.amazonaws.com/boletas/compra_${request.uuid}.pdf`} target="_blank" rel="noreferrer">
+                      Ver boleta
+                    </a>
                   </td>
                 </tr>
               );
