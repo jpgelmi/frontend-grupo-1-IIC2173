@@ -2,7 +2,7 @@ name: Frontend CI
 
 on:
   push:
-    branches: [ master, main, develop, actions ]
+    branches: [main, master]
   pull_request:
     branches: [ main, master ]
 
@@ -37,8 +37,16 @@ jobs:
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
+              - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
         with:
-          args: --delete --follow-symlinks
+          args: --delete --follow-symlinks --exclude ".git/*" --exclude "node_modules/*" --exclude ".*" --exclude "tests/*"
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-2'  # Ajusta según la región de tu bucket S3
+
         env:
           AWS_S3_BUCKET: "frontend-proyecto-arquisis-bucket"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
