@@ -27,7 +27,7 @@ export default function LandingPage() {
           <h2 className="text-4xl font-bold text-white mb-4">Apuesta en los mejores partidos de fútbol</h2>
           <p className="text-xl text-white mb-8">Únete a la comunidad de apuestas más emocionante y gana grandes premios</p>
           <button className="bg-white text-green-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-green-100 transition duration-300">
-            ¡Comienza a apostar ahora V2!
+            ¡¡Comienza a apostar ahora!!
           </button>
         </section>
 
