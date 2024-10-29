@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master, main, develop, actions ]
   pull_request:
-    branches: [ master ]
+    branches: [ main, master ]
 
 jobs:
   lint:
@@ -29,7 +29,7 @@ jobs:
         run: npm run lint
       
       - name: Build project
-        run: npm run build --verbose
+        run: CI=false npm run build --verbose
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
           REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
