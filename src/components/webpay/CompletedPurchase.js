@@ -19,6 +19,7 @@ const CompletedPurchase = () => {
       if (isAuthenticated) {
         try {
           const token = await getAccessTokenSilently();
+          console.log("Acces token:", token);
           setAccessToken(token);
           setIsTokenLoaded(true); // Marcar que el token ha sido cargado
         } catch (error) {
