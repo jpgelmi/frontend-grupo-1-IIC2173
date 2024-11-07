@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
+      colors: {
+        customGray: '#f0f0f0',
+      },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
       },

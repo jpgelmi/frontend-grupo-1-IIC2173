@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginButton from './LoginButton.js';
+import LoginButton from '../components/Buttons/LoginButton.js';
 
 export default function LandingPage() {
   const navigate = useNavigate();

@@ -1,0 +1,50 @@
+/* FooterElements.css */
+.bottom-elements {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    position: relative;
+    /* bottom: 0; */
+    /* left: 0; */
+    /* z-index: 5; */
+    margin-top: 20px;
+  }
+  
+  .logo-button-bottom {
+    display: flex;
+    align-items: center;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .social-icons img {
+    width: 24px; /* Ajusta el tamaño de los íconos según sea necesario */
+    height: 24px; /* Ajusta el tamaño de los íconos según sea necesario */
+  }
+  
+  .home-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .home-link a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  /* Agregamos una línea a 100 pixeles del borde inferior */
+  .footer-bottom-line {
+    position: absolute;
+    bottom: 90px;
+    left: 0;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+  }

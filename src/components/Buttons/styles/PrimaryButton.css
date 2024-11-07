@@ -1,0 +1,47 @@
+/* PrimaryButton.css */
+.primary-button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 9999px; /* rounded-full */
+    font-weight: 600; /* semibold */
+    display: flex;
+    align-items: center;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .primary-button:hover {
+    background-color: #d1fae5; /* green-100 */
+    color: black;
+  }
+  
+  .primary-button span {
+    margin-right: 8px; /* mr-2 */
+  }
+
+  .button-icon {
+    width: 20px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: 20px; /* Ajusta el tamaño de la imagen según sea necesario */
+  }
+  
+  @media (max-width: 394px) {
+    .primary-button {
+      padding: 5px 10px; /* Reduce padding */
+      font-size: 0.875rem; /* Reduce font size */
+    }
+  
+    .primary-button:hover {
+      background-color: #d1fae5; /* green-100 */
+      color: black;
+    }
+    
+    .primary-button span {
+      margin-right: 8px; /* mr-2 */
+    }
+
+    .button-icon {
+      width: 16px; /* Ajusta el tamaño de la imagen según sea necesario */
+      height: 16px; /* Ajusta el tamaño de la imagen según sea necesario */
+    }
+  }

@@ -1,22 +1,17 @@
+/* AddFunds.css
 .wallet-container {
-    max-width: 400px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .wallet-container h2 {
     text-align: center;
     color: #333;
-  }
-  
-  .wallet-container p {
-    font-size: 1.2em;
-    color: #666;
-    text-align: center;
   }
   
   .wallet-container form {
@@ -37,27 +32,20 @@
     font-size: 1em;
   }
   
-  .wallet-container button {
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-group button {
     padding: 10px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
     color: white;
-    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
   }
   
-  .wallet-container button:hover {
+  .button-group button:hover {
     background-color: #0056b3;
-  }
-
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  
-  .button-group button {
-    flex: 1;
-  }
+  } */

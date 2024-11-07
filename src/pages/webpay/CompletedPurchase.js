@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { commitTransaction } from '../../api/axios.js';
 import { useAuth0 } from "@auth0/auth0-react";
+import Cargando from '../../components/Cargando.js';
 
 const CompletedPurchase = () => {
 
@@ -54,9 +55,7 @@ const CompletedPurchase = () => {
 
   if (isLoading) {
     return (
-      <div className="p-20">
-        <h1>Loading...</h1>
-      </div>
+      <Cargando />
     );
   }
 

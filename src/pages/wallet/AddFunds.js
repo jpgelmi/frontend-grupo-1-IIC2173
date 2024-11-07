@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postAddAmount } from "../../api/axios.js";
-import "../style/Wallet.css";
+import "../style/AddFunds.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const AddFunds = () => {
