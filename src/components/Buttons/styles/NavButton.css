@@ -1,0 +1,16 @@
+/* NavButton.css */
+.nav-button {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: 600; /* semibold */
+    font-size: 1rem; /* 2xl */
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+  }
+  
+  .nav-button:hover {
+    background-color: #f0f0f0;
+  }

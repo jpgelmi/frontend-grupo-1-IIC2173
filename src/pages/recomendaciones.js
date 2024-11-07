@@ -4,6 +4,7 @@ import { getRecomedation } from '../api/axios.js';
 import "./style/recomendaciones.css";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { getActiveJobs } from '../api/axios.js';
 
 
 
@@ -12,6 +13,10 @@ export default function Recomendaciones() {
     const [recomendaciones, setRecomendaciones] = useState([]);
     const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
     const [accessToken, setAccessToken] = useState("");
+    const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+    const [activeJobs, setActiveJobs] = useState(false);
+
+
     useEffect(() => {
         const getToken = async () => {
             if (isAuthenticated) {
@@ -29,6 +34,7 @@ export default function Recomendaciones() {
     const handleFixtureClick = (fixture) => {
         navigate(`/match/${fixture.fixture.id}`, { state: { fixture } });
       };
+
     useEffect(() => {
         const fetchRecomendaciones = async () => {
             if (accessToken) {
@@ -42,6 +48,24 @@ export default function Recomendaciones() {
         };
     
         fetchRecomendaciones();
+    }, [accessToken]);
+
+    useEffect(() => {
+      const fetchActiveJobs = async () => {
+        if (accessToken) {
+          setIsLoadingJobs(true); // Inicia el loading
+          try {
+            const response = await getActiveJobs(accessToken);
+            setActiveJobs(response);
+          } catch (error) {
+            console.error('Error fetching active jobs:', error);
+          } finally {
+            setIsLoadingJobs(false); // Finaliza el loading
+          }
+        }
+      };
+  
+      fetchActiveJobs();
     }, [accessToken]);
 
     return (
@@ -66,6 +90,13 @@ export default function Recomendaciones() {
             )}
           </ul>
         </div>
+          {isLoadingJobs ? ( // Condición para mostrar el loading específico de jobs
+            <p style={{ fontSize: "15px", color: "orange" }}>Cargando servicio de recomendaciones...</p>
+          ) : activeJobs ? (
+            <p style={{ fontSize: "15px", color: "green" }}>Servicio de recomendaciones disponible</p>
+          ) : (
+            <p style={{ fontSize: "15px", color: "red" }}>Servicio de recomendaciones no disponible</p>
+          )}
           <button onClick={() => navigate("/")}>Volver al Inicio</button>
         </div>
     );
