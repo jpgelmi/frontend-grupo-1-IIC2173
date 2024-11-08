@@ -27,22 +27,27 @@
 }
 
 .search-form button {
+  font: semi-bold;
+  /* negrita */
+  font-weight: 600;
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #007bff;
+  background-color: black;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
 .search-form button:hover {
-  background-color: #0056b3;
+  /* green-100 */
+  background-color: #d1fae5;
+  color: black;
 }
 
 .fixtures-list-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   max-height: calc(100vh - 250px);
   overflow-y: auto;
   background-color: white;
@@ -57,18 +62,10 @@
   margin: 0;
 }
 
-.fixture-item {
-  background-color: white;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.fixture-item p {
-  margin: 5px 0;
-  color: #666;
+.fixture-date {
+  flex: 1;
+  text-align: left;
+  margin-right: 20px;
 }
 
 .pagination {
@@ -82,13 +79,22 @@
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #007bff;
+  background-color: black;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
+  font: semi-bold;
+  font-weight: 600;
+}
+
+.pagination button:hover {
+  /* green-100 */
+  background-color: #d1fae5;
+  color: black;
 }
 
 .pagination button:disabled {
+  color: #fff;
   background-color: #ccc;
   cursor: not-allowed;
 }
@@ -103,7 +109,7 @@
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #007bff;
+  background-color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -111,5 +117,6 @@
 }
 
 .back-button:hover {
-  background-color: #0056b3;
+  background-color: #d1fae5;
+  color: black;
 }

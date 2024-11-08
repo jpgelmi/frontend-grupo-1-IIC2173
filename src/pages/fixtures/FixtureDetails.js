@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getBonoByFixtureId } from "../../api/axios.js";
-import "../style/FixtureDetails.css";
+import "./FixtureDetails.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import Cargando from "../../components/Cargando.js";
 
 
 const FixtureDetails = () => {
@@ -71,7 +72,11 @@ const FixtureDetails = () => {
     fixture.odds[0].values.length > 0;
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <Cargando />
+      </div>
+    )
   }
 
   return (

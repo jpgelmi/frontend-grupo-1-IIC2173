@@ -48,15 +48,17 @@
     padding: 10px 20px;
     font-size: 1rem;
     color: #fff;
-    background-color: #007bff;
+    background-color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     text-align: center;
+    font: semi-bold;
+    font-weight: 600;
   }
   
   .back-button:hover {
-    background-color: #0056b3;
+    background-color: #d1fae5;
   }
 
   .button-buy {

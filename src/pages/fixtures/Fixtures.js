@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios.js";
-import "../style/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
+import "./Fixtures.css";
 
 const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
@@ -122,23 +123,20 @@ const Fixtures = () => {
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
           />
-          <button type="submit">Buscar</button>
+          <button className="search-button" type="submit">
+            Buscar
+          </button>
         </form>
 
         <div className="fixtures-list-container">
           <ul className="fixtures-list">
             {fixtures.length > 0 ? (
               fixtures.map((fixture, index) => (
-                <li
-                  key={index}
-                  className="fixture-item"
-                  onClick={() => handleFixtureClick(fixture)}
-                >
-                  <p>
-                    {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
-                  </p>
-                  <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
-                </li>
+                <FixtureItem
+                key={index}
+                fixture={fixture}
+                handleFixtureClick={handleFixtureClick}
+              />
               ))
             ) : (
               <p>No se encontraron partidos.</p>
