@@ -21,7 +21,9 @@ const SectionHero = ({
         <div className="section-hero-content">
           <h2 className="section-hero-heading">{heading}</h2>
           <span className="section-hero-subheading">{subHeading}</span>
-          {!!btnText && <PrimaryButton to={reference}>{btnText}</PrimaryButton>}
+          <div className="button-container">
+            {!!btnText && <PrimaryButton to={reference}>{btnText}</PrimaryButton>}
+          </div>
         </div>
         <div className="flex-grow">
           <img className="section-hero-image" src={rightImg} alt="" style={{ width: imgWidth, height: imgHeight}} />

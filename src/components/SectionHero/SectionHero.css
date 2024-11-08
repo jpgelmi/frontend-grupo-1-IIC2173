@@ -11,7 +11,8 @@
   position: relative;
   text-align: center;
   height: 50%;
-  margin-left: 40px;
+  width: 100%;
+  margin-left: 7.5%;
 }
 
 @media (min-width: 1024px) {
@@ -41,6 +42,7 @@
   line-height: 1.25;
   font-weight: 600;
   color: #333;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {

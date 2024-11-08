@@ -16,6 +16,12 @@
     color: black;
   }
   
+  .primary-button.disabled {
+    background-color: #d1fae5;
+    color: black;
+    cursor: not-allowed;
+  }
+
   .primary-button span {
     margin-right: 8px; /* mr-2 */
   }

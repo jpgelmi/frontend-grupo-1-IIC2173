@@ -1,0 +1,70 @@
+
+.match-info {
+    display: flex;
+    align-items: flex-start;
+    background-color: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    width: 60%;
+  }
+  
+.teams-info {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* margin-right: 20px; */
+}
+
+.team-head {
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  
+  .team-head-logo {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .team-head h2 {
+    font-size: 2em;
+    text-align: left;
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .match-details {
+    flex: 1;
+    margin-top: 2%;
+  }
+  
+  .match-details p {
+    font-size: 1em;
+    margin: 10px 0;
+  }
+  
+  .match-details strong {
+    font-weight: bold;
+  }
+
+  .vertical-match-line{
+    border-right: 1px solid #ddd;
+    height: 290px;
+    margin-right: 30px;
+    margin-left: 30px;
+    position: relative;
+  }
+
+  .vs-text{
+    font-size: 1.2em;
+    margin: 0 50%;
+    color: gray;
+  }

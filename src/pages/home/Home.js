@@ -16,10 +16,7 @@ const Home = () => {
   const { error, isLoading, isAuthenticated, getAccessTokenSilently, user } = useAuth0();
   const [activeJobs, setActiveJobs] = useState(false);
   const [accessToken, setAccessToken] = useState("");
-  const [isLoadingJobs, setIsLoadingJobs] = useState(false); // Nuevo estado para el loading de jobs
-
-  console.log('User:', user);
-
+  const [isLoadingJobs, setIsLoadingJobs] = useState(false);
   useEffect(() => {
     const getToken = async () => {
       if (isAuthenticated) {
@@ -38,14 +35,14 @@ const Home = () => {
   useEffect(() => {
     const fetchActiveJobs = async () => {
       if (accessToken) {
-        setIsLoadingJobs(true); // Inicia el loading
+        setIsLoadingJobs(true);
         try {
           const response = await getActiveJobs(accessToken);
           setActiveJobs(response);
         } catch (error) {
           console.error('Error fetching active jobs:', error);
         } finally {
-          setIsLoadingJobs(false); // Finaliza el loading
+          setIsLoadingJobs(false);
         }
       }
     };
@@ -64,7 +61,6 @@ const Home = () => {
   };
 
   const handlePromoClick = () => {
-    // Bajamos al Carouse
     console.log('Bajamos al Carousel');
     window.scrollTo({ top: 600, behavior: 'smooth' });
   }
@@ -72,16 +68,8 @@ const Home = () => {
   return (
     <div>
       {error && <div>Oops... Error en el Auth0</div>}
-      {/* {!error && isLoading && <Cargando />} */}
       {!error && !isLoading && isAuthenticated ? (
         <div className="home-container">
-          {/* {
-            heading: "👋 CoolGoat!",
-            rightImg: homeImage,
-            imgWidth: "80%",
-            subHeading: "Bienvenido a CoolGoat, la mejor plataforma de apuestas deportivas. Encuentra increíbles oportunidades de apuestas, con los últimos partidos. ",
-            imgWidth: "65%",
-          }, */}
           <SectionPromo
             heading="👋 CoolGoat!"
             subHeading="Bienvenido a CoolGoat, la mejor plataforma de apuestas deportivas. Encuentra increíbles oportunidades de apuestas, con los últimos partidos."
@@ -91,10 +79,6 @@ const Home = () => {
             reference="/##"
           />
           <ManualCarouselSection sections={sections} />
-          {/* <PrimaryButton text="👀 Ver más"/> */}
-          {/* <div className="bet-button-container">
-            <PrimaryButton to="/fixtures">👀 Apuesta con nosotros</PrimaryButton>
-          </div> */}
           <div className="bottom-line"></div>
           <FooterElements handleClick={handleClick} />
         </div>

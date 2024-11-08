@@ -4,6 +4,8 @@ import { getBonoByFixtureId } from "../../api/axios.js";
 import "./FixtureDetails.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cargando from "../../components/Cargando.js";
+import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
+import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 
 
 const FixtureDetails = () => {
@@ -81,90 +83,14 @@ const FixtureDetails = () => {
 
   return (
     <div className="match-details-container">
-      <h2>Detalles del partido</h2>
-      <h3>
-        {fixture.teams.home.name} vs {fixture.teams.away.name}
-      </h3>
-      <p>Equipo local: {fixture.teams.home.name}</p>
-      <p>Equipo visita: {fixture.teams.away.name}</p>
-      <p>Fecha: {new Date(fixture.fixture.date).toLocaleString()}</p>
-      <p>Estado: {fixture.fixture.status.long}</p>
-      <p>Liga: {fixture.league.name}</p>
-      <p>Ronda: {fixture.league.round}</p>
-      {bono ? (
-        <p>Bonos disponibles: {bono.bonosDisponibles}</p>
-      ) : (
-        <p>Bonos no disponibles</p>
-      )}
-      <div className="odds-container">
-        <h3>Valores de apuestas</h3>
-        {oddsAvailable ? (
-          <>
-            <p>
-              {fixture.teams.home.name} gana: {fixture.odds[0].values[0].odd}
-              {/* Validación para asegurarse de que bono no sea null */}
-              {bono && (
-                <button
-                  className="button-buy"
-                  onClick={() =>
-                    handleBuyBonds(
-                      "Home",
-                      fixture.teams.home.name,
-                      fixture.odds[0].values[0].odd,
-                      bono.bonosDisponibles,
-                      fixture.fixture.id
-                    )
-                  }
-                >
-                  Comprar bono
-                </button>
-              )}
-            </p>
-            <p>
-              {fixture.teams.away.name} gana: {fixture.odds[0].values[2].odd}
-              {/* Validación para asegurarse de que bono no sea null */}
-              {bono && (
-                <button
-                  className="button-buy"
-                  onClick={() =>
-                    handleBuyBonds(
-                      "Away",
-                      fixture.teams.away.name,
-                      fixture.odds[0].values[2].odd,
-                      bono.bonosDisponibles,
-                      fixture.fixture.id
-                    )
-                  }
-                >
-                  Comprar bono
-                </button>
-              )}
-            </p>
-            <p>
-              Empate: {fixture.odds[0].values[1].odd}
-              {/* Validación para asegurarse de que bono no sea null */}
-              {bono && (
-                <button
-                  className="button-buy"
-                  onClick={() =>
-                    handleBuyBonds(
-                      "Draw",
-                      "Empate",
-                      fixture.odds[0].values[1].odd,
-                      bono.bonosDisponibles,
-                      fixture.fixture.id
-                    )
-                  }
-                >
-                  Comprar bono
-                </button>
-              )}
-            </p>
-          </>
-        ) : (
-          <p>Valores no disponibles</p>
-        )}
-      </div>
+      <h2><strong>🔎 Detalles del partido</strong></h2>
+      <MatchInfo fixture={fixture} bono={bono} />
+      <OddsInfo
+        fixture={fixture}
+        bono={bono}
+        oddsAvailable={oddsAvailable}
+        handleBuyBonds={handleBuyBonds}
+      />
       <button className="back-button" onClick={() => navigate("/fixtures")}>
         Back to Fixtures
       </button>

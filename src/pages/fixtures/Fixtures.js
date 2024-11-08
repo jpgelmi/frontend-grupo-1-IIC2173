@@ -23,7 +23,7 @@ const Fixtures = () => {
       if (isAuthenticated) {
         try {
           const token = await getAccessTokenSilently();
-          console.log("AccessToken obtenido:", token); // Log para verificar que el token se obtiene correctamente
+          // console.log("AccessToken obtenido:", token);
           setAccessToken(token);
         } catch (error) {
           console.error("Error obteniendo el Access Token:", error);

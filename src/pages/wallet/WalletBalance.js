@@ -62,7 +62,7 @@ const WalletBalance = () => {
           fontWeight: "bold",
         }}>¿Qué quieres hacer?</h3>
         <div className="button-group">
-          <PrimaryButton to="/wallet">
+          <PrimaryButton to="/wallet" disabled={true}>
           ⊕ Cargar dinero
           </PrimaryButton>
         </div>

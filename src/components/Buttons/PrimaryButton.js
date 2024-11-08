@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles/PrimaryButton.css';
 
-const PrimaryButton = ({ to, children, icon }) => {
+const PrimaryButton = ({ to, children, icon, disabled}) => {
   const handleClick = () => {
     console.log('To:', to);
     if (to === "/#") {
@@ -14,7 +14,7 @@ const PrimaryButton = ({ to, children, icon }) => {
   };
   
   return (
-    <Link to={to} className="primary-button" onClick={handleClick}>
+    <Link to={disabled ? "#" : to} className={`primary-button ${disabled ? "disabled" : ""}`} onClick={handleClick}>
       {icon && <img src={icon} alt="icon" className="button-icon" />}
       <span>{children}</span>
     </Link>

@@ -21,7 +21,9 @@ const SectionPromo = ({
         <div className="section-promo-content">
           <h2 className="section-promo-heading">{heading}</h2>
           <span className="section-promo-subheading">{subHeading}</span>
-          {!!btnText && <PrimaryButton to={reference}>{btnText}</PrimaryButton>}
+          <div className="button-container">
+            {!!btnText && <PrimaryButton to={reference}>{btnText}</PrimaryButton>}
+          </div>
         </div>
         <div className="flex-grow">
           <img className="section-promo-image" src={rightImg} alt="" style={{ width: imgWidth, height: imgHeight}} />
