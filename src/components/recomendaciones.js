@@ -59,6 +59,7 @@ export default function Recomendaciones() {
                     {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
                   </p>
                   <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
+                  <p>Created At: {new Date(fixture.createdAt).toLocaleString()}</p>
                 </li>
               ))
             ) : (
