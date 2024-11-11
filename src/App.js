@@ -12,7 +12,7 @@ import BuyRequests from "./pages/buyRequests/BuyRequests.js";
 import Missing from "./pages/Missing.js";
 import LoginBotton from "./components/Buttons/LoginButton.js";
 import CompletedPurchase from './pages/webpay/CompletedPurchase.js';
-import Recomendaciones from './pages/recomendaciones.js';
+import Recomendaciones from './pages/recomendaciones/recomendaciones.js';
 import Layout from "./pages/layout.js";
 
 function App() {

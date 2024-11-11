@@ -12,6 +12,17 @@ h1 {
     margin-bottom: 1rem; /* mb-4 */
     color: black;
 }
+.recomendations-title {
+    font-size: 2.5rem;
+    font: bold;
+    font-weight: bold;
+}
+
+.recomendations-description {
+    font-size: 1rem;
+    font: bold;
+    margin-bottom: 10px;
+}
 
 .element {
     background-color: rgba(255, 255, 255, 0.2); /* bg-white bg-opacity-20 */
