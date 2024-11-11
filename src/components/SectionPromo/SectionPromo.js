@@ -8,7 +8,9 @@ const SectionPromo = ({
   heading,
   subHeading,
   btnText,
+  btnText2,
   reference = "/",
+  reference2 = "/fixtures",
   imgWidth = "100%", // Default width
   imgHeight = "auto", // Default height
 }) => {
@@ -23,6 +25,9 @@ const SectionPromo = ({
           <span className="section-promo-subheading">{subHeading}</span>
           <div className="button-container">
             {!!btnText && <PrimaryButton to={reference}>{btnText}</PrimaryButton>}
+          </div>
+          <div className="button-container-2">
+            {!!btnText && <PrimaryButton to={reference2}>{btnText2}</PrimaryButton>}
           </div>
         </div>
         <div className="flex-grow">

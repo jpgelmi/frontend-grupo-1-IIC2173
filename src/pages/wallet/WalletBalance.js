@@ -68,12 +68,12 @@ const WalletBalance = () => {
         </div>
         <div className="button-group">
           <PrimaryButton to="/">
-          ← Volver al inicio
+          ⬅️ Volver al inicio
           </PrimaryButton>
         </div>
         <div className="button-group">
           <PrimaryButton to="/fixtures">
-          ⬆ Apuesta en los partidos disponibles
+          🤑 Apuesta en los partidos disponibles
           </PrimaryButton>
         </div>
         {/* <FooterElements /> */}

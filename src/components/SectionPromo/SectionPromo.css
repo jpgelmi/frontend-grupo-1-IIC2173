@@ -92,6 +92,9 @@
 
   .button-container {
     display: flex;
-    /* justify-content: center; */
     margin-top: 50px;
+  }
+  .button-container-2 {
+    display: flex;
+    margin-top: 10px;
   }

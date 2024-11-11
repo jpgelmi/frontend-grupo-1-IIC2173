@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginButton from '../components/Buttons/LoginButton.js';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function LandingPage() {
+  const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400 to-blue-500">
@@ -26,7 +28,10 @@ export default function LandingPage() {
         <section className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">Apuesta en los mejores partidos de fútbol</h2>
           <p className="text-xl text-white mb-8">Únete a la comunidad de apuestas más emocionante y gana grandes premios</p>
-          <button className="bg-white text-green-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-green-100 transition duration-300">
+          <button 
+          onClick={() => loginWithRedirect()}
+          className="bg-white text-green-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-green-100 transition duration-300"
+          >
             ¡Comienza a apostar ahora!
           </button>
         </section>
