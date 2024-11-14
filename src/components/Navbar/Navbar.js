@@ -4,6 +4,7 @@ import LogOutButton from '../Buttons/LogoutButton.js';
 import NavButton from '../Buttons/NavButton.js';
 import LogoButton from '../Buttons/LogoButton.js';
 import './Navbar.css';
+import {Home,  Wallet, Calendar, DollarSign, TrendingUp, LogOut, Settings, HelpCircle } from 'lucide-react';
 
 const Navbar = () => {
   const { isAuthenticated } = useAuth0();
@@ -23,10 +24,10 @@ const Navbar = () => {
         <LogoButton />
       </div>
       <div className={`nav-buttons ${menuOpen ? 'show' : ''}`}>
-        <NavButton to="/wallet">Billetera</NavButton>
-        <NavButton to="/fixtures">Partidos disponibles</NavButton>
-        <NavButton to="/dashboard">Mis apuestas</NavButton>
-        <NavButton to="/recomedaciones">Recomendaciones</NavButton>
+        <NavButton to="/wallet" icon={Wallet}> Billetera</NavButton>
+        <NavButton to="/fixtures" icon={Calendar}>Partidos disponibles</NavButton>
+        <NavButton to="/dashboard" icon={DollarSign}>Mis apuestas</NavButton>
+        <NavButton to="/recomedaciones" icon={TrendingUp}>Recomendaciones</NavButton>
       </div>
       <div className="logout-button-container">
         <LogOutButton />
