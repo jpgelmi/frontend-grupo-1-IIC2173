@@ -27,7 +27,7 @@ const Navbar = () => {
         <NavButton to="/wallet" icon={Wallet}> Billetera</NavButton>
         <NavButton to="/fixtures" icon={Calendar}>Partidos disponibles</NavButton>
         <NavButton to="/dashboard" icon={DollarSign}>Mis apuestas</NavButton>
-        <NavButton to="/recomedaciones" icon={TrendingUp}>Recomendaciones</NavButton>
+        <NavButton to="/recomendaciones" icon={TrendingUp}>Recomendaciones</NavButton>
       </div>
       <div className="logout-button-container">
         <LogOutButton />
