@@ -2,9 +2,9 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import Navbar from '../components/Navbar/Navbar.js';
+import Navbar from '../../components/Navbar/Navbar.js';
 
-const Layout = () => {
+const MainLayout = () => {
   const { isAuthenticated } = useAuth0();
 
   return (
@@ -27,4 +27,4 @@ const styles = {
   },
 };
 
-export default Layout;
+export default MainLayout;

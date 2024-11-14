@@ -12,27 +12,35 @@ import BuyRequests from "./pages/buyRequests/BuyRequests.js";
 import Missing from "./pages/Missing.js";
 import LoginBotton from "./components/Buttons/LoginButton.js";
 import CompletedPurchase from './pages/webpay/CompletedPurchase.js';
-import Recomendaciones from './pages/recomendaciones.js';
-import Layout from "./pages/layout.js";
+import Recomendaciones from './pages/recomendaciones/recomendaciones.js';
+import MainLayout from "./pages/layouts/MainLayout.js";
+import SidebarLayout from "./pages/layouts/SideBarLayout.js";
+import Dashboard from "./pages/dashboard/Dashboard.js";
+import { ThemeProvider } from './context/ThemeContext.js';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<LoginBotton />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="/completed-purchase" element={<CompletedPurchase />} />
-        <Route path="/wallet" element={<WalletBalance/>} />
-        <Route path="/wallet/add-funds" element={<AddFunds/>} />
-        <Route path="/fixtures" element={<Fixtures />} />
-        <Route path="/match/:id" element={<FixtureDetails />} />
-        <Route path="/buy-bonds" element={<BuyBonds />} />
-        <Route path="/buy-requests" element={<BuyRequests />} />
-        <Route path="/recomedaciones" element={<Recomendaciones />} /> 
-        <Route path="*" element={<Missing />} />
-      </Route>
-    </Routes>
+    <ThemeProvider>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/login" element={<LoginBotton />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/completed-purchase" element={<CompletedPurchase />} />
+          <Route path="/wallet/add-funds" element={<AddFunds/>} />
+          <Route path="/fixtures" element={<Fixtures />} />
+          <Route path="/match/:id" element={<FixtureDetails />} />
+          <Route path="/buy-bonds" element={<BuyBonds />} />
+          <Route path="/buy-requests" element={<BuyRequests />} />
+          <Route path="/recomendaciones" element={<Recomendaciones />} /> 
+          <Route path="*" element={<Missing />} />
+        </Route>
+        <Route element={<SidebarLayout />}>
+          <Route path="/wallet" element={<WalletBalance/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 

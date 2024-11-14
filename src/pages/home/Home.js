@@ -76,7 +76,9 @@ const Home = () => {
             rightImg={promoImage}
             imgWidth="90%"
             btnText="👀 Ver más"
+            btnText2="🤑 Ver las apuestas disponibles"
             reference="/##"
+            reference2="/fixtures"
           />
           <ManualCarouselSection sections={sections} />
           <div className="bottom-line"></div>

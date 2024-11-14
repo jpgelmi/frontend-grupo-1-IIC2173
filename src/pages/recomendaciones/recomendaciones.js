@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getRecomedation } from '../api/axios.js';
-import "./style/recomendaciones.css";
+import { getRecomedation } from '../../api/axios.js';
+import "./recomendaciones.css";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { getActiveJobs } from '../api/axios.js';
-
-
+import { getActiveJobs } from '../../api/axios.js';
+import PrimaryButton from '../../components/Buttons/PrimaryButton.js'
+import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
 
 export default function Recomendaciones() {
     const navigate = useNavigate();
@@ -70,20 +70,17 @@ export default function Recomendaciones() {
 
     return (
         <div className="fixtures-container">
+        <h2 className="recomendations-title">📈 Recomendaciones de apuestas</h2>
+        <h3 className="recomendations-description">Estas son los partidos en los que te recomendamos apostar en base a tu historial de apuestas, aciertos y estadísticas </h3>
         <div className="fixtures-list-container">
           <ul className="fixtures-list">
             {recomendaciones.length > 0 ? (
               recomendaciones.map((fixture, index) => (
-                <li
-                  key={index}
-                  className="fixture-item"
-                  onClick={() => handleFixtureClick(fixture)}
-                >
-                  <p>
-                    {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
-                  </p>
-                  <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
-                </li>
+                  <FixtureItem
+                    key={index}
+                    fixture={fixture}
+                    handleFixtureClick={handleFixtureClick}
+                  />
               ))
             ) : (
               <p>Aún no has acertado a ningún partido, para acceder al servicio de recomendaciones debes acertar a al menos un resultado!</p>
@@ -93,11 +90,13 @@ export default function Recomendaciones() {
           {isLoadingJobs ? ( // Condición para mostrar el loading específico de jobs
             <p style={{ fontSize: "15px", color: "orange" }}>Cargando servicio de recomendaciones...</p>
           ) : activeJobs ? (
-            <p style={{ fontSize: "15px", color: "green" }}>Servicio de recomendaciones disponible</p>
+            <p style={{ fontSize: "15px", color: "green" }}>Servicio de recomendaciones disponible 😁</p>
           ) : (
-            <p style={{ fontSize: "15px", color: "red" }}>Servicio de recomendaciones no disponible</p>
+            <p style={{ fontSize: "15px", color: "red" }}>Servicio de recomendaciones no disponible 😔</p>
           )}
-          <button onClick={() => navigate("/")}>Volver al Inicio</button>
+          <PrimaryButton to="/">
+          ⬅️ Volver al inicio
+          </PrimaryButton>
         </div>
     );
 
