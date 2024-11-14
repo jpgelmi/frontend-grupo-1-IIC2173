@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className={`nav-buttons ${menuOpen ? 'show' : ''}`}>
         <NavButton to="/wallet">Billetera</NavButton>
         <NavButton to="/fixtures">Partidos disponibles</NavButton>
-        <NavButton to="/buy-requests">Mis apuestas</NavButton>
+        <NavButton to="/dashboard">Mis apuestas</NavButton>
         <NavButton to="/recomedaciones">Recomendaciones</NavButton>
       </div>
       <div className="logout-button-container">
