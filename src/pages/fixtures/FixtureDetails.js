@@ -8,15 +8,16 @@ import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 
-
 const FixtureDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { fixture } = location.state || {};
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
+
+  console.log("User:", user);
 
   useEffect(() => {
     const getToken = async () => {
@@ -98,6 +99,10 @@ const FixtureDetails = () => {
     )
   }
 
+  const handleDiscountButtonClick = () => {
+    console.log("Agregar descuento a este partido");
+  }
+
   return (
     <div className="match-details-container">
       <h2><strong>🔎 Detalles del partido</strong></h2>
@@ -108,9 +113,14 @@ const FixtureDetails = () => {
         oddsAvailable={oddsAvailable}
         handleBuyBonds={handleBuyBonds}
       />
+      <div>
       <button className="back-button" onClick={() => navigate("/fixtures")}>
-        Back to Fixtures
+        Volver a partidos disponibles
       </button>
+      <button className="discount-button" onClick={handleDiscountButtonClick}>
+        Agregar descuento a este partido
+      </button>
+      </div>
     </div>
   );
 };
