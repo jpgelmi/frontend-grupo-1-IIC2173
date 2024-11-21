@@ -17,7 +17,6 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  // Obtener el Access Token de Auth0
   useEffect(() => {
     const getToken = async () => {
       if (isAuthenticated) {
@@ -62,6 +61,23 @@ const FixtureDetails = () => {
 
     fetchBono();
   }, [accessToken, fixture]);
+
+  useEffect(() => {
+    const handleWebSocketMessage = (data) => {
+      console.log("Mensaje recibido:", data.bonoActualizado);
+      console.log("Fixture actual:", fixture);
+      if (data.bonoActualizado.fixtureId === fixture.fixtureId.toString()) {
+        console.log("Actualizando bono...");
+        setBono(data.bonoActualizado);
+      }
+    };
+
+    connectWebSocket(handleWebSocketMessage);
+
+    return () => {
+      disconnectWebSocket();
+    };
+  }, [fixture]);
 
   if (!fixture) {
     return <div>No match details available</div>;
