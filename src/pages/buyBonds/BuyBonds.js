@@ -5,14 +5,15 @@ import {postBuyBonds, postCheckAmountAvailable, postDiscountAmount, commitTransa
 import Swal from 'sweetalert2';
 import '../style/BuyBonds.css';
 import { useAuth0 } from "@auth0/auth0-react";
+import { connectWebSocket, disconnectWebSocket } from '../../api/websocket/websocketClient.js';
 
 const BuyBonds = () => {
   const [numBonds, setNumBonds] = useState(1);
-  const [balance, setBalance] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-
+  
   const { betType, teamName, odd, bond, fixtureId } = location.state;
+  const [numAvailableBonds, setnumAvailableBonds] = useState(bond);
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
@@ -31,6 +32,20 @@ const BuyBonds = () => {
     
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
+
+  useEffect(() => {
+    const handleWebSocketMessage = (data) => {
+      if (data.bonoActualizado.fixtureId === fixtureId.toString()) {
+        setnumAvailableBonds(data.bonoActualizado.bonosDisponibles);
+      }
+    };
+
+    connectWebSocket(handleWebSocketMessage);
+
+    return () => {
+      disconnectWebSocket();
+    };
+  }, [fixtureId]);
 
   const handleCancel = () => {
     navigate(-1);
@@ -169,7 +184,7 @@ const BuyBonds = () => {
       <p>Apuesta: {betType === 'home' ? 'Gana el equipo local' : betType === 'away' ? 'Gana el equipo visitante' : 'Empate'}</p>
       {teamName === 'Empate' ? null : <p>Equipo: {teamName}</p>}
       <p>Cuota: {odd}</p>
-      <p>Bonos disponibles: {bond}</p>
+      <p>Bonos disponibles: {numAvailableBonds}</p>
       <div>
         <label htmlFor="numBonds">Número de bonos:</label>
         <input
