@@ -18,7 +18,6 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  // Obtener el Access Token de Auth0
   useEffect(() => {
     const getToken = async () => {
       if (isAuthenticated) {
@@ -64,7 +63,6 @@ const FixtureDetails = () => {
     fetchBono();
   }, [accessToken, fixture]);
 
-  // Manejo de la conexión WebSocket
   useEffect(() => {
     const handleWebSocketMessage = (data) => {
       console.log("Mensaje recibido:", data.bonoActualizado);
