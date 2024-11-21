@@ -365,3 +365,19 @@ export const getActiveJobs = async (token) => {
     throw error;
   }
 }
+
+export const getAuctions = async (token) => {
+  const URL = `${BASE_URL}/offers`;
+  try {
+    const response = await axios.get(`${URL}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
