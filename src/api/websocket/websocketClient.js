@@ -1,4 +1,4 @@
-const WEBSOCKET_URL = "ws://localhost:3000";
+const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 let socket;
 
