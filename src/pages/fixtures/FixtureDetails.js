@@ -7,6 +7,7 @@ import Cargando from "../../components/Cargando.js";
 import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
+import Swal from "sweetalert2";
 
 const FixtureDetails = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  console.log("User:", user);
+  console.log("User:", user.user_roles);
 
   useEffect(() => {
     const getToken = async () => {
@@ -100,7 +101,17 @@ const FixtureDetails = () => {
   }
 
   const handleDiscountButtonClick = () => {
-    console.log("Agregar descuento a este partido");
+    // SI "Admin IIC2173" está en los roles del usuario, muestra un mensaje en consola
+    if (user.user_roles.includes("Admin IIC2173")) {
+      navigate("/add-discount", { state: { fixture } });
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No tienes permisos para agregar descuentos a partidos',
+      });
+    }
   }
 
   return (
