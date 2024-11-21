@@ -6,7 +6,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Cargando from "../../components/Cargando.js";
 import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
-import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 
 
 const FixtureDetails = () => {
@@ -63,24 +62,6 @@ const FixtureDetails = () => {
 
     fetchBono();
   }, [accessToken, fixture]);
-
-  // Manejo de la conexión WebSocket
-  useEffect(() => {
-    const handleWebSocketMessage = (data) => {
-      console.log("Mensaje recibido:", data.bonoActualizado);
-      console.log("Fixture actual:", fixture);
-      if (data.bonoActualizado.fixtureId === fixture.fixtureId.toString()) {
-        console.log("Actualizando bono...");
-        setBono(data.bonoActualizado);
-      }
-    };
-
-    connectWebSocket(handleWebSocketMessage);
-
-    return () => {
-      disconnectWebSocket();
-    };
-  }, [fixture]);
 
   if (!fixture) {
     return <div>No match details available</div>;
