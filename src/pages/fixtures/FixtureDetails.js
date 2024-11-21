@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Cargando from "../../components/Cargando.js";
 import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
+import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 
 
 const FixtureDetails = () => {
