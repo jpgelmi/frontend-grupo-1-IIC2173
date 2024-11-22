@@ -67,6 +67,7 @@ export default function BetsTable({ bets }) {
           </thead>
           <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             {bets.map((bet) => (
+              // console.log(bet.request),
               <React.Fragment key={bet.id}>
                 <tr
                   onClick={() => toggleRow(bet.id)}
@@ -117,11 +118,11 @@ export default function BetsTable({ bets }) {
                         <div>
                           <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Posible ganancia</p>
                           <p className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                            ${(bet.request.price * getOddForBet(bet)).toFixed(2)}
+                            ${(bet.request.quantity * 1000 * getOddForBet(bet)).toFixed(2)}
                           </p>
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Ticket</p>
+                          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Boleta</p>
                           <button
                             disabled={bet.request.status === 'rejected' || bet.request.status === 'pending'}
                             className={`mt-1 inline-flex items-center text-sm ${
@@ -136,9 +137,13 @@ export default function BetsTable({ bets }) {
                               }
                             }}
                           >
-                            View Ticket
+                            Ver boleta
                             <ExternalLink className="ml-1 h-4 w-4" />
                           </button>
+                        </div>
+                        <div>
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Fecha de compra</p>
+                        <p className="mt-1 text-sm text-gray-900 dark:text-gray-100">{bet.request.date != "Invalid Date" ? bet.request.date : 'Fecha no disponible :('}</p>
                         </div>
                       </div>
                     </td>

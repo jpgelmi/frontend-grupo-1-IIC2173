@@ -35,9 +35,10 @@ const FixtureDetails = () => {
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
 
-  const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
+  const handleBuyBonds = (betType, teamName, odd, bono, fixtureId) => {
+    console.log("Bono recibido: ", bono);
     navigate("/buy-bonds", {
-      state: { betType, teamName, odd, bond, fixtureId },
+      state: { betType, teamName, odd, bono, fixtureId },
     });
   };
 
@@ -92,26 +93,26 @@ const FixtureDetails = () => {
     fixture.odds[0].values &&
     fixture.odds[0].values.length > 0;
 
+    const handleDiscountButtonClick = () => {
+      const isAdmin = user.user_roles.includes("Admin IIC2173");
+      if (isAdmin) {
+        navigate("/add-discount", { state: { fixture, bono } });
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No tienes permisos para agregar descuentos a partidos',
+        });
+      }
+    }
+
   if (loading) {
     return (
       <div className="loading-container">
         <Cargando />
       </div>
     )
-  }
-
-  const handleDiscountButtonClick = () => {
-    // SI "Admin IIC2173" está en los roles del usuario, muestra un mensaje en consola
-    if (user.user_roles.includes("Admin IIC2173")) {
-      navigate("/add-discount", { state: { fixture } });
-    }
-    else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'No tienes permisos para agregar descuentos a partidos',
-      });
-    }
   }
 
   return (

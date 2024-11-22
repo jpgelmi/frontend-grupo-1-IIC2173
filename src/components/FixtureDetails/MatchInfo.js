@@ -2,6 +2,9 @@ import React from "react";
 import "./MatchInfo.css";
 
 const MatchInfo = ({ fixture, bono }) => {
+
+  const descuento = bono.precio != 1000 ? `con un ${(1000 - bono.precio)/10}% de descuento!` : '';
+
   return (
     <div className="match-info">
       <div className="teams-info">
@@ -36,6 +39,11 @@ const MatchInfo = ({ fixture, bono }) => {
           <p><strong>Bonos disponibles:</strong> {bono.bonosDisponibles}</p>
         ) : (
           <p>Bonos no disponibles</p>
+        )}
+        {bono ? (
+          <p><strong>Precio por bono:</strong> ${bono.precio} {descuento}</p>
+        ) : (
+          <p></p>
         )}
       </div>
     </div>

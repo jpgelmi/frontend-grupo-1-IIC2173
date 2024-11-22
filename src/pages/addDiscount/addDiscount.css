@@ -47,11 +47,22 @@
     background-color: #4CAF50; /* Verde */
     color: white;
   }
+
+  .add-Discount-container button {
+    background-color: #2196F3; /* Verde */
+    color: white;
+  }
+
+  .add-Discount-container button:hover {
+    /* Azul un poco más oscuro */
+    background-color: #0d8bf2;
+  }
   
   .add-Discount-container button:first-of-type:hover {
     background-color: #45a049;
   }
   
+
   .add-Discount-container button:last-of-type {
     background-color: #f44336; /* Rojo */
     color: white;
