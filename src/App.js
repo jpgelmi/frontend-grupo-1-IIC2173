@@ -17,6 +17,7 @@ import MainLayout from "./pages/layouts/MainLayout.js";
 import SidebarLayout from "./pages/layouts/SideBarLayout.js";
 import Dashboard from "./pages/dashboard/Dashboard.js";
 import { ThemeProvider } from './context/ThemeContext.js';
+import AddDiscount from "./pages/addDiscount/addDiscount.js";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/buy-requests" element={<BuyRequests />} />
           <Route path="/recomendaciones" element={<Recomendaciones />} /> 
           <Route path="*" element={<Missing />} />
+          <Route path="/add-discount" element={<AddDiscount />} />
         </Route>
         <Route element={<SidebarLayout />}>
           <Route path="/wallet" element={<WalletBalance/>} />

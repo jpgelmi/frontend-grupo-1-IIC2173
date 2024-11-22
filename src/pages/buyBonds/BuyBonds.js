@@ -12,7 +12,8 @@ const BuyBonds = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const { betType, teamName, odd, bond, fixtureId } = location.state;
+  const { betType, teamName, odd, bono, fixtureId } = location.state;
+  const bond = bono.bonosDisponibles;
   const [numAvailableBonds, setnumAvailableBonds] = useState(bond);
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -90,13 +91,13 @@ const BuyBonds = () => {
     if (numBonds <= bond) {
       try {
         if (opcion === 'wallet') {
-          const isAvailable = await postCheckAmountAvailable(accessToken, numBonds * 1000);
+          const isAvailable = await postCheckAmountAvailable(accessToken, numBonds * bono.precio);
           if (!isAvailable) {
             noFundsAlert();
             return;
           } else {
             const wallet = true;
-            const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType, wallet);
+            const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * bono.precio, betType, wallet);
             const request = data.data.buyRequest;
             const token_ws = "";
             createBrokerRequest(accessToken, {token_ws, request, fixtureId, numBonds, betType, wallet});
@@ -112,11 +113,10 @@ const BuyBonds = () => {
         // La respuesta es el trx y la solicitud de compra
         if (opcion === 'webpay') {
           const wallet = false;
-          const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * 1000, betType, wallet);
+          const data = await postBuyBonds(accessToken, fixtureId, numBonds, numBonds * bono.precio, betType, wallet);
           const trx = data.data.transaction;
           const request = data.data.buyRequest;
 
-          
           const { token: token_ws, url } = trx;
           createBrokerRequest(accessToken, {token_ws, request, fixtureId, numBonds, betType, wallet});
 
@@ -177,6 +177,7 @@ const BuyBonds = () => {
     }
   };
 
+  const descuento = bono.precio !== 1000 ? `¡${(1000 - bono.precio) / 10}% de descuento!` : '';
 
   return (
     <div className="buy-bonds-container">
@@ -197,7 +198,7 @@ const BuyBonds = () => {
         />
       </div>
       <p>En caso de ganar, recibirás ${numBonds * 1000 * odd}</p>
-      <p>Total a pagar: ${numBonds * 1000}</p>
+      <p>Total a pagar: ${numBonds * bono.precio} {descuento}</p>
       <button onClick={handlePreBuy}>Comprar</button>
       <button onClick={handleCancel}>Cancelar</button>
     </div>

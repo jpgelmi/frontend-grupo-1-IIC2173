@@ -17,7 +17,7 @@ const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
                     "Home",
                     fixture.teams.home.name,
                     fixture.odds[0].values[0].odd,
-                    bono.bonosDisponibles,
+                    bono,
                     fixture.fixture.id
                   )
                 }
@@ -36,7 +36,7 @@ const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
                     "Draw",
                     "Empate",
                     fixture.odds[0].values[1].odd,
-                    bono.bonosDisponibles,
+                    bono,
                     fixture.fixture.id
                   )
                 }
@@ -55,7 +55,7 @@ const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
                     "Away",
                     fixture.teams.away.name,
                     fixture.odds[0].values[2].odd,
-                    bono.bonosDisponibles,
+                    bono,
                     fixture.fixture.id
                   )
                 }

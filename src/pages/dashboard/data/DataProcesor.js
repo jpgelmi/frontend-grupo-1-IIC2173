@@ -4,7 +4,8 @@ function transformBetData(buyRequests, fixtures) {
       if (!fixture) {
         return null; // O maneja el caso donde no se encuentra el fixture correspondiente
       }
-  
+      
+      if (request.createdAt) {console.log("Request: ", request);}
       return {
         id: request._id,
         fixture: {
@@ -25,7 +26,8 @@ function transformBetData(buyRequests, fixtures) {
           betType: request.betType.toLowerCase(),
           quantity: request.quantity,
           price: request.price,
-          status: request.status
+          status: request.status,
+          date: new Date(request.createdAt).toLocaleString(),
         },
         ticketLink: request.ticketLink || `https://pdf-bucket-unique-name.s3.us-east-2.amazonaws.com/boletas/compra_${request.uuid}.pdf`,
         // buscamos la odd cuyo value es el mismo betType

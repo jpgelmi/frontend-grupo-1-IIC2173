@@ -7,7 +7,7 @@ import Cargando from "../../components/Cargando.js";
 import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
-
+import Swal from "sweetalert2";
 
 const FixtureDetails = () => {
   const location = useLocation();
@@ -15,8 +15,10 @@ const FixtureDetails = () => {
   const { fixture } = location.state || {};
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
+
+  console.log("User:", user.user_roles);
 
   useEffect(() => {
     const getToken = async () => {
@@ -33,9 +35,10 @@ const FixtureDetails = () => {
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
 
-  const handleBuyBonds = (betType, teamName, odd, bond, fixtureId) => {
+  const handleBuyBonds = (betType, teamName, odd, bono, fixtureId) => {
+    console.log("Bono recibido: ", bono);
     navigate("/buy-bonds", {
-      state: { betType, teamName, odd, bond, fixtureId },
+      state: { betType, teamName, odd, bono, fixtureId },
     });
   };
 
@@ -90,6 +93,20 @@ const FixtureDetails = () => {
     fixture.odds[0].values &&
     fixture.odds[0].values.length > 0;
 
+    const handleDiscountButtonClick = () => {
+      const isAdmin = user.user_roles.includes("Admin IIC2173");
+      if (isAdmin) {
+        navigate("/add-discount", { state: { fixture, bono } });
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No tienes permisos para agregar descuentos a partidos',
+        });
+      }
+    }
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -108,9 +125,14 @@ const FixtureDetails = () => {
         oddsAvailable={oddsAvailable}
         handleBuyBonds={handleBuyBonds}
       />
+      <div>
       <button className="back-button" onClick={() => navigate("/fixtures")}>
-        Back to Fixtures
+        Volver a partidos disponibles
       </button>
+      <button className="discount-button" onClick={handleDiscountButtonClick}>
+        Agregar descuento a este partido
+      </button>
+      </div>
     </div>
   );
 };

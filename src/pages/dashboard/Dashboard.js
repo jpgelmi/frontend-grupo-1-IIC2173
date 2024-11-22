@@ -60,8 +60,8 @@ export default function Dashboard() {
     fetchBuyRequests();
   }, [ accessToken, isAuthenticated]);
 
-  console.log(buyRequests);
-  console.log(fixtures);
+  // console.log(buyRequests);
+  // console.log(fixtures);
 
   const betData = transformBetData(buyRequests, fixtures);
 
