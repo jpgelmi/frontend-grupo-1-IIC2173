@@ -367,17 +367,20 @@ export const getActiveJobs = async (token) => {
 }
 
 export const getAuctions = async (token) => {
-  const URL = `${BASE_URL}/offers`;
+  console.log("GETTIN")
   try {
-    const response = await axios.get(`${URL}`, {
+    
+    const response = await axios.get(`${BASE_URL}/auctions/offers`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       withCredentials: true,
     });
-    return response;
+    console.log("Getting auctions", response.data);
+    return response.data;
   } catch (error) {
-    return error;
+    console.error('Error fetching Auctions:', error);
+    throw error;
   }
 };

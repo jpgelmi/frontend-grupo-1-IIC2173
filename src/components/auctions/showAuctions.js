@@ -5,58 +5,43 @@ import "../style/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const AuctionDetails = () => {
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [auctions, setAuctions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { auction } = location.state || {};
   const [auctionDetails, setAuctionDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
   // Obtener el Access Token de Auth0
   useEffect(() => {
-    const getToken = async () => {
+    const fetchAuctionDetails = async () => {
       if (isAuthenticated) {
         try {
           const token = await getAccessTokenSilently();
-          setAccessToken(token);
+          const response = await getAuctions(token);
+          console.log('Auction details fetched:', response); // Log para verificar la respuesta
+          setAuctionDetails(response[0]);
         } catch (error) {
-          console.error('Error obteniendo el Access Token:', error);
+          console.error('Error fetching auctions:', error); // Log para verificar el error
+          setError('Error fetching auctions');
+        } finally {
+          setLoading(false);
         }
-      }
-    };
-
-    getToken();
-  }, [getAccessTokenSilently, isAuthenticated]);
-
-  useEffect(() => {
-    const fetchAuctionDetails = async () => {
-      if (!auction || !accessToken) return;
-      try {
-        setLoading(true);
-        const response = await getAuctions(accessToken);
-
-        if (response.status === 200) {
-          setAuctionDetails(response.data);
-        } else {
-          console.error("Error fetching auction details");
-        }
-      } catch (error) {
-        console.error("Error fetching auction details:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchAuctionDetails();
-  }, [accessToken, auction]);
-
-  if (!auction) {
-    return <div>No auction details available</div>;
-  }
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
