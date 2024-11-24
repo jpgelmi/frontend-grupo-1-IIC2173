@@ -18,7 +18,9 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  console.log("User:", user.user_roles);
+  const isAdmin = user.user_roles.includes("Admin IIC2173");
+
+  console.log("Is amdin:", isAdmin);
 
   useEffect(() => {
     const getToken = async () => {
@@ -118,6 +120,7 @@ const FixtureDetails = () => {
   return (
     <div className="match-details-container">
       <h2><strong>🔎 Detalles del partido</strong></h2>
+      <h3>{isAdmin ? "Administrador" : "Cliente"}</h3>
       <MatchInfo fixture={fixture} bono={bono} />
       <OddsInfo
         fixture={fixture}

@@ -37,7 +37,7 @@ function transformBetData(buyRequests, fixtures) {
   }
 
   function calculateStats(betData) {
-    console.log("betData: ", betData);
+    // console.log("betData: ", betData);
     let correctCount = 0;
     let wrongCount = 0;
     let pendingCount = 0;
