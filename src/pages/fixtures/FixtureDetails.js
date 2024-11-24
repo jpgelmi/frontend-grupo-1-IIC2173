@@ -8,6 +8,7 @@ import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 import Swal from "sweetalert2";
+import PrimaryButton from "../../components/Buttons/PrimaryButton.js";
 
 const FixtureDetails = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  const isAdmin = user.user_roles.includes("Admin IIC2173");
+  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
 
   console.log("Is amdin:", isAdmin);
 
@@ -122,12 +123,17 @@ const FixtureDetails = () => {
       <h2><strong>🔎 Detalles del partido</strong></h2>
       <h3>{isAdmin ? "Administrador" : "Cliente"}</h3>
       <MatchInfo fixture={fixture} bono={bono} />
+      {isAdmin ? 
+      <PrimaryButton>
+      Comprar bonos desde central 
+      </PrimaryButton>
+      :
       <OddsInfo
         fixture={fixture}
         bono={bono}
         oddsAvailable={oddsAvailable}
         handleBuyBonds={handleBuyBonds}
-      />
+      />}
       <div>
       <button className="back-button" onClick={() => navigate("/fixtures")}>
         Volver a partidos disponibles

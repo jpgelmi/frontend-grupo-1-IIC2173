@@ -16,7 +16,7 @@ const BuyBonds = () => {
   const bond = bono.bonosDisponibles;
   const [numAvailableBonds, setnumAvailableBonds] = useState(bond);
 
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
@@ -87,8 +87,8 @@ const BuyBonds = () => {
     });
   }
 
-  const handleBuy = async (opcion) => {
-    if (numBonds <= bond) {
+  const handleAdminBuy = async (opcion) => {
+    if (numBonds <= bono.bonosTotales) {
       try {
         if (opcion === 'wallet') {
           const isAvailable = await postCheckAmountAvailable(accessToken, numBonds * bono.precio);
@@ -145,6 +145,18 @@ const BuyBonds = () => {
       } else {
         throwAlert('Error', 'No hay suficientes bonos disponibles', 'error');
       }
+  };
+
+  const handleClientBuy = async (opcion) => {
+    console.log('Compra de no admin');
+  }
+
+  const handleBuy = async (opcion) => {
+    if (user ? user.user_roles.includes('Admin IIC2173') : false) {
+      handleAdminBuy(opcion);
+    } else {
+      handleClientBuy(opcion);
+    }
   };
 
   const handlePreBuy = async () => {

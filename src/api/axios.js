@@ -222,7 +222,6 @@ export const getBono = async (token, fixtureId) => {
 export const getBonoByFixtureId = async (token, fixtureId) => {
   try {
     const URL = `${BASE_URL}/bonos/${fixtureId}`;
-    console.log(`${BASE_URL}/bonos/${fixtureId}`)
     const response = await axios.get(URL, {
       headers: {
         'Content-Type': 'application/json',
@@ -230,13 +229,31 @@ export const getBonoByFixtureId = async (token, fixtureId) => {
       },
       withCredentials: true,
     });
-    console.log(response)
     return response;
 
   } catch (error) {
     console.error('Error al obtener el bono:', error);
   }
 };
+
+
+export const getAvailableBonds = async (token) => {
+    try {
+      const URL = `${BASE_URL}/bonos/admin/buyed`;
+      const response = await axios.get(URL, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+      return response;
+  
+    } catch (error) {
+      console.error('Error al obtener el bono:', error);
+    }
+  };
+
 
 export const postIsAmountAvailable = async (token, userId, amount) => {
   try {
