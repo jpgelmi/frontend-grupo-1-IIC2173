@@ -60,6 +60,8 @@ const Home = () => {
           <Link to="/fixtures">Ver Partidos disponibles</Link>
           <Link to="/recomedaciones">Ver Recomendaciones</Link>
           <Link to="/offers">Ver Auctions (Solo Admin)</Link>
+          <Link to="/offers/showSellable">Ver Para Vender (Solo Admin)</Link>
+          <Link to="/offers/seeAuctions">Ver Ofertas (Solo Admin)</Link>
 
           {isLoadingJobs ? ( // Condición para mostrar el loading específico de jobs
             <p style={{ fontSize: "10px", color: "orange" }}>Cargando Active Jobs...</p>

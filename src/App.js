@@ -13,6 +13,9 @@ import LoginBotton from "./components/LoginButton.js";
 import CompletedPurchase from './components/webpay/CompletedPurchase.js';
 import Recomendaciones from './components/recomendaciones.js';
 import AuctionDetails from './components/auctions/showAuctions.js';
+import SellDetails from "./components/auctions/sellDetail.js";
+import SeeFixtures from "./components/auctions/showFixtures.js";
+import SeeProposals from "./components/auctions/getProposals.js";
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
       <Route path="*" element={<Missing />} />
       <Route path="/recomedaciones" element={<Recomendaciones />} /> 
       <Route path="/offers" element={<AuctionDetails />} /> 
+      <Route path="/auction/:id" element={<SellDetails />} /> 
+      <Route path="/offers/showSellable" element={< SeeFixtures />} /> 
+      <Route path="/offers/seeAuctions" element={< SeeProposals />} /> 
     </Routes>
   );
 }
