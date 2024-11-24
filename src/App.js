@@ -17,9 +17,11 @@ import MainLayout from "./pages/layouts/MainLayout.js";
 import SidebarLayout from "./pages/layouts/SideBarLayout.js";
 import Dashboard from "./pages/dashboard/Dashboard.js";
 import { ThemeProvider } from './context/ThemeContext.js';
+import AdminFixtures from "./pages/fixtures/UserFixtures.js";
 
 function App() {
   return (
+
     <ThemeProvider>
       <Routes>
         <Route path="/" element={<MainLayout />}>
@@ -32,7 +34,8 @@ function App() {
           <Route path="/match/:id" element={<FixtureDetails />} />
           <Route path="/buy-bonds" element={<BuyBonds />} />
           <Route path="/buy-requests" element={<BuyRequests />} />
-          <Route path="/recomendaciones" element={<Recomendaciones />} /> 
+          <Route path="/recomendaciones" element={<Recomendaciones />} />
+          <Route path="/user-fixtures" element={<AdminFixtures />} /> 
           <Route path="*" element={<Missing />} />
         </Route>
         <Route element={<SidebarLayout />}>

@@ -365,3 +365,20 @@ export const getActiveJobs = async (token) => {
     throw error;
   }
 }
+
+export const getBonosCompradosPorAdmin = async (token) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/bonos/admin/buyed`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching bonos comprados por admin holaaa:', error);
+    throw error;
+  }
+}

@@ -30,7 +30,7 @@ export const createBrokerRequest = async (token, request) => {
         "datetime": formatDateToUTC(new Date()),
         "wallet": request.wallet,
         "quantity": request.numBonds,
-        "seller": 0
+        "seller": 1
     }
     await postSendRequestToBroker(token, params);
 };
