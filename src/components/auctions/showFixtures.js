@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios.js";
-import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
+import { getBonoByFixtureId, getAvailableBonds } from "../../api/axios.js";
+import "../../pages/fixtures/Fixtures.css";
 
-const SeeFixtures = () => {
+const Fixtures = () => {
   const [fixtures, setFixtures] = useState([]);
   const [country, setCountry] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -13,7 +15,7 @@ const SeeFixtures = () => {
   const [count] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState("");
 
   // Obtención del Access Token
@@ -22,7 +24,6 @@ const SeeFixtures = () => {
       if (isAuthenticated) {
         try {
           const token = await getAccessTokenSilently();
-          console.log("AccessToken obtenido:", token); // Log para verificar que el token se obtiene correctamente
           setAccessToken(token);
         } catch (error) {
           console.error("Error obteniendo el Access Token:", error);
@@ -31,8 +32,9 @@ const SeeFixtures = () => {
     };
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
+
   // Función para obtener los fixtures
-  const ShowSellableFixtures = async () => {
+  const fetchFixtures = async () => {
     try {
       if (isAuthenticated && accessToken) {
         const response = await getFixtures(
@@ -69,7 +71,7 @@ const SeeFixtures = () => {
   // Ejecutar fetchFixtures cuando cambien page, accessToken o isAuthenticated
   useEffect(() => {
     if (isAuthenticated && accessToken) {
-      ShowSellableFixtures();
+      fetchFixtures();
     }
   }, [page, accessToken, isAuthenticated]);
 
@@ -77,7 +79,7 @@ const SeeFixtures = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1); // Reiniciar a la página 1 para hacer la nueva búsqueda
-    ShowSellableFixtures();
+    fetchFixtures();
   };
 
   // Manejo del clic en un fixture
@@ -97,6 +99,51 @@ const SeeFixtures = () => {
       setPage(page + 1);
     }
   };
+
+  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
+
+  const filterFixturesIfIsNotAdmin = async (fixtures) => {
+    if (!isAdmin) {
+      try {
+        if (isAuthenticated && accessToken) {
+          const response = await getAvailableBonds(accessToken);
+          if (response.data) {
+            const filteredFixtures = response.data[1];
+            const uniqueFixtures = [];
+            const fixtureIds = new Set();
+
+            for (const fixture of filteredFixtures) {
+              if (!fixtureIds.has(fixture.fixtureId)) {
+                fixtureIds.add(fixture.fixtureId);
+                uniqueFixtures.push(fixture);
+              }
+            }
+
+            setFixtures((prevFixtures) => {
+              if (JSON.stringify(prevFixtures) !== JSON.stringify(uniqueFixtures)) {
+                return uniqueFixtures;
+              }
+              return prevFixtures;
+            });
+          } else {
+            console.error("Error al obtener los bonos:", response);
+          }
+        }
+      } catch (error) {
+        console.error("Error al obtener los bonos:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const filterAndSetFixtures = async () => {
+      await filterFixturesIfIsNotAdmin(fixtures);
+    };
+
+    if (isAuthenticated && accessToken) {
+      filterAndSetFixtures();
+    }
+  }, [fixtures, accessToken, isAuthenticated]);
 
   return (
     isAuthenticated && accessToken && (
@@ -121,23 +168,20 @@ const SeeFixtures = () => {
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
           />
-          <button type="submit">Buscar</button>
+          <button className="search-button" type="submit">
+            Buscar
+          </button>
         </form>
 
         <div className="fixtures-list-container">
           <ul className="fixtures-list">
             {fixtures.length > 0 ? (
               fixtures.map((fixture, index) => (
-                <li
-                  key={index}
-                  className="fixture-item"
-                  onClick={() => handleFixtureClick(fixture)}
-                >
-                  <p>
-                    {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
-                  </p>
-                  <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
-                </li>
+                <FixtureItem
+                key={index}
+                fixture={fixture}
+                handleFixtureClick={handleFixtureClick}
+              />
               ))
             ) : (
               <p>No se encontraron partidos.</p>
@@ -166,4 +210,4 @@ const SeeFixtures = () => {
   );
 };
 
-export default SeeFixtures;
+export default Fixtures;

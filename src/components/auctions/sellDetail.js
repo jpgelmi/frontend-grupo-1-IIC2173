@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getBonoByFixtureId, postAuction } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import MatchInfo from "../FixtureDetails/MatchInfo.js";
 
 
 const SellDetails = () => {
@@ -71,20 +72,7 @@ const SellDetails = () => {
   return (
     <div className="match-details-container">
       <h2>Detalles del partido</h2>
-      <h3>
-        {fixture.teams.home.name} vs {fixture.teams.away.name}
-      </h3>
-      <p>Equipo local: {fixture.teams.home.name}</p>
-      <p>Equipo visita: {fixture.teams.away.name}</p>
-      <p>Fecha: {new Date(fixture.fixture.date).toLocaleString()}</p>
-      <p>Estado: {fixture.fixture.status.long}</p>
-      <p>Liga: {fixture.league.name}</p>
-      <p>Ronda: {fixture.league.round}</p>
-      {bono ? (
-        <p>Bonos disponibles: {bono.bonosDisponibles}</p>
-      ) : (
-        <p>Bonos no disponibles</p>
-      )}
+      <MatchInfo fixture={fixture} bono={bono} />
       <div className="odds-container">
         <h3>Venta:</h3>
         <form onSubmit={(e) => {
@@ -98,14 +86,13 @@ const SellDetails = () => {
                   value={number} 
                   onChange={(e) => setNumber(e.target.value)}
                   min="0"
+                  max={bono.bonosDisponibles}
                 />
             </label>
             <button type="submit" className="button-buy">Enviar a subasta</button>
         </form>
-            
-        
       </div>
-      <button className="back-button" onClick={() => navigate("/showSellableFixtures")}>
+      <button className="back-button" onClick={() => navigate("/offers/showSellable")}>
         Back to Fixtures
       </button>
     </div>
