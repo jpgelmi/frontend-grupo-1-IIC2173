@@ -254,6 +254,28 @@ export const getAvailableBonds = async (token) => {
     }
   };
 
+export const modifyBono = async (token, fixtureId, bonoData, buyRequestId) => {
+  try {
+    console.log('Modifying bono:', bonoData);
+    const URL = `${BASE_URL}/bonos/`;
+    const response = await axios.put(URL, {
+      fixtureId,
+      bonoData,
+      buyRequestId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    console.error('Error al modificar el bono:', error);
+  }
+}
+
+
 
 export const postIsAmountAvailable = async (token, userId, amount) => {
   try {
