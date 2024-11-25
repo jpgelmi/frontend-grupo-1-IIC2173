@@ -47,10 +47,10 @@ const FixtureDetails = () => {
   // Obtener el bono por fixtureId
   useEffect(() => {
     const fetchBono = async () => {
-      if (!fixture || !accessToken) return;  // Asegurarse de que el fixture y el token estén listos
+      if (!fixture || !accessToken) return;
       try {
         setLoading(true);
-        console.log(fixture.fixture.id); // Asegúrate de que fixture.fixture.id esté disponible
+        console.log(fixture.fixture.id);
         const response = await getBonoByFixtureId(accessToken, fixture.fixture.id);
 
         if (response.status === 200) {

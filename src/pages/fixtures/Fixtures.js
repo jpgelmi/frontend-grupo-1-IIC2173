@@ -107,7 +107,6 @@ const Fixtures = () => {
       try {
         if (isAuthenticated && accessToken) {
           const response = await getAvailableBonds(accessToken);
-          console.log("Response:", response);
           if (response.data) {
             const filteredFixtures = response.data[1];
             const uniqueFixtures = [];

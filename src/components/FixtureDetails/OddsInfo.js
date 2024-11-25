@@ -2,6 +2,7 @@ import React from "react";
 import "./OddsInfo.css";
 
 const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
+
   return (
     <div className="odds-container">
       <h3><strong>Valores de apuestas</strong></h3>
