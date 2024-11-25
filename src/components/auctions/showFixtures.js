@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFixtures } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
+import "../FixtureItem/FixtureItem.css"
 import { useAuth0 } from "@auth0/auth0-react";
 
 const SeeFixtures = () => {
@@ -128,15 +129,38 @@ const SeeFixtures = () => {
           <ul className="fixtures-list">
             {fixtures.length > 0 ? (
               fixtures.map((fixture, index) => (
-                <li
-                  key={index}
-                  className="fixture-item"
-                  onClick={() => handleFixtureClick(fixture)}
-                >
-                  <p>
-                    {fixture.teams?.home?.name} vs {fixture.teams?.away?.name}
-                  </p>
-                  <p>{new Date(fixture.fixture?.date).toLocaleString()}</p>
+                <li className="fixture-item" onClick={() => handleFixtureClick(fixture)}>
+                  <div className="fixture-info">
+                    <p className="fixture-date">
+                      {new Date(fixture.fixture.date).toLocaleString([], { weekday: 'long', month: 'long', day: 'numeric' })}
+                      <br />
+                      {new Date(fixture.fixture.date).toLocaleString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                    <div className="vertical-line"></div>
+                    <div className="fixture-details">
+                      <div className="fixture-teams">
+                        <div className="team">
+                          <img
+                            src={fixture.teams.home.logo}
+                            alt={`${fixture.teams.home.name} logo`}
+                            className="team-logo"
+                          />
+                          <span>{fixture.teams.home.name}</span>
+                        </div>
+                        <div className="team">
+                          <img
+                            src={fixture.teams.away.logo}
+                            alt={`${fixture.teams.away.name} logo`}
+                            className="team-logo"
+                          />
+                          <span>{fixture.teams.away.name}</span>
+                        </div>
+                      </div>
+                      <div className="vertical-line-2"></div>
+                      <div className="odds">
+                      </div>
+                    </div>
+                  </div>
                 </li>
               ))
             ) : (

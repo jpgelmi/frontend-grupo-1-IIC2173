@@ -3,9 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getBonoByFixtureId, postAuction } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import "../FixtureDetails/MatchInfo.css";
 
 
 const SellDetails = () => {
+  const { user } = useAuth0();
+  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
   const location = useLocation();
   const navigate = useNavigate();
   const { fixture } = location.state || {};
@@ -70,42 +73,62 @@ const SellDetails = () => {
 
   return (
     <div className="match-details-container">
-      <h2>Detalles del partido</h2>
-      <h3>
-        {fixture.teams.home.name} vs {fixture.teams.away.name}
-      </h3>
-      <p>Equipo local: {fixture.teams.home.name}</p>
-      <p>Equipo visita: {fixture.teams.away.name}</p>
-      <p>Fecha: {new Date(fixture.fixture.date).toLocaleString()}</p>
-      <p>Estado: {fixture.fixture.status.long}</p>
-      <p>Liga: {fixture.league.name}</p>
-      <p>Ronda: {fixture.league.round}</p>
-      {bono ? (
-        <p>Bonos disponibles: {bono.bonosDisponibles}</p>
-      ) : (
-        <p>Bonos no disponibles</p>
-      )}
-      <div className="odds-container">
-        <h3>Venta:</h3>
-        <form onSubmit={(e) => {
-            e.preventDefault();
-            handleSell(fixture, number);
-        }}>
-            <label>
-                Cantidad a vender:
-                <input 
-                  type="number" 
-                  value={number} 
-                  onChange={(e) => setNumber(e.target.value)}
-                  min="0"
-                />
-            </label>
-            <button type="submit" className="button-buy">Enviar a subasta</button>
-        </form>
-            
-        
+      <div className="match-info">
+        <div className="teams-info">
+          <div className="team-head">
+            <img
+              src={fixture.teams.home.logo}
+              alt={`${fixture.teams.home.name} logo`}
+              className="team-head-logo"
+            />
+            <h2>{fixture.teams.home.name}</h2>
+          </div>
+          <div className="vs-text">vs</div>
+          <div className="team-head">
+            <img
+              src={fixture.teams.away.logo}
+              alt={`${fixture.teams.away.name} logo`}
+              className="team-head-logo"
+            />
+            <h2>{fixture.teams.away.name}</h2>
+          </div>
+        </div>
+        {/* Agregamos una linea vertical */}
+        <div className="vertical-match-line"></div>
+        <div className="match-details">
+          <p><strong>Equipo local:</strong> {fixture.teams.home.name}</p>
+          <p><strong>Equipo visita:</strong> {fixture.teams.away.name}</p>
+          <p><strong>Fecha:</strong> {new Date(fixture.fixture.date).toLocaleString()}</p>
+          <p><strong>Arbitro:</strong> {fixture.fixture.referee}</p>
+          <p><strong>Liga:</strong> {fixture.league.name}</p>
+          <p><strong>Ronda:</strong> {fixture.league.round}, {fixture.league.season}</p>
+          {bono ? (
+            !isAdmin ?
+            <p><strong>Bonos disponibles:</strong> {bono.bonosDisponibles}</p>
+            : <p><strong>Bonos disponibles desde central:</strong> {bono.bonosTotales}</p>
+          ) : (
+            <p>Bonos no disponibles</p>
+          )}
+        </div>
       </div>
-      <button className="back-button" onClick={() => navigate("/showSellableFixtures")}>
+      <h3>Venta:</h3>
+      <form onSubmit={(e) => {
+          e.preventDefault();
+          handleSell(fixture, number);
+      }}>
+          <label>
+              Cantidad a vender:
+              <input 
+                type="number" 
+                value={number} 
+                onChange={(e) => setNumber(e.target.value)}
+                min="0"
+                max={bono.bonosDisponibles}
+              />
+          </label>
+          <button type="submit" className="button-buy">Enviar a subasta</button>
+      </form>
+      <button className="back-button" onClick={() => navigate("/offers/showSellable")}>
         Back to Fixtures
       </button>
     </div>
