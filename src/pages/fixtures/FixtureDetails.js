@@ -39,7 +39,6 @@ const FixtureDetails = () => {
   }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleBuyBonds = (betType, teamName, odd, bono, fixtureId) => {
-    console.log("Bono recibido: ", bono);
     navigate("/buy-bonds", {
       state: { betType, teamName, odd, bono, fixtureId },
     });
@@ -123,9 +122,9 @@ const FixtureDetails = () => {
       <h2><strong>🔎 Detalles del partido</strong></h2>
       <h3>{isAdmin ? "Administrador" : "Cliente"}</h3>
       <MatchInfo fixture={fixture} bono={bono} />
-      {isAdmin ? 
+      {isAdmin ?
       <PrimaryButton>
-      Comprar bonos desde central 
+        Comprar bonos desde central
       </PrimaryButton>
       :
       <OddsInfo

@@ -102,17 +102,14 @@ const Fixtures = () => {
 
   const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
 
-  const filterFixturesIfIsAdmin = async (fixtures) => {
+  const filterFixturesIfIsNotAdmin = async (fixtures) => {
     if (!isAdmin) {
-      // Llamamos al endpoint /availableBonds
       const fetchBonds = async () => {
         try {
           if (isAuthenticated && accessToken) {
             const response = await getAvailableBonds(accessToken);
             console.log("Response:", response);
             if (response.data) {
-              const bonds = response.data;
-              console.log("Fixture IDs:", fixtures.map((fixture) => fixture.fixtureId));
               const filteredFixtures = response.data[1];
               const uniqueFixtures = [];
               const fixtureIds = new Set();
@@ -123,7 +120,6 @@ const Fixtures = () => {
                   uniqueFixtures.push(fixture);
                 }
               }
-              console.log("Unique fixtures:", uniqueFixtures);
 
               setFixtures(uniqueFixtures);
             } else {
@@ -140,14 +136,13 @@ const Fixtures = () => {
 
   useEffect(() => {
     const filterAndSetFixtures = async () => {
-      await filterFixturesIfIsAdmin(fixtures);
+      await filterFixturesIfIsNotAdmin(fixtures);
     };
 
     if (isAuthenticated && accessToken) {
       filterAndSetFixtures();
     }
   }, [fixtures, accessToken, isAuthenticated]);
-
 
   return (
     isAuthenticated && accessToken && (
