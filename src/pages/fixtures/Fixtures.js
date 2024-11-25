@@ -104,33 +104,35 @@ const Fixtures = () => {
 
   const filterFixturesIfIsNotAdmin = async (fixtures) => {
     if (!isAdmin) {
-      const fetchBonds = async () => {
-        try {
-          if (isAuthenticated && accessToken) {
-            const response = await getAvailableBonds(accessToken);
-            console.log("Response:", response);
-            if (response.data) {
-              const filteredFixtures = response.data[1];
-              const uniqueFixtures = [];
-              const fixtureIds = new Set();
+      try {
+        if (isAuthenticated && accessToken) {
+          const response = await getAvailableBonds(accessToken);
+          console.log("Response:", response);
+          if (response.data) {
+            const filteredFixtures = response.data[1];
+            const uniqueFixtures = [];
+            const fixtureIds = new Set();
 
-              for (const fixture of filteredFixtures) {
-                if (!fixtureIds.has(fixture.fixtureId)) {
-                  fixtureIds.add(fixture.fixtureId);
-                  uniqueFixtures.push(fixture);
-                }
+            for (const fixture of filteredFixtures) {
+              if (!fixtureIds.has(fixture.fixtureId)) {
+                fixtureIds.add(fixture.fixtureId);
+                uniqueFixtures.push(fixture);
               }
-
-              setFixtures(uniqueFixtures);
-            } else {
-              console.error("Error al obtener los bonos:", response);
             }
+
+            setFixtures((prevFixtures) => {
+              if (JSON.stringify(prevFixtures) !== JSON.stringify(uniqueFixtures)) {
+                return uniqueFixtures;
+              }
+              return prevFixtures;
+            });
+          } else {
+            console.error("Error al obtener los bonos:", response);
           }
-        } catch (error) {
-          console.error("Error al obtener los bonos:", error);
         }
-      };
-      fetchBonds();
+      } catch (error) {
+        console.error("Error al obtener los bonos:", error);
+      }
     }
   };
 
