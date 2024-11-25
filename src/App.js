@@ -18,6 +18,10 @@ import SidebarLayout from "./pages/layouts/SideBarLayout.js";
 import Dashboard from "./pages/dashboard/Dashboard.js";
 import { ThemeProvider } from './context/ThemeContext.js';
 import AddDiscount from "./pages/addDiscount/addDiscount.js";
+import AuctionDetails from './components/auctions/showAuctions.js';
+import SellDetails from "./components/auctions/sellDetail.js";
+import SeeFixtures from "./components/auctions/showFixtures.js";
+import SeeProposals from "./components/auctions/getProposals.js";
 
 function App() {
   return (
@@ -36,6 +40,10 @@ function App() {
           <Route path="/recomendaciones" element={<Recomendaciones />} /> 
           <Route path="*" element={<Missing />} />
           <Route path="/add-discount" element={<AddDiscount />} />
+          <Route path="/offers" element={<AuctionDetails />} /> 
+          <Route path="/auction/:id" element={<SellDetails />} /> 
+          <Route path="/offers/showSellable" element={< SeeFixtures />} /> 
+          <Route path="/offers/seeAuctions" element={< SeeProposals />} /> 
         </Route>
         <Route element={<SidebarLayout />}>
           <Route path="/wallet" element={<WalletBalance/>} />

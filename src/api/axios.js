@@ -403,3 +403,122 @@ export const getActiveJobs = async (token) => {
     throw error;
   }
 }
+
+export const getAuctions = async (token) => {
+  try {
+    console.log("DEWFE")
+    const response = await axios.get(`${BASE_URL}/auctions/buyAuction`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    console.log("Getting auctions", response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
+
+export const postAuction = async (token, fixture, number) => {
+  console.log("Posting", token, fixture, number)
+  try {
+    const response = await axios.post(`${BASE_URL}/auctions/offer`,
+      {
+      "fixture": fixture,
+      "number": number
+      },
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
+
+export const getProposals = async (token) => {
+  try {
+    console.log("Getting proposals", token)
+    const response = await axios.get(`${BASE_URL}/auctions/proposal`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    console.log("Getting auctions", response.data);
+    return response;
+  } catch (error) {
+    console.error('Error fetching Proposals:', error);
+    throw error;
+  }
+};
+
+export const acceptProposal = async (token, auction) => {
+  try {
+    console.log("Accepting proposal", auction)
+    auction.type = "acceptance";
+    const response = await axios.post(`${BASE_URL}/auctions/proposal`,
+      {
+      "auction": auction,
+      },
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
+
+export const rejectProposal = async (token, auction) => {
+  try {
+    auction.type = "rejection";
+    const response = await axios.post(`${BASE_URL}/auctions/proposal`,
+      {
+      "auction": auction
+      },
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
+
+export const proposeBuyAuction = async (token, auction) => {
+  try {
+    auction.type = "proposal";
+    auction.group_id = 1;
+    const response = await axios.post(`${BASE_URL}/auctions/buyAuction`,
+      {
+      "auction": auction
+      },
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
