@@ -46,16 +46,17 @@ const SeeProposals = () => {
         );
 
         if (response.status === 200) {
-          if (response.data.fixtures) {
-            setFixtures(response.data.fixtures);
+          const responses = response.data
+          if (responses) {
+            setProposals(responses);
             setTotalPages(response.data.pagination?.totalPages || 1);
           } else {
-            console.log("No se encontraron fixtures en la respuesta");
-            setFixtures([]);
+            console.log("No se encontraron proposals en la respuesta");
+            setProposals([]);
             setTotalPages(1);
           }
         } else {
-          console.error("Error al obtener los fixtures:", response);
+          console.error("Error al obtener las proposals:", response);
           setFixtures([]);
           setTotalPages(1);
         }
@@ -98,7 +99,6 @@ const SeeProposals = () => {
       setPage(page + 1);
     }
   };
-
   return (
     isAuthenticated && accessToken && (
       <div className="fixtures-container">
@@ -124,32 +124,43 @@ const SeeProposals = () => {
           />
           <button type="submit">Buscar</button>
         </form>
-
+  
         <div className="fixtures-list-container">
           <ul className="fixtures-list">
-            {fixtures.length > 0 ? (
-              fixtures.map((fixture, index) => (
+            {proposal.length > 0 ? (
+              proposal.map((proposal, index) => (
                 <li
                   key={index}
                   className="fixture-item"
-                  onClick={() => handleFixtureClick(fixture)}
-                ><p>ID de la Subasta: {proposal.auction_id}</p>
-                <p>ID del Fixture: {proposal.fixture_id}</p>
-                <p>Nombre de la Liga: {proposal.league_name}</p>
-                <p>Ronda: {proposal.round}</p>
-                <p>Resultado: {proposal.result}</p>
-                <p>Cantidad: {proposal.quantity}</p>
-                <p>ID del Grupo: {proposal.group_id}</p>
-                <button onClick={() => acceptProposal(proposal.auction_id)}>Accept Proposal</button>
-                <button onClick={() => rejectProposal(proposal.auction_id)}>Reject Proposal</button>
+                  onClick={() => handleFixtureClick(proposal)}
+                >
+                  <p>ID de la Subasta: {proposal.auction_id}</p>
+                  <p>ID del Fixture: {proposal.fixture_id}</p>
+                  <p>Nombre de la Liga: {proposal.league_name}</p>
+                  <p>Ronda: {proposal.round}</p>
+                  <p>Resultado: {proposal.result}</p>
+                  <p>Cantidad: {proposal.quantity}</p>
+                  <p>ID del Grupo: {proposal.group_id}</p>
+                  <button onClick={(e) => { 
+                    e.stopPropagation(); 
+                    acceptProposal(accessToken, proposal); 
+                  }}>
+                    Aceptar Propuesta
+                  </button>
+                  <button onClick={(e) => { 
+                    e.stopPropagation(); 
+                    rejectProposal(accessToken, proposal); 
+                  }}>
+                    Rechazar Propuesta
+                  </button>
                 </li>
               ))
             ) : (
-              <p>No se encontraron partidos.</p>
+              <p>No se encontraron propuestas.</p>
             )}
           </ul>
         </div>
-
+  
         {fixtures.length > 0 && (
           <div className="pagination">
             <button onClick={handlePrevPage} disabled={page === 1}>
@@ -169,6 +180,5 @@ const SeeProposals = () => {
       </div>
     )
   );
-};
-
+}
 export default SeeProposals;

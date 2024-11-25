@@ -368,8 +368,8 @@ export const getActiveJobs = async (token) => {
 
 export const getAuctions = async (token) => {
   try {
-    
-    const response = await axios.get(`${BASE_URL}/auctions/offers`, {
+    console.log("DEWFE")
+    const response = await axios.get(`${BASE_URL}/auctions/buyAuction`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -387,7 +387,7 @@ export const getAuctions = async (token) => {
 export const postAuction = async (token, fixture, number) => {
   console.log("Posting", token, fixture, number)
   try {
-    const response = await axios.post(`${BASE_URL}/auctions/postAuction`,
+    const response = await axios.post(`${BASE_URL}/auctions/offer`,
       {
       "fixture": fixture,
       "number": number
@@ -408,7 +408,7 @@ export const postAuction = async (token, fixture, number) => {
 export const getProposals = async (token) => {
   try {
     console.log("Getting proposals", token)
-    const response = await axios.get(`${BASE_URL}/auctions/proposals`, {
+    const response = await axios.get(`${BASE_URL}/auctions/proposal`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -423,12 +423,13 @@ export const getProposals = async (token) => {
   }
 };
 
-export const acceptProposal = async (token, auction_id) => {
+export const acceptProposal = async (token, auction) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auctions/handlePorposal`,
+    console.log("Accepting proposal", auction)
+    auction.type = "acceptance";
+    const response = await axios.post(`${BASE_URL}/auctions/proposal`,
       {
-      "auction_id": auction_id,
-      "type": "acceptance"
+      "auction": auction,
       },
       {
       headers: {
@@ -443,12 +444,33 @@ export const acceptProposal = async (token, auction_id) => {
   }
 };
 
-export const rejectProposal = async (token, auction_id) => {
+export const rejectProposal = async (token, auction) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auctions/handlePorposal`,
+    auction.type = "rejection";
+    const response = await axios.post(`${BASE_URL}/auctions/proposal`,
       {
-      "auction_id": auction_id,
-      "type": "rejection"
+      "auction": auction
+      },
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error('Error fetching Auctions:', error);
+    throw error;
+  }
+};
+
+export const proposeBuyAuction = async (token, auction) => {
+  try {
+    auction.type = "proposal";
+    auction.group_id = 1;
+    const response = await axios.post(`${BASE_URL}/auctions/buyAuction`,
+      {
+      "auction": auction
       },
       {
       headers: {
