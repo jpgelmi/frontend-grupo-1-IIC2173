@@ -1,0 +1,96 @@
+
+.wallet-page {
+    /* max-width: 1200px; */
+    width: 100%;
+    height: 87.5vh;
+    margin: 0 auto;
+    font: 'semiBold';
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  .wallet-content {
+    margin-top: 3%;
+    margin-left: 15%;
+    width: 70%;
+  }
+  
+  .wallet-page-title {
+    text-align: left;
+    color: black;
+    font: 'semiBold';
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .wallet-balance {
+    font-size: 2em;
+    font: 'semiBold';
+    color: black;
+    text-align: left;
+
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* .button-group button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  } */
+  
+  /* .button-group button:hover {
+    background-color: #0056b3;
+  } */
+
+  .wallet-container {
+    max-width: 400px;
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .wallet-page-title {
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .wallet-subtitle {
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  
+  .wallet-balance {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .wallet-info{
+    text-align: 'left';
+    font-size: '1.2em';
+    font: 'semiBold';
+    color: 'black';
+    margin-bottom: '20px' 
+   }

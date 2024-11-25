@@ -1,0 +1,61 @@
+/* ManualCarouselSection.css */
+.manual-carousel-section {
+  position: relative; /* Cambia a relative para que se ajuste dentro del contenedor */
+  top: 10px;
+  /* overflow: hidden; */
+  width: 100%; /* Asegúrate de que ocupe el 100% del ancho del contenedor */
+  height: 80vh; /* Ocupa el 100% de la altura de la ventana */
+  /* border-bottom: 2px solid #ccc; */
+  margin-bottom: 0; 
+}
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%; /* Asegúrate de que los elementos del carrusel utilicen el 100% de su altura */
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.carousel-item.active {
+  left: 0;
+  opacity: 1;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 20%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border 0.3s ease;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-button:hover {
+  border: 2px solid black; /* Borde al hacer hover */
+}
+
+.carousel-button svg {
+  width: 20px;
+  height: 20px;
+}

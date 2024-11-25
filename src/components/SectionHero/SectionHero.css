@@ -1,0 +1,87 @@
+/* SectionHero.css */
+.nc-SectionHero {
+  position: relative;
+  height: 100%;
+}
+
+.section-hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  height: 50%;
+  width: 100%;
+  margin-left: 7.5%;
+}
+
+@media (min-width: 1024px) {
+  .section-hero-container {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+  }
+}
+
+.section-hero-content {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 1280px) {
+  .section-hero-content {
+    max-width: 600px;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+}
+
+.section-hero-heading {
+  font-size: 3rem;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .section-hero-heading {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-hero-heading {
+    font-size: 5rem;
+  }
+}
+
+.section-hero-subheading {
+  display: block;
+  font-size: 1rem;
+  color: #666;
+}
+
+@media (min-width: 1280px) {
+  .section-hero-subheading {
+    font-size: 1.125rem;
+  }
+}
+
+.section-hero-image {
+  width: 100%;
+  animation: fade-in-right 1s ease-in-out;
+  align-self: flex-end;
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

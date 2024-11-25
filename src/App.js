@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Wallet from "./components/wallet/Wallet.js";
-import Home from "./components/Home.js";
-import Fixtures from "./components/fixtures/Fixtures.js";
-import FixtureDetails from "./components/fixtures/FixtureDetails.js";
-import BuyBonds from "./components/buyBonds/BuyBonds.js";
-import Unauthorized from "./components/Unauthorized.js";
-import BuyRequests from "./components/buyRequests/BuyRequests.js";
-import Missing from "./components/Missing.js";
-import LoginBotton from "./components/LoginButton.js";
-import CompletedPurchase from './components/webpay/CompletedPurchase.js';
-import Recomendaciones from './components/recomendaciones.js';
+import WalletBalance from "./pages/wallet/WalletBalance.js";
+import AddFunds from "./pages/wallet/AddFunds.js";
+import Home from "./pages/home/Home.js";
+import Fixtures from "./pages/fixtures/Fixtures.js";
+import FixtureDetails from "./pages/fixtures/FixtureDetails.js";
+import BuyBonds from "./pages/buyBonds/BuyBonds.js";
+import Unauthorized from "./pages/Unauthorized.js";
+import BuyRequests from "./pages/buyRequests/BuyRequests.js";
+import Missing from "./pages/Missing.js";
+import LoginBotton from "./components/Buttons/LoginButton.js";
+import CompletedPurchase from './pages/webpay/CompletedPurchase.js';
+import Recomendaciones from './pages/recomendaciones/recomendaciones.js';
+import MainLayout from "./pages/layouts/MainLayout.js";
+import SidebarLayout from "./pages/layouts/SideBarLayout.js";
+import Dashboard from "./pages/dashboard/Dashboard.js";
+import { ThemeProvider } from './context/ThemeContext.js';
+import AddDiscount from "./pages/addDiscount/addDiscount.js";
 import AuctionDetails from './components/auctions/showAuctions.js';
 import SellDetails from "./components/auctions/sellDetail.js";
 import SeeFixtures from "./components/auctions/showFixtures.js";
@@ -19,30 +25,32 @@ import SeeProposals from "./components/auctions/getProposals.js";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<LoginBotton />} />
-      <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route path="/completed-purchase" element={<CompletedPurchase />} />
-      <Route
-        path="/wallet/*"
-        element={<Wallet/>}
-      />
-      <Route path="/fixtures" element={<Fixtures />} />
-      <Route path="/match/:id" element={<FixtureDetails />} />
-      <Route
-        path="/buy-bonds"
-        element={<BuyBonds />}
-      />
-      <Route path="/buy-requests" element={<BuyRequests />} />
-      <Route path="/" element={<Home />} />
-      <Route path="*" element={<Missing />} />
-      <Route path="/recomedaciones" element={<Recomendaciones />} /> 
-      <Route path="/offers" element={<AuctionDetails />} /> 
-      <Route path="/auction/:id" element={<SellDetails />} /> 
-      <Route path="/offers/showSellable" element={< SeeFixtures />} /> 
-      <Route path="/offers/seeAuctions" element={< SeeProposals />} /> 
-    </Routes>
+    <ThemeProvider>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/login" element={<LoginBotton />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/completed-purchase" element={<CompletedPurchase />} />
+          <Route path="/wallet/add-funds" element={<AddFunds/>} />
+          <Route path="/fixtures" element={<Fixtures />} />
+          <Route path="/match/:id" element={<FixtureDetails />} />
+          <Route path="/buy-bonds" element={<BuyBonds />} />
+          <Route path="/buy-requests" element={<BuyRequests />} />
+          <Route path="/recomendaciones" element={<Recomendaciones />} /> 
+          <Route path="*" element={<Missing />} />
+          <Route path="/add-discount" element={<AddDiscount />} />
+        </Route>
+        <Route element={<SidebarLayout />}>
+          <Route path="/wallet" element={<WalletBalance/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/offers" element={<AuctionDetails />} /> 
+          <Route path="/auction/:id" element={<SellDetails />} /> 
+          <Route path="/offers/showSellable" element={< SeeFixtures />} /> 
+          <Route path="/offers/seeAuctions" element={< SeeProposals />} /> 
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 

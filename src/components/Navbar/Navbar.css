@@ -1,0 +1,72 @@
+/* Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 80px;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 0px;
+  }
+  
+  .logout-button-container {
+    /* position: absolute; */
+    display: flex;
+    /* right: 10px; */
+    align-items: center;
+  }
+  
+  .logo-button-container {
+    /* position: absolute; */
+    display: flex;
+    /* left: 10px; */
+    align-items: center;
+  }
+
+  .menu-toggle {
+    /* La ocultamos */
+    display: none;
+  }
+  
+  @media (max-width: 1080px) {
+    .nav-buttons {
+      flex-direction: column;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: none; /* Initially hidden */
+    }
+  
+    .nav-buttons.show {
+      display: flex; /* Show when toggled */
+    }
+  
+    .navbar {
+      justify-content: space-between;
+    }
+  
+    .menu-toggle {
+      display: block;
+      cursor: pointer;
+      position: absolute;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 394px) {
+    .menu-toggle {
+      font-size: 1rem;
+    }
+  }

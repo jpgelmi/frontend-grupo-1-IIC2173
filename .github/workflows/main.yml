@@ -2,9 +2,9 @@ name: Frontend CI
 
 on:
   push:
-    branches: [ master, main, develop, actions ]
+    branches: [main, master]
   pull_request:
-    branches: [ master ]
+    branches: [ main, master ]
 
 jobs:
   lint:
@@ -17,12 +17,48 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.11.1'
+          cache: 'npm'
+
+      - name: Clear npm cache
+        run: npm cache clean --force
 
       - name: Install dependencies
         run: npm install
 
       - name: Run ESLint
         run: npm run lint
+      
+      - name: Build project
+        run: CI=false npm run build --verbose
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
+
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete --follow-symlinks 
+        env:
+          SOURCE_DIR: "build"
+          AWS_S3_BUCKET: "frontend-proyecto-arquisis-bucket"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-2'  # Ajusta según la región de tu bucket S3
+
+      - name: Invalidate CloudFront Cache
+        uses: chetan/invalidate-cloudfront-action@v1
+        env:
+          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          PATHS: '/*'
+          AWS_REGION: 'us-east-2'  # Adjust to your AWS region
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Print npm log file (optional)
+        if: failure()
+        run: cat /home/runner/.npm/_logs/*.log
+
 
   lighthouse:
     runs-on: ubuntu-latest
