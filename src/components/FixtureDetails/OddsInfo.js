@@ -1,7 +1,10 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./OddsInfo.css";
 
 const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+  console.log(user);
 
   return (
     <div className="odds-container">
