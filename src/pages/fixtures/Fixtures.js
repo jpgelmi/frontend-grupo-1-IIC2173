@@ -144,7 +144,7 @@ const Fixtures = () => {
       filterAndSetFixtures();
     }
   }, [fixtures, accessToken, isAuthenticated]);
-
+  console.log("fixtures", fixtures);
   return (
     isAuthenticated && accessToken && (
       <div className="fixtures-container">

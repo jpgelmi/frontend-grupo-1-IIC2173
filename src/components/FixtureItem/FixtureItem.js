@@ -2,6 +2,9 @@ import React from "react";
 import "./FixtureItem.css";
 
 const FixtureItem = ({ fixture, handleFixtureClick }) => {
+  if (!fixture.odds[0].values[0]) {
+    return null;
+  };
   return (
     <li className="fixture-item" onClick={() => handleFixtureClick(fixture)}>
       <div className="fixture-info">
