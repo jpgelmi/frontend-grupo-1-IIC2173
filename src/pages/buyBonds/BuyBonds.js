@@ -12,7 +12,9 @@ const BuyBonds = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { betType, teamName, odd, bond, fixtureId } = location.state;
+  const { betType, teamName, odd, bono, fixtureId } = location.state;
+  const bond = bono.bonosDisponibles;
+  console.log('Bond:', bond);
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [accessToken, setAccessToken] = useState('');

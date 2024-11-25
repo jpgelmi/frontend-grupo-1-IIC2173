@@ -17,7 +17,7 @@ const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
                     "Home",
                     fixture.teams.home.name,
                     fixture.odds[0].values[0].odd,
-                    bono.bonosDisponibles,
+                    bono,
                     fixture.fixture.id
                   )
                 }
