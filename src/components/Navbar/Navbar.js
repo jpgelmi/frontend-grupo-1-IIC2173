@@ -28,6 +28,9 @@ const Navbar = () => {
         <NavButton to="/fixtures" icon={Calendar}>Partidos disponibles</NavButton>
         <NavButton to="/dashboard" icon={DollarSign}>Mis apuestas</NavButton>
         <NavButton to="/recomendaciones" icon={TrendingUp}>Recomendaciones</NavButton>
+        <NavButton to="/offers" icon={TrendingUp}>Subastas</NavButton>
+        <NavButton to="/offers/showSellable" icon={TrendingUp}>Subastar</NavButton>
+        <NavButton to="/offers/seeAuctions" icon={TrendingUp}>Propuestas</NavButton>
       </div>
       <div className="logout-button-container">
         <LogOutButton />
