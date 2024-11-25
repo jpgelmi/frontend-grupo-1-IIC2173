@@ -4,11 +4,12 @@ import LogOutButton from '../Buttons/LogoutButton.js';
 import NavButton from '../Buttons/NavButton.js';
 import LogoButton from '../Buttons/LogoButton.js';
 import './Navbar.css';
-import {Home,  Wallet, Calendar, DollarSign, TrendingUp, LogOut, Settings, HelpCircle } from 'lucide-react';
+import { Home, Wallet, Calendar, DollarSign, TrendingUp, LogOut, Settings, HelpCircle } from 'lucide-react';
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -28,9 +29,13 @@ const Navbar = () => {
         <NavButton to="/fixtures" icon={Calendar}>Partidos disponibles</NavButton>
         <NavButton to="/dashboard" icon={DollarSign}>Mis apuestas</NavButton>
         <NavButton to="/recomendaciones" icon={TrendingUp}>Recomendaciones</NavButton>
-        <NavButton to="/offers" icon={TrendingUp}>Subastas</NavButton>
-        <NavButton to="/offers/showSellable" icon={TrendingUp}>Subastar</NavButton>
-        <NavButton to="/offers/seeAuctions" icon={TrendingUp}>Propuestas</NavButton>
+        {isAdmin && (
+          <>
+            <NavButton to="/offers" icon={TrendingUp}>Subastas</NavButton>
+            <NavButton to="/offers/showSellable" icon={TrendingUp}>Subastar</NavButton>
+            <NavButton to="/offers/seeAuctions" icon={TrendingUp}>Propuestas</NavButton>
+          </>
+        )}
       </div>
       <div className="logout-button-container">
         <LogOutButton />
@@ -43,3 +48,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
