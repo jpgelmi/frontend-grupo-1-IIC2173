@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProposals, acceptProposal, rejectProposal } from "../../api/axios.js";
-import "../style/Fixtures.css";
+import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const SeeProposals = () => {

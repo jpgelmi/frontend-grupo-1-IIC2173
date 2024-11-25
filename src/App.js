@@ -40,14 +40,14 @@ function App() {
           <Route path="/recomendaciones" element={<Recomendaciones />} /> 
           <Route path="*" element={<Missing />} />
           <Route path="/add-discount" element={<AddDiscount />} />
-        </Route>
-        <Route element={<SidebarLayout />}>
-          <Route path="/wallet" element={<WalletBalance/>} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/offers" element={<AuctionDetails />} /> 
           <Route path="/auction/:id" element={<SellDetails />} /> 
           <Route path="/offers/showSellable" element={< SeeFixtures />} /> 
           <Route path="/offers/seeAuctions" element={< SeeProposals />} /> 
+        </Route>
+        <Route element={<SidebarLayout />}>
+          <Route path="/wallet" element={<WalletBalance/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
     </ThemeProvider>
