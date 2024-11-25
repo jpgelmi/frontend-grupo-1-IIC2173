@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { getProposals, acceptProposal, rejectProposal } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
+
 
 const SeeProposals = () => {
   const [fixtures, setFixtures] = useState([]);
-  const [proposal, setProposals] = useState([]);
+  const [proposals, setProposals] = useState([]);
   const [country, setCountry] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -48,7 +50,8 @@ const SeeProposals = () => {
         if (response.status === 200) {
           const responses = response.data
           if (responses) {
-            setProposals(responses);
+            setProposals(responses.proposals);
+            setFixtures(responses.fixtures);
             setTotalPages(response.data.pagination?.totalPages || 1);
           } else {
             console.log("No se encontraron proposals en la respuesta");
@@ -84,7 +87,6 @@ const SeeProposals = () => {
 
   // Manejo del clic en un fixture
   const handleFixtureClick = (fixture) => {
-    navigate(`/auction/${fixture.fixture.id}`, { state: { fixture } });
   };
 
   // Manejo de la paginación
@@ -99,6 +101,11 @@ const SeeProposals = () => {
       setPage(page + 1);
     }
   };
+
+  const getFixtureById = (fixtureId) => {
+    return fixtures.find(fixture => fixture.fixtureId === fixtureId);
+  }
+
   return (
     isAuthenticated && accessToken && (
       <div className="fixtures-container">
@@ -126,39 +133,50 @@ const SeeProposals = () => {
         </form>
   
         <div className="fixtures-list-container">
-          <ul className="fixtures-list">
-            {proposal.length > 0 ? (
-              proposal.map((proposal, index) => (
-                <li
-                  key={index}
-                  className="fixture-item"
-                  onClick={() => handleFixtureClick(proposal)}
-                >
-                  <p>ID de la Subasta: {proposal.auction_id}</p>
-                  <p>ID del Fixture: {proposal.fixture_id}</p>
-                  <p>Nombre de la Liga: {proposal.league_name}</p>
-                  <p>Ronda: {proposal.round}</p>
-                  <p>Resultado: {proposal.result}</p>
-                  <p>Cantidad: {proposal.quantity}</p>
-                  <p>ID del Grupo: {proposal.group_id}</p>
-                  <button onClick={(e) => { 
+        <ul className="fixtures-list">
+          {proposals.length > 0 ? (
+            proposals.map((proposal, index) => {
+              const fixture = getFixtureById(proposal.fixture_id);
+              return (
+                <li key={index} className="fixture-item">
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+  <p style={{ marginRight: '10px' }}><strong>Grupo Ofertante:</strong> {proposal.group_id}</p>
+  <p style={{ marginRight: '10px' }}> </p>
+  <p><strong>Cantidad:</strong> {proposal.quantity}</p>
+</div>
+                  
+                  {fixture && (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <FixtureItem
+                        key={index}
+                        fixture={fixture}
+                        handleFixtureClick={handleFixtureClick}
+                      />
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  
+                  <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
                     acceptProposal(accessToken, proposal); 
                   }}>
                     Aceptar Propuesta
                   </button>
-                  <button onClick={(e) => { 
+                  <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
                     rejectProposal(accessToken, proposal); 
                   }}>
                     Rechazar Propuesta
                   </button>
+                </div>
+
                 </li>
-              ))
-            ) : (
-              <p>No se encontraron propuestas.</p>
-            )}
-          </ul>
+              );
+            })
+          ) : (
+            <p>No se encontraron propuestas.</p>
+          )}
+        </ul>
         </div>
   
         {fixtures.length > 0 && (

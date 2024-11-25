@@ -1,15 +1,35 @@
-import React from "react";
 import "./MatchInfo.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
+import React, { useState, useEffect } from "react";
+
 
 const MatchInfo = ({ fixture, bono }) => {
-
+  const [bond, setBono] = useState(bono);
   const { user } = useAuth0();
   const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
 
   console.log('fixture', fixture);
-  console.log('bono', bono);
-  const descuento = bono.precio != 1000 ? `con un ${(1000 - bono.precio)/10}% de descuento!` : '';
+  console.log('bono', bond);
+  const descuento = bond.precio != 1000 ? `con un ${(1000 - bond.precio)/10}% de descuento!` : '';
+
+  useEffect(() => {
+    const handleWebSocketMessage = (data) => {
+      console.log("Mensaje recibido:", data.bonoActualizado);
+      console.log("Fixture actual:", fixture);
+      if (data.bonoActualizado.fixtureId === fixture.fixtureId.toString()) {
+        console.log("Actualizando bono...");
+        setBono(data.bonoActualizado);
+      }
+    };
+
+    connectWebSocket(handleWebSocketMessage);
+
+    return () => {
+      disconnectWebSocket();
+    };
+  }, [fixture]);
+
 
   return (
     <div className="match-info">
@@ -41,15 +61,15 @@ const MatchInfo = ({ fixture, bono }) => {
         <p><strong>Arbitro:</strong> {fixture.fixture.referee}</p>
         <p><strong>Liga:</strong> {fixture.league.name}</p>
         <p><strong>Ronda:</strong> {fixture.league.round}, {fixture.league.season}</p>
-        {bono ? (
+        {bond ? (
           !isAdmin ?
-          <p><strong>Bonos disponibles:</strong> {bono.bonosDisponibles}</p>
-          : <p><strong>Bonos disponibles desde central:</strong> {bono.bonosTotales}</p>
+          <p><strong>Bonos disponibles:</strong> {bond.bonosDisponibles}</p>
+          : <p><strong>Bonos disponibles desde central:</strong> {bond.bonosTotales}</p>
         ) : (
           <p>Bonos no disponibles</p>
         )}
-        {bono ? (
-          <p><strong>Precio por bono:</strong> ${bono.precio} {descuento}</p>
+        {bond ? (
+          <p><strong>Precio por bono:</strong> ${bond.precio} {descuento}</p>
         ) : (
           <p></p>
         )}
