@@ -5,8 +5,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar({ isOpen }) {
-  const { logout, isAuthenticated } = useAuth0();
+  const { logout, isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
 
   const menuItems = [
     { icon: Home, label: 'Inicio', active: true, to: '/' },
@@ -14,18 +15,23 @@ export default function Sidebar({ isOpen }) {
     { icon: Calendar, label: 'Partidos disponibles', active: true, to: '/fixtures' },
     { icon: DollarSign, label: 'Mis apuestas', active: true, to: '/dashboard' },
     { icon: TrendingUp, label: 'Recomendaciones', active: true, to: '/recomendaciones' },
+    ...(isAdmin ? [
+      { icon: TrendingUp, label: 'Comprar Subastas', active: true, to: '/offers' },
+      { icon: TrendingUp, label: 'Subastar Partidos', active: true, to: '/offers/ShowSellable' },
+      { icon: TrendingUp, label: 'Ver Propuestas', active: true, to: '/offers/seeAuctions' },
+    ] : []),
     { icon: LogOut, label: 'Cerrar sesión', active: true, to: '/logout' },
     { icon: Settings, label: 'Settings' },
     { icon: HelpCircle, label: 'Help' },
   ];
 
   const handleClick = (item) => {
-    if (item.to == "/logout") {
-    logout();
-  } else {
-    navigate(item.to);
+    if (item.to === "/logout") {
+      logout();
+    } else {
+      navigate(item.to);
+    }
   }
-}
 
   return (
     <aside
@@ -36,7 +42,7 @@ export default function Sidebar({ isOpen }) {
       <div className="p-6">
         <Link className="text-xl font-bold text-gray-800 dark:text-white" to="/">
           ⚽ CoolGoat
-          </Link>
+        </Link>
       </div>
       
       <nav className="mt-6">
@@ -60,3 +66,4 @@ export default function Sidebar({ isOpen }) {
     </aside>
   );
 }
+
