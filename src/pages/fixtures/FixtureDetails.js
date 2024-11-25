@@ -8,6 +8,7 @@ import MatchInfo from "../../components/FixtureDetails/MatchInfo.js";
 import OddsInfo from "../../components/FixtureDetails/OddsInfo.js";
 import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 import Swal from "sweetalert2";
+import PrimaryButton from "../../components/Buttons/PrimaryButton.js";
 
 const FixtureDetails = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const FixtureDetails = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
 
-  const isAdmin = user.user_roles.includes("Admin IIC2173");
+  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
 
   console.log("Is amdin:", isAdmin);
 
@@ -38,7 +39,6 @@ const FixtureDetails = () => {
   }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleBuyBonds = (betType, teamName, odd, bono, fixtureId) => {
-    console.log("Bono recibido: ", bono);
     navigate("/buy-bonds", {
       state: { betType, teamName, odd, bono, fixtureId },
     });
@@ -47,10 +47,10 @@ const FixtureDetails = () => {
   // Obtener el bono por fixtureId
   useEffect(() => {
     const fetchBono = async () => {
-      if (!fixture || !accessToken) return;  // Asegurarse de que el fixture y el token estén listos
+      if (!fixture || !accessToken) return;
       try {
         setLoading(true);
-        console.log(fixture.fixture.id); // Asegúrate de que fixture.fixture.id esté disponible
+        console.log(fixture.fixture.id);
         const response = await getBonoByFixtureId(accessToken, fixture.fixture.id);
 
         if (response.status === 200) {
@@ -122,12 +122,12 @@ const FixtureDetails = () => {
       <h2><strong>🔎 Detalles del partido</strong></h2>
       <h3>{isAdmin ? "Administrador" : "Cliente"}</h3>
       <MatchInfo fixture={fixture} bono={bono} />
-      <OddsInfo
+      {<OddsInfo
         fixture={fixture}
         bono={bono}
         oddsAvailable={oddsAvailable}
         handleBuyBonds={handleBuyBonds}
-      />
+      />}
       <div>
       <button className="back-button" onClick={() => navigate("/fixtures")}>
         Volver a partidos disponibles
