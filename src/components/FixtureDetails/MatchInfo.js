@@ -3,6 +3,8 @@ import "./MatchInfo.css";
 
 const MatchInfo = ({ fixture, bono }) => {
 
+  console.log('fixture', fixture);
+  console.log('bono', bono);
   const descuento = bono.precio != 1000 ? `con un ${(1000 - bono.precio)/10}% de descuento!` : '';
 
   return (

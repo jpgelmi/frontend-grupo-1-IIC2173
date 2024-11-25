@@ -15,8 +15,8 @@ const OddsInfo = ({ fixture, bono, oddsAvailable, handleBuyBonds }) => {
                 className="button-buy"
                 onClick={() =>
                   handleBuyBonds(
-                    "Admin",
-                    "Admin",
+                    "admin",
+                    "admin",
                     fixture.odds[0].values[0].odd,
                     bono,
                     fixture.fixture.id

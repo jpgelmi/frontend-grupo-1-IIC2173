@@ -26,13 +26,21 @@ export default function BetsTable({ bets }) {
   };
 
   const getOddForBet = (bet) => {
-    return bet.fixture.odds[0].values.find(
+    const value =bet.fixture.odds[0].values.find(
       (value) => value.value === bet.request.betType
-    ).odd;
+    );
+    if (value){
+      return value.odd;
+    } else {
+      return 1;
+    }
   };
 
   const getBettedTeam = (bet) => {
-    if (bet.request.betType != "draw") {
+    if (bet.request.betType == "admin" || bet.request.betType == "Admin"){
+      return "Admin request";
+    }
+    else if (bet.request.betType != "draw") {
       return bet.fixture.teams[bet.request.betType].name;
     } else {
       return "Empate";

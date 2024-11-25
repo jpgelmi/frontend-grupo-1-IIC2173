@@ -122,12 +122,7 @@ const FixtureDetails = () => {
       <h2><strong>🔎 Detalles del partido</strong></h2>
       <h3>{isAdmin ? "Administrador" : "Cliente"}</h3>
       <MatchInfo fixture={fixture} bono={bono} />
-      {isAdmin ?
-      <PrimaryButton>
-        Comprar bonos desde central
-      </PrimaryButton>
-      :
-      <OddsInfo
+      {<OddsInfo
         fixture={fixture}
         bono={bono}
         oddsAvailable={oddsAvailable}
