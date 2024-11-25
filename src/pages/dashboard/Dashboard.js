@@ -41,6 +41,7 @@ export default function Dashboard() {
     const fetchBuyRequests = async () => {
       if (isAuthenticated && accessToken) {
         const data = await getBuyRequestsByUser(accessToken);
+        console.log(data);
         setBuyRequests(data);
 
         const fixtureDetails = {};

@@ -1,11 +1,19 @@
+import { Variable } from "lucide-react";
+
 function transformBetData(buyRequests, fixtures) {
     return buyRequests.map((request) => {
       const fixture = fixtures[request.fixtureId]
       if (!fixture) {
         return null; // O maneja el caso donde no se encuentra el fixture correspondiente
       }
+      const finalValue = fixture.odds[0].values.find(value => value.value === request.betType);
+      var finalOdd;
+      if (!finalValue) {
+        finalOdd = 1;
+      } else {
+        finalOdd = finalValue.odd;
+      }
       
-      if (request.createdAt) {console.log("Request: ", request);}
       return {
         id: request._id,
         fixture: {
@@ -31,13 +39,13 @@ function transformBetData(buyRequests, fixtures) {
         },
         ticketLink: request.ticketLink || `https://pdf-bucket-unique-name.s3.us-east-2.amazonaws.com/boletas/compra_${request.uuid}.pdf`,
         // buscamos la odd cuyo value es el mismo betType
-        odd: parseFloat(fixture.odds[0].values.find(value => value.value === request.betType).odd)
+        odd: finalOdd,
       };
     }).filter(item => item !== null); // Filtra los elementos nulos
   }
 
   function calculateStats(betData) {
-    console.log("betData: ", betData);
+    // console.log("betData: ", betData);
     let correctCount = 0;
     let wrongCount = 0;
     let pendingCount = 0;

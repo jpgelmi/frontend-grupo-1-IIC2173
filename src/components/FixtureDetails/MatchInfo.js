@@ -1,8 +1,14 @@
 import React from "react";
 import "./MatchInfo.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MatchInfo = ({ fixture, bono }) => {
 
+  const { user } = useAuth0();
+  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
+
+  console.log('fixture', fixture);
+  console.log('bono', bono);
   const descuento = bono.precio != 1000 ? `con un ${(1000 - bono.precio)/10}% de descuento!` : '';
 
   return (
@@ -36,7 +42,9 @@ const MatchInfo = ({ fixture, bono }) => {
         <p><strong>Liga:</strong> {fixture.league.name}</p>
         <p><strong>Ronda:</strong> {fixture.league.round}, {fixture.league.season}</p>
         {bono ? (
+          !isAdmin ?
           <p><strong>Bonos disponibles:</strong> {bono.bonosDisponibles}</p>
+          : <p><strong>Bonos disponibles desde central:</strong> {bono.bonosTotales}</p>
         ) : (
           <p>Bonos no disponibles</p>
         )}
