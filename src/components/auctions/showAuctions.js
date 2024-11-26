@@ -80,12 +80,15 @@ const AuctionDetails = () => {
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <button className="button-buy" onClick={(e) => { 
                       e.stopPropagation(); 
-                      alert("Propuesta Enviada");
                       proposeBuyAuction(accessToken, detail); 
                       Swal.fire({
                         title: "Proposición realizada",
                         icon: "success",
                         confirmButtonText: "Aceptar",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          window.location.reload();
+                        }
                       });
                     }}>
                       Realizar proposición

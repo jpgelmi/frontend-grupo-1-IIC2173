@@ -6,15 +6,21 @@ import applyDiscount from './applyDiscount.js';
 import Swal from 'sweetalert2';
 
 const BuyBonds = () => {
+  const { getAccessTokenSilently, isAuthenticated, user} = useAuth0();
+  const isAdmin = user?.user_roles?.includes('Admin IIC2173');
+  const navigate = useNavigate();
+
+  if (!isAdmin) {
+    navigate('/AdminError');
+    return null;
+  }
+
   const [numBonds, setNumBonds] = useState(1);
   const location = useLocation();
-  const navigate = useNavigate();
   
   const { fixture, bono } = location.state;
 
-  const { getAccessTokenSilently, isAuthenticated, user} = useAuth0();
   const [accessToken, setAccessToken] = useState('');
-  const isAdmin = user?.user_roles?.includes('Admin IIC2173');
   useEffect(() => {
     const getToken = async () => {
       if (isAuthenticated) {

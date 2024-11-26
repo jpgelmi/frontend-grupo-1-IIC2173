@@ -161,23 +161,31 @@ const SeeProposals = () => {
                   
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
+                    acceptProposal(accessToken, proposal); 
                     Swal.fire({
                       title: "Propuesta aceptada",
                       icon: "success",
                       confirmButtonText: "Aceptar",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.reload();
+                      }
                     });
-                    acceptProposal(accessToken, proposal); 
                   }}>
                     Aceptar Propuesta
                   </button>
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
+                    rejectProposal(accessToken, proposal); 
                     Swal.fire({
                       title: "Propuesta aceptada",
                       icon: "error",
                       confirmButtonText: "Aceptar",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.reload();
+                      }
                     });
-                    rejectProposal(accessToken, proposal); 
                   }}>
                     Rechazar Propuesta
                   </button>
