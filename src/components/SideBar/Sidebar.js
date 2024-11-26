@@ -1,5 +1,5 @@
 import React from 'react';
-import {Home,  Wallet, Calendar, DollarSign, TrendingUp, LogOut, Settings, HelpCircle } from 'lucide-react';
+import {Home,  Wallet, Calendar, DollarSign, TrendingUp, LogOut, Settings, HelpCircle, Gavel, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
@@ -16,9 +16,9 @@ export default function Sidebar({ isOpen }) {
     { icon: DollarSign, label: 'Mis apuestas', active: true, to: '/dashboard' },
     { icon: TrendingUp, label: 'Recomendaciones', active: true, to: '/recomendaciones' },
     ...(isAdmin ? [
-      { icon: TrendingUp, label: 'Comprar Subastas', active: true, to: '/offers' },
-      { icon: TrendingUp, label: 'Subastar Partidos', active: true, to: '/offers/ShowSellable' },
-      { icon: TrendingUp, label: 'Ver Propuestas', active: true, to: '/offers/seeAuctions' },
+      { icon: Gavel, label: 'Comprar Subastas', active: true, to: '/offers' },
+      { icon: Gavel, label: 'Subastar Partidos', active: true, to: '/offers/ShowSellable' },
+      { icon: FileText, label: 'Ver Propuestas', active: true, to: '/offers/seeAuctions' },
     ] : []),
     { icon: LogOut, label: 'Cerrar sesión', active: true, to: '/logout' },
     { icon: Settings, label: 'Settings' },

@@ -7,7 +7,7 @@ import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
 
 
 const AuctionDetails = () => {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +20,7 @@ const AuctionDetails = () => {
   const getFixtureById = (fixtureId) => {
     return fixtures.find(fixture => fixture.fixtureId === fixtureId);
   }
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
   // Obtener el Access Token de Auth0
   useEffect(() => {
     const fetchAuctionDetails = async () => {
@@ -53,43 +54,47 @@ const AuctionDetails = () => {
   }
 
   const handleFixtureClick = (fixture) => {};
-  
+  if (!isAdmin) {
+    navigate('/AdminError');
+  }
   return (
-    <div className="fixtures-container" style={{ marginTop: '200px', align:'center' }}>
-      <ul className="fixtures-list">
-        {auctionDetails.length > 0 ? (
-          auctionDetails.map((detail, index) => {
-            const fixture = getFixtureById(detail.fixture_id);
-            return (
-              <li key={index} className="fixture-item">
-                <div className="auction-details">
-                  <p><strong>Grupo Vendedor:</strong> {detail.group_id}</p>
-                  <p><strong>Cantidad Ofrecida:</strong> {detail.quantity}</p>
-                </div>
-                {fixture && (
-                  <div className="fixture-details">
-                    <FixtureItem
-                      key={index}
-                      fixture={fixture}
-                      handleFixtureClick={handleFixtureClick}
-                    />
+    <div className="fixtures-container" style={{textAlign: 'center'}}>
+      <div style={{ maxHeight: '500px', overflowY: 'scroll' }}> {/* Add this container */}
+        <ul className="fixtures-list">
+          {auctionDetails.length > 0 ? (
+            auctionDetails.map((detail, index) => {
+              const fixture = getFixtureById(detail.fixture_id);
+              return (
+                <li key={index} className="fixture-item">
+                  <div className="auction-details">
+                    <p><strong>Grupo Vendedor:</strong> {detail.group_id}</p>
+                    <p><strong>Cantidad Ofrecida:</strong> {detail.quantity}</p>
                   </div>
-                )}
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <button className="button-buy" onClick={(e) => { 
-                    e.stopPropagation(); 
-                    proposeBuyAuction(accessToken, detail); 
-                  }}>
-                    Realizar proposición
-                  </button>
-                </div>
-              </li>
-            );
-          })
-        ) : (
-          <p>No se encontraron partidos.</p>
-        )}
-      </ul>
+                  {fixture && (
+                    <div className="fixture-details">
+                      <FixtureItem
+                        key={index}
+                        fixture={fixture}
+                        handleFixtureClick={handleFixtureClick}
+                      />
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button className="button-buy" onClick={(e) => { 
+                      e.stopPropagation(); 
+                      proposeBuyAuction(accessToken, detail); 
+                    }}>
+                      Realizar proposición
+                    </button>
+                  </div>
+                </li>
+              );
+            })
+          ) : (
+            <p>No se encontraron partidos.</p>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };
