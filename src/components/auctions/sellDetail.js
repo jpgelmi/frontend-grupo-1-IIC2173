@@ -4,7 +4,8 @@ import { getBonoByFixtureId, postAuction } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import MatchInfo from "../FixtureDetails/MatchInfo.js";
-
+import Swal from "sweetalert2";
+import { connectWebSocket, disconnectWebSocket } from "../../api/websocket/websocketClient.js";
 
 const SellDetails = () => {
   const location = useLocation();
@@ -16,6 +17,23 @@ const SellDetails = () => {
   const [accessToken, setAccessToken] = useState('');
   const [number, setNumber] = useState(0);
   const isAdmin = user?.user_roles?.includes("Admin IIC2173");
+
+  useEffect(() => {
+    const handleWebSocketMessage = (data) => {
+      console.log("Mensaje recibido:", data.bonoActualizado);
+      console.log("Fixture actual:", fixture);
+      if (data.bonoActualizado.fixtureId === fixture.fixtureId.toString()) {
+        console.log("Actualizando bono...");
+        setBono(data.bonoActualizado);
+      }
+    };
+
+    connectWebSocket(handleWebSocketMessage);
+
+    return () => {
+      disconnectWebSocket();
+    };
+  }, [fixture]);
 
   if (!isAdmin) {
     navigate('/AdminError');
@@ -73,6 +91,24 @@ const SellDetails = () => {
     return <div>Loading...</div>;
   }
 
+  const handleOffer = (e, fixture, number) => {
+    if (bono.bonosDisponibles >= number) {
+      {e.preventDefault();
+            Swal.fire({
+              title: "Subasta enviada",
+              icon: "success",
+              confirmButtonText: "Aceptar",
+            });
+            handleSell(fixture, number);}
+    } else {
+      Swal.fire({
+        title: "No tienes bonos disponibles",
+        icon: "Error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+
   return (
     <div className="match-details-container">
       <h2>Detalles del partido</h2>
@@ -80,9 +116,8 @@ const SellDetails = () => {
       <div className="odds-container">
         <h3>Venta:</h3>
         <form onSubmit={(e) => {
-            e.preventDefault();
-            alert("Subastando " + number + " bonos");
-            handleSell(fixture, number);
+          e.preventDefault();
+          handleOffer(e, fixture, number);
         }}>
             <label>
                 Cantidad a vender:

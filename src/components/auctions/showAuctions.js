@@ -4,7 +4,7 @@ import { getAuctions, proposeBuyAuction } from "../../api/axios.js";
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
-
+import Swal from "sweetalert2";
 
 const AuctionDetails = () => {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
@@ -82,6 +82,11 @@ const AuctionDetails = () => {
                       e.stopPropagation(); 
                       alert("Propuesta Enviada");
                       proposeBuyAuction(accessToken, detail); 
+                      Swal.fire({
+                        title: "Proposición realizada",
+                        icon: "success",
+                        confirmButtonText: "Aceptar",
+                      });
                     }}>
                       Realizar proposición
                     </button>

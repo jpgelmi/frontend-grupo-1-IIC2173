@@ -62,9 +62,15 @@ const MatchInfo = ({ fixture, bono }) => {
         <p><strong>Liga:</strong> {fixture.league.name}</p>
         <p><strong>Ronda:</strong> {fixture.league.round}, {fixture.league.season}</p>
         {bond ? (
-          !isAdmin ?
-          <p><strong>Bonos disponibles:</strong> {bond.bonosDisponibles}</p>
-          : <p><strong>Bonos disponibles desde central:</strong> {bond.bonosTotales}</p>
+          <p><strong>Bonos disponibles para comprar:</strong> {bond.bonosDisponibles}</p>
+        ) : (
+          <p>Bonos no disponibles</p>
+        )}
+        {bond ? (
+          isAdmin ?
+          <p><strong>Bonos disponibles desde central:</strong> {bond.bonosTotales}</p>
+          : 
+          null
         ) : (
           <p>Bonos no disponibles</p>
         )}
