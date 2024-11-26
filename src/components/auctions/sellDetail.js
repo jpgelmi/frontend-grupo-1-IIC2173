@@ -81,6 +81,7 @@ const SellDetails = () => {
         <h3>Venta:</h3>
         <form onSubmit={(e) => {
             e.preventDefault();
+            alert("Subastando " + number + " bonos");
             handleSell(fixture, number);
         }}>
             <label>
@@ -89,7 +90,7 @@ const SellDetails = () => {
                   type="number" 
                   value={number} 
                   onChange={(e) => setNumber(e.target.value)}
-                  min="0"
+                  min="1"
                   max={bono.bonosDisponibles}
                 />
             </label>

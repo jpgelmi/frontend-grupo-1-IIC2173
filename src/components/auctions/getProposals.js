@@ -16,9 +16,9 @@ const SeeProposals = () => {
   const [count] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user} = useAuth0();
   const [accessToken, setAccessToken] = useState("");
-
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
   // Obtención del Access Token
   useEffect(() => {
     const getToken = async () => {
@@ -35,6 +35,9 @@ const SeeProposals = () => {
     getToken();
   }, [getAccessTokenSilently, isAuthenticated]);
   // Función para obtener los fixtures
+  if (!isAdmin) {
+    navigate('/AdminError');
+  }
   const ShowProposals = async () => {
     try {
       if (isAuthenticated && accessToken) {
@@ -158,12 +161,14 @@ const SeeProposals = () => {
                   
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
+                    alert("Propuesta aceptada");
                     acceptProposal(accessToken, proposal); 
                   }}>
                     Aceptar Propuesta
                   </button>
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
+                    alert("Propuesta rechazada");
                     rejectProposal(accessToken, proposal); 
                   }}>
                     Rechazar Propuesta

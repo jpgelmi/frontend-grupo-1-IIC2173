@@ -12,9 +12,9 @@ const BuyBonds = () => {
   
   const { fixture, bono } = location.state;
 
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user} = useAuth0();
   const [accessToken, setAccessToken] = useState('');
-
+  const isAdmin = user?.user_roles?.includes('Admin IIC2173');
   useEffect(() => {
     const getToken = async () => {
       if (isAuthenticated) {
@@ -72,7 +72,9 @@ const BuyBonds = () => {
         navigate(-1);
       })
     }
-
+  if (!isAdmin) {
+    navigate('/AdminError');
+  }
   return (
     <div className="add-Discount-container">
       <h2>Agregar descuento</h2>
