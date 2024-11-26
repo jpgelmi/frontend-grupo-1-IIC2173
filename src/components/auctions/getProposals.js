@@ -4,7 +4,7 @@ import { getProposals, acceptProposal, rejectProposal } from "../../api/axios.js
 import "../../pages/fixtures/Fixtures.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
-
+import Swal from "sweetalert2";
 
 const SeeProposals = () => {
   const [fixtures, setFixtures] = useState([]);
@@ -143,10 +143,10 @@ const SeeProposals = () => {
               return (
                 <li key={index} className="fixture-item">
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <p style={{ marginRight: '10px' }}><strong>Grupo Ofertante:</strong> {proposal.group_id}</p>
-  <p style={{ marginRight: '10px' }}> </p>
-  <p><strong>Cantidad:</strong> {proposal.quantity}</p>
-</div>
+                    <p style={{ marginRight: '10px' }}><strong>Grupo Ofertante:</strong> {proposal.group_id}</p>
+                    <p style={{ marginRight: '10px' }}> </p>
+                    <p><strong>Cantidad:</strong> {proposal.quantity}</p>
+                  </div>
                   
                   {fixture && (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -161,14 +161,22 @@ const SeeProposals = () => {
                   
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
-                    alert("Propuesta aceptada");
+                    Swal.fire({
+                      title: "Propuesta aceptada",
+                      icon: "success",
+                      confirmButtonText: "Aceptar",
+                    });
                     acceptProposal(accessToken, proposal); 
                   }}>
                     Aceptar Propuesta
                   </button>
                   <button className="button-buy" onClick={(e) => { 
                     e.stopPropagation(); 
-                    alert("Propuesta rechazada");
+                    Swal.fire({
+                      title: "Propuesta aceptada",
+                      icon: "error",
+                      confirmButtonText: "Aceptar",
+                    });
                     rejectProposal(accessToken, proposal); 
                   }}>
                     Rechazar Propuesta
