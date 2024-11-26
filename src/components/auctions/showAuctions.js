@@ -59,7 +59,7 @@ const AuctionDetails = () => {
   }
   return (
     <div className="fixtures-container" style={{textAlign: 'center'}}>
-      <div style={{ maxHeight: '500px', overflowY: 'scroll' }}> {/* Add this container */}
+      <div style={{ maxHeight: '500px', overflowY: 'scroll', width:'900px' }}> {/* Add this container */}
         <ul className="fixtures-list">
           {auctionDetails.length > 0 ? (
             auctionDetails.map((detail, index) => {
@@ -71,13 +71,11 @@ const AuctionDetails = () => {
                     <p><strong>Cantidad Ofrecida:</strong> {detail.quantity}</p>
                   </div>
                   {fixture && (
-                    <div className="fixture-details">
                       <FixtureItem
                         key={index}
                         fixture={fixture}
                         handleFixtureClick={handleFixtureClick}
                       />
-                    </div>
                   )}
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <button className="button-buy" onClick={(e) => { 
