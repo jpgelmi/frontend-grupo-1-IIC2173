@@ -22,6 +22,7 @@ import AuctionDetails from './components/auctions/showAuctions.js';
 import SellDetails from "./components/auctions/sellDetail.js";
 import SeeFixtures from "./components/auctions/showFixtures.js";
 import SeeProposals from "./components/auctions/getProposals.js";
+import AdminError from "./components/OnlyAdmin.js";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route element={<SidebarLayout />}>
           <Route path="/wallet" element={<WalletBalance/>} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/AdminError" element={<AdminError />} />
         </Route>
       </Routes>
     </ThemeProvider>

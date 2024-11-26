@@ -17,6 +17,10 @@ const Fixtures = () => {
   const navigate = useNavigate();
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState("");
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
+  
+
+  
 
   // Obtención del Access Token
   useEffect(() => {
@@ -99,11 +103,12 @@ const Fixtures = () => {
       setPage(page + 1);
     }
   };
-
-  const isAdmin = user ? user.user_roles.includes("Admin IIC2173") : false;
+  if (!isAdmin) {
+    navigate("/adminError");
+  }
 
   const filterFixturesIfIsNotAdmin = async (fixtures) => {
-    if (!isAdmin) {
+    
       try {
         if (isAuthenticated && accessToken) {
           const response = await getAvailableBonds(accessToken);
@@ -132,7 +137,7 @@ const Fixtures = () => {
       } catch (error) {
         console.error("Error al obtener los bonos:", error);
       }
-    }
+    
   };
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import FixtureItem from "../../components/FixtureItem/FixtureItem.js";
 
 
 const AuctionDetails = () => {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +20,7 @@ const AuctionDetails = () => {
   const getFixtureById = (fixtureId) => {
     return fixtures.find(fixture => fixture.fixtureId === fixtureId);
   }
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
   // Obtener el Access Token de Auth0
   useEffect(() => {
     const fetchAuctionDetails = async () => {
@@ -53,7 +54,9 @@ const AuctionDetails = () => {
   }
 
   const handleFixtureClick = (fixture) => {};
-  
+  if (!isAdmin) {
+    navigate('/AdminError');
+  }
   return (
     <div className="fixtures-container" style={{ marginTop: '200px', align:'center' }}>
       <ul className="fixtures-list">

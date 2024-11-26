@@ -12,10 +12,14 @@ const SellDetails = () => {
   const { fixture } = location.state || {};
   const [bono, setBono] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [accessToken, setAccessToken] = useState('');
   const [number, setNumber] = useState(0);
+  const isAdmin = user?.user_roles?.includes("Admin IIC2173");
 
+  if (!isAdmin) {
+    navigate('/AdminError');
+  }
   // Obtener el Access Token de Auth0
   useEffect(() => {
     const getToken = async () => {
