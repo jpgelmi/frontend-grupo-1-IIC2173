@@ -82,6 +82,7 @@ const AuctionDetails = () => {
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <button className="button-buy" onClick={(e) => { 
                       e.stopPropagation(); 
+                      alert("Propuesta Enviada");
                       proposeBuyAuction(accessToken, detail); 
                     }}>
                       Realizar proposición
