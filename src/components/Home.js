@@ -59,6 +59,9 @@ const Home = () => {
           <Link to={`/buy-requests`}>Ver Mis Solicitudes de Compra</Link>
           <Link to="/fixtures">Ver Partidos disponibles</Link>
           <Link to="/recomedaciones">Ver Recomendaciones</Link>
+          <Link to="/offers">Ver Subastas de otros grupos (Solo Admin)</Link>
+          <Link to="/offers/showSellable">Ver Fixtures para enviar a subasta (Solo Admin)</Link>
+          <Link to="/offers/seeAuctions">Ver Propuestas a mis subastas (Solo Admin)</Link>
 
           {isLoadingJobs ? ( // Condición para mostrar el loading específico de jobs
             <p style={{ fontSize: "10px", color: "orange" }}>Cargando Active Jobs...</p>

@@ -1,0 +1,80 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 110vh; */
+    min-height: 100vh;
+    background-color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: -120px;
+  }
+  
+  .home-container h2 {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .bet-button-container {
+    display: flex;
+    justify-content: center;
+    /*  Lo subimos */
+    position: relative;
+    top: -200px;
+    margin: 20px; /*Espacio alrededor del botón */
+  }
+
+  /* .bottom-line {
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+  } */
+
+  .bottom-elements {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    margin-bottom: 15px;
+  }
+  
+  .logo-button-bottom {
+    display: flex;
+    align-items: center;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: absolute;
+    margin-left: 45%;
+  }
+  
+  .social-icons img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .home-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 10px;
+  }
+  
+  .home-link a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }

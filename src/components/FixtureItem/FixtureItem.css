@@ -1,0 +1,111 @@
+.fixture-item {
+  background-color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.fixture-item:hover {
+  background-color: #f0f0f0;
+}
+
+.fixture-info {
+  display: flex;
+  align-items: center;
+  position: relative
+}
+
+.fixture-date {
+  font-weight: bold;
+  width: 150px;
+  font-size: 0.9em;
+  white-space: nowrap;
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+.vertical-line {
+  border-right: 1px solid #ddd;
+  height: 60px;
+  margin-left: 70px;
+  margin-right: 15px;
+  position: absolute;
+  left: 130px;
+}
+
+.vertical-line-2 {
+  border-right: 1px solid #ddd;
+  height: 60px;
+  margin-left: 40%;
+  margin-right: 15px;
+  position: absolute;
+  left: 130px;
+}
+
+.fixture-details {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 50px;
+}
+
+.fixture-teams {
+  display: flex;
+  flex-direction: column;
+  margin-left: -20px;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.team-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.odds {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-right: 10%; */
+  width: 60%;
+}
+
+.odd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.odd.left {
+  align-items: flex-start;
+}
+
+.odd.center {
+  align-items: center;
+  position: absolute;
+  left: 73%;
+}
+
+.odd.right {
+  align-items: flex-end;
+}
+
+.odd label {
+  font-size: 0.8em;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.odd span {
+  font-size: 1em;
+  font-weight: bold;
+}
